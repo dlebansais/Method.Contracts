@@ -24,8 +24,6 @@ Consider the following code:
 		// ...
         }
 
-		// ...
-
 The line `if (text.Length > 0)` generates warning CA1062: *Validate arguments of public methods*. The traditional way of removing this warning is to check for the `null` value, as follow.
 
     public bool TryParseFoo(string text, out Foo parsedFoo)
@@ -38,8 +36,6 @@ The line `if (text.Length > 0)` generates warning CA1062: *Validate arguments of
 		// ...
         }
 
-		// ...
-
 You can replace this code with `RequireNotNull` instead:
 
     public bool TryParseFoo(string text, out Foo parsedFoo)
@@ -50,8 +46,6 @@ You can replace this code with `RequireNotNull` instead:
         {
 		// ...
         }
-
-		// ...
 
 Note how the new code uses `Text` with an upper case T and not the parameter anymore.
 
