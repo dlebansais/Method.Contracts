@@ -21,10 +21,10 @@ Consider the following code:
     {
         if (text.Length > 0)
         {
-			// ...
+		// ...
         }
 
-		// ...
+	// ...
 
 The line `if (text.Length > 0)` generates warning CA1062: *Validate arguments of public methods*. The traditional way of removing this warning is to check for the `null` value, as follow.
 
@@ -35,10 +35,10 @@ The line `if (text.Length > 0)` generates warning CA1062: *Validate arguments of
 
         if (text.Length > 0)
         {
-			// ...
+		// ...
         }
 
-		// ...
+	// ...
 
 You can replace this code with `RequireNotNull` instead:
 
@@ -48,10 +48,10 @@ You can replace this code with `RequireNotNull` instead:
 
         if (Text.Length > 0)
         {
-			// ...
+		// ...
         }
 
-		// ...
+	// ...
 
 Note how the new code uses `Text` with an upper case T and not the parameter anymore.
 
@@ -65,7 +65,7 @@ The drawback of using `RequireNotNull` is, of course, that you introduce a new v
 
 ### Contract.Unused
 
-The purpose of this method is mostly to annotate your code to specify that a variable value is not used, and remove warning CS8625:*C# Cannot convert null literal to non-nullable reference type*.
+The purpose of this method is mostly to annotate your code to specify that a variable value is not used, and remove warning CS8625: *Cannot convert null literal to non-nullable reference type*.
 
 Consider the following code:
 
@@ -90,8 +90,6 @@ You can replace this code with `Unused` instead:
 
     parsedFoo = Contract.Unused<Foo>();
     return false;
-
-Note how the new code uses `Text` with an upper case T and not the parameter anymore.
 
 By using `Unused` you can slightly improve your code, at least from a point of view:
 
