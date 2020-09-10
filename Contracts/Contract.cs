@@ -14,6 +14,7 @@
         /// <param name="obj">The object instance to check.</param>
         /// <param name="result">The non-null alias upon return.</param>
         public static void RequireNotNull<T>(object? obj, out T result)
+            where T : class
         {
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
@@ -25,12 +26,11 @@
         /// Provide a value for variables that should be uninitialized.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
-        /// <returns>A value that can be used.</returns>
-        public static T Unused<T>()
+        /// <param name="result">The unused value.</param>
+        public static void Unused<T>(out T result)
             where T : class
         {
-            T Result = null !;
-            return Result;
+            result = null !;
         }
     }
 }

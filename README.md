@@ -82,7 +82,7 @@ The line `parsedFoo = null;` generates warning CS8625. The traditional way of re
 
 You can replace this code with `Unused` instead:
 
-    parsedFoo = Contract.Unused<Foo>();
+    Contract.Unused(out parsedFoo);
     return false;
 
 By using `Unused` you can slightly improve your code, at least from a point of view:
