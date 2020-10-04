@@ -29,9 +29,9 @@ after_build:
 
 test: off
 
-artifacts:
-  - path: Contracts/bin/
-    name: Contracts
+#artifacts:
+#  - path: Contracts/bin/
+#    name: Contracts
 
 #deploy:
 #  release: '%APPVEYOR_REPO_TAG_NAME%'
@@ -45,6 +45,10 @@ artifacts:
 #  on:
 #    branch: master
 #    APPVEYOR_REPO_TAG: true        # deploy on tag push only
+
+artifacts:
+  - path: /.nupkg/
+    name: Contracts
 
 deploy:
   - provider: NuGet
