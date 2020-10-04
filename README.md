@@ -89,7 +89,3 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 
 + The null forgiving operator is easily missed.
 + This check explicitely means you're declaring a code contract about your output.
- 
-# Certification
-
-This program is digitally signed with a [CAcert](https://www.cacert.org/) certificate.
