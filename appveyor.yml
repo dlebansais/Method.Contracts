@@ -47,7 +47,7 @@ test: off
 #    APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
 artifacts:
-  - path: Contracts/bin/x64/Release/Contracts.1.0.2.nupkg
+  - path: Contracts/bin/x64/Release/Contracts.*.nupkg
     name: Contracts
 
 deploy:
