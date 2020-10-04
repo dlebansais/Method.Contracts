@@ -46,14 +46,14 @@ test: off
 #    branch: master
 #    APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
-#artifacts:
-#  - path: /.nupkg/
-#    name: Contracts
+artifacts:
+  - path: Contracts/bin/x64/Release/Contracts.1.0.2.nupkg
+    name: Contracts
 
 deploy:
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
-    artifact: Contracts/bin/x64/Release/Contracts.1.0.2.nupkg
+    artifact: Contracts
     username: dlebansais
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
