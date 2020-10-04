@@ -29,33 +29,28 @@ after_build:
 
 test: off
 
-#artifacts:
-#  - path: Contracts/bin/
-#    name: Contracts
-
-#deploy:
-#  release: '%APPVEYOR_REPO_TAG_NAME%'
-#  description: '%APPVEYOR_REPO_COMMIT_MESSAGE%'
-#  provider: GitHub
-#  auth_token:
-#    secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
-#  artifact: Contracts
-#  draft: true
-#  prerelease: false
-#  on:
-#    branch: master
-#    APPVEYOR_REPO_TAG: true        # deploy on tag push only
-
 artifacts:
+  - path: Contracts/bin/
+    name: Contracts-Release
   - path: Contracts/bin/x64/Release/Contracts.*.nupkg
-    name: Contracts
+    name: Contracts-Package
 
 deploy:
+  - provider: GitHub
+    release: '%APPVEYOR_REPO_TAG_NAME%'
+    description: '%APPVEYOR_REPO_COMMIT_MESSAGE%'
+    auth_token:
+      secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
+    artifact: Contracts-Release
+    draft: true
+    prerelease: false
+    on:
+      branch: master
+      APPVEYOR_REPO_TAG: true        # deploy on tag push only
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
-    artifact: Contracts
+    artifact: Contracts-Package
     username: dlebansais
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
     skip_symbols: true
-    APPVEYOR_REPO_TAG: true        # deploy on tag push only
