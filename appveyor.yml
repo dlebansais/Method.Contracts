@@ -24,6 +24,9 @@ before_build:
 build:
   project: build_all.xml
 
+after_build:
+  - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
+
 test: off
 
 artifacts:
