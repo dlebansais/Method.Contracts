@@ -9,6 +9,9 @@ branches:
 skip_commits:
   message: "*[skip ci]*"
 
+# Start builds on tags only
+skip_non_tags: true
+
 image: Visual Studio 2019
 
 # scripts that are called at very beginning, before repo cloning
@@ -46,7 +49,6 @@ deploy:
     prerelease: false
     on:
       branch: master
-      APPVEYOR_REPO_TAG: true        # deploy on tag push only
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
     artifact: Contracts-Package
