@@ -34,10 +34,8 @@ test: off
 artifacts:
   - path: Contracts/bin/
     name: Contracts
-  - path: Contracts/bin/x64/Debug/Contracts.*.snupkg
-    name: Contracts-Package-Debug
-  - path: Contracts/bin/x64/Release/Contracts.*.nupkg
-    name: Contracts-Package-Release
+  - path: Contracts/bin/x64/Debug/Contracts.*(\.|\.s)nupkg
+    name: Contracts-Package
 
 deploy:
   - provider: GitHub
