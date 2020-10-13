@@ -1,6 +1,11 @@
 # version format
 version: v{build}
 
+branches:
+  only:
+    - master
+    - deployment
+
 # Skipping commits with particular message or from specific user
 skip_commits:
   message: "*[skip ci]*"
