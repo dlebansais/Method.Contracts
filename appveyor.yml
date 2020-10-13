@@ -1,10 +1,6 @@
 # version format
 version: v{build}
 
-branches:
-  only:
-    - master
-
 # Skipping commits with particular message or from specific user
 skip_commits:
   message: "*[skip ci]*"
@@ -28,15 +24,18 @@ build:
   project: build_all.xml
 
 after_build:
+  - dotnet pack --configuration Debug /p:Platform=x64 Contracts/Contracts.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
 
 test: off
 
 artifacts:
   - path: Contracts/bin/
-    name: Contracts-Release
+    name: Contracts
+  - path: Contracts/bin/x64/Debug/Contracts.*.snupkg
+    name: Contracts-Package-Debug
   - path: Contracts/bin/x64/Release/Contracts.*.nupkg
-    name: Contracts-Package
+    name: Contracts-Package-Release
 
 deploy:
   - provider: GitHub
@@ -44,15 +43,25 @@ deploy:
     description: '%APPVEYOR_REPO_COMMIT_MESSAGE%'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
-    artifact: Contracts-Release
+    artifact: Contracts
     draft: true
     prerelease: false
     on:
-      branch: master
+      branch: deployment
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
-    artifact: Contracts-Package
+    artifact: Contracts-Package-Debug
     username: dlebansais
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
+    on:
+      branch: deployment
+  - provider: NuGet
+    server: https://nuget.pkg.github.com/dlebansais/index.json
+    artifact: Contracts-Package-Release
     skip_symbols: true
+    username: dlebansais
+    api_key:
+      secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
+    on:
+      branch: deployment
