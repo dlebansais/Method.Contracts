@@ -35,7 +35,11 @@ artifacts:
   - path: Contracts/bin/
     name: Contracts
   - path: Contracts/bin/x64/Debug/Contracts.*(\.|\.s)nupkg
-    name: Contracts-Package
+    name: Contracts-Package-Debug
+    type: NuGetPackage
+  - path: Contracts/bin/x64/Release/Contracts.*.nupkg
+    name: Contracts-Package-Release
+    type: NuGetPackage
 
 deploy:
   - provider: GitHub
@@ -49,6 +53,7 @@ deploy:
     on:
       branch: deployment
   - provider: NuGet
+    server: https://nuget.pkg.github.com/dlebansais/index.json
     symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
     artifact: Contracts-Package-Debug
     username: dlebansais
