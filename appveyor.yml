@@ -10,9 +10,6 @@ branches:
 skip_commits:
   message: "*[skip ci]*"
 
-# Start builds on tags only
-skip_non_tags: true
-
 image: Visual Studio 2019
 
 # scripts that are called at very beginning, before repo cloning
