@@ -34,7 +34,7 @@ test: off
 artifacts:
   - path: Contracts/bin/
     name: Contracts
-  - path: Contracts/bin/x64/Debug/Contracts.*(\.|\.s)nupkg
+  - path: Contracts/bin/x64/Debug/Contracts.*nupkg
     name: Contracts-Package-Debug
     type: NuGetPackage
   - path: Contracts/bin/x64/Release/Contracts.*.nupkg
