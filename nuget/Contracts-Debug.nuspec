@@ -11,7 +11,4 @@
       <group targetFramework=".NETFramework4.8"/>
     </dependencies>
   </metadata>
-  <files>
-    <file src="bin\x64\Debug\net48\Contracts.pdb" target="lib\net48\"/>
-  </files>
 </package>
