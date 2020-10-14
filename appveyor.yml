@@ -28,8 +28,7 @@ build:
 after_build:
   - nuget install Packager -DependencyVersion Highest -OutputDirectory packages
   - ls -d packages/Packager.*
-  - ls -d packages/Packager.* | head -n 1
-  - cd $(ls -d packages/Packager.*/|head -n 1)
+  - cd $(ls -d packages/Packager.*)
   - ps: packages/Packager.1.0.1/lib/net48/Packager.exe
   - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
