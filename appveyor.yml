@@ -54,6 +54,7 @@ deploy:
       branch: deployment
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
+    symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
     artifact: Contracts-Package-Debug
     username: dlebansais
     api_key:
