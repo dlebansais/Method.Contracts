@@ -27,7 +27,7 @@ build:
 
 after_build:
   - nuget install Packager -DependencyVersion Highest -OutputDirectory packages
-  - ps: $folder = ls -d 'packages/Packager.*' | Out-String
+  - ps: $folder = (ls -d packages/Packager.*) | Out-String
   - ps: echo $folder
   - ps: echo $folder/lib/net48/Packager.exe
   - ps: packages/Packager.1.0.1/lib/net48/Packager.exe
