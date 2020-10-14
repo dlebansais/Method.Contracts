@@ -30,7 +30,7 @@ after_build:
   - ps: $folder = Get-ChildItem -Path packages -Name | Out-String
   - ps: $firstline = ($folder -split '\n')[0]
   - ps: echo $firstline
-  - ps: $fullpath = ("packages/" + $firstline + "/lib/net48/Packager.exe")
+  - ps: $fullpath = "packages/$firstline/lib/net48/Packager.exe"
   - ps: echo $fullpath
   - ps: packages/Packager.1.0.1/lib/net48/Packager.exe
   - nuget pack nuget\Contracts-Debug.nuspec
