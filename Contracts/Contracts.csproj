@@ -1,20 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PackageId>Contracts-Debug</PackageId>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Symbols|x64'">
-    <PackageId>Contracts-Symbols</PackageId>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PackageId>Contracts</PackageId>
-  </PropertyGroup>
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.1;net48</TargetFrameworks>
-    <Configurations>Debug;Release;Symbols</Configurations>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
@@ -27,7 +14,6 @@
     <Copyright>Copyright © 2019 David Le Bansais</Copyright>
     <AssemblyVersion>1.0.6.8</AssemblyVersion>
     <FileVersion>1.0.6.8</FileVersion>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/dlebansais/Contracts</RepositoryUrl>
   </PropertyGroup>
 
