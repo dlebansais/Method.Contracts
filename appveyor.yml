@@ -32,7 +32,7 @@ after_build:
   - ps: echo $firstline
   - ps: $fullpath = "packages/$firstline/lib/net48/Packager.exe"
   - ps: echo $fullpath
-  - ps: $fullpath
+  - ps: Invoke-Expression $fullpath
   - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
 
