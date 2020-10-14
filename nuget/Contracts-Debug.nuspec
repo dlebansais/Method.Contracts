@@ -8,6 +8,8 @@
     <copyright>Copyright © 2019 David Le Bansais</copyright>
     <repository type="git" url="https://github.com/dlebansais/Contracts" />
     <dependencies>
+      <group targetFramework=".NETStandard2.1"/>
+      <group targetFramework=".NETCoreApp3.1"/>
       <group targetFramework=".NETFramework4.8"/>
     </dependencies>
   </metadata>
