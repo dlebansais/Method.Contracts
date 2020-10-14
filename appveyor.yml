@@ -26,7 +26,7 @@ build:
   project: build_all.xml
 
 after_build:
-  - nuget install Packager -OutputDirectory packages
+  - nuget install Packager -Version 1.0.1 -OutputDirectory packages
   - ls -R
   - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
