@@ -29,8 +29,8 @@ after_build:
   - nuget install Packager -DependencyVersion Highest -OutputDirectory packages
   - ps: $folder = Get-ChildItem -Path packages -Name | Out-String
   - ps: $firstline = ($folder -split '\n')[0]
-  - ps: echo firstline
-  - ps: echo firstline/lib/net48/Packager.exe
+  - ps: echo $firstline
+  - ps: echo $firstline/lib/net48/Packager.exe
   - ps: packages/Packager.1.0.1/lib/net48/Packager.exe
   - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
