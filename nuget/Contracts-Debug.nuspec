@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Contracts-Debug</id>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <authors>David Le Bansais</authors>
     <description>A set of tools to enforce contracts in methods</description>
     <copyright>Copyright © 2019 David Le Bansais</copyright>
