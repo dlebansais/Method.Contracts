@@ -26,7 +26,7 @@ build:
   project: build_all.xml
 
 after_build:
-  - dotnet pack --configuration Debug /p:Platform=x64 Contracts/Contracts.csproj -p:IncludeSymbols=true
+  - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
 
 test: off
@@ -34,7 +34,7 @@ test: off
 artifacts:
   - path: Contracts/bin/
     name: Contracts
-  - path: Contracts/bin/x64/Debug/Contracts-Debug.*.nupkg
+  - path: Contracts-Debug.*.nupkg
     name: Contracts-Package-Debug
     type: NuGetPackage
   - path: Contracts/bin/x64/Release/Contracts.*.nupkg
