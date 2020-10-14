@@ -27,6 +27,8 @@ build:
 
 after_build:
   - dotnet pack --configuration Debug /p:Platform=x64 Contracts/Contracts.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+  - mv Contracts\bin\x64\Debug\Contracts.1.0.4.nupkg Contracts\bin\x64\Debug\Contracts-Debug.1.0.4.nupkg
+  - mv Contracts\bin\x64\Debug\Contracts.1.0.4.snupkg Contracts\bin\x64\Debug\Contracts-Debug.1.0.4.snupkg
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
 
 test: off
@@ -34,10 +36,10 @@ test: off
 artifacts:
   - path: Contracts/bin/
     name: Contracts
-  - path: Contracts/bin/x64/Debug/Contracts.*nupkg
+  - path: Contracts/bin/x64/Debug/Contracts-Debug.*nupkg
     name: Contracts-Package-Debug
     type: NuGetPackage
-  - path: Contracts/bin/x64/Release/Contracts.*.nupkg
+  - path: Contracts/bin/x64/Release/Contracts.*nupkg
     name: Contracts-Package-Release
     type: NuGetPackage
 
