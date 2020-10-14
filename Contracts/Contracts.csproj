@@ -1,5 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PackageId>Contracts-Debug</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PackageId>Contracts</PackageId>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.1;net48</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
