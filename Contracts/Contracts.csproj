@@ -4,12 +4,17 @@
     <PackageId>Contracts-Debug</PackageId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Symbols|x64'">
+    <PackageId>Contracts-Symbols</PackageId>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PackageId>Contracts</PackageId>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.1;net48</TargetFrameworks>
+    <Configurations>Debug;Release;Symbols</Configurations>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>

@@ -26,7 +26,8 @@ build:
   project: build_all.xml
 
 after_build:
-  - dotnet pack --configuration Debug /p:Platform=x64 Contracts/Contracts.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+  - dotnet pack --configuration Debug /p:Platform=x64 Contracts/Contracts.csproj
+  - dotnet pack --configuration Symbols /p:Platform=x64 Contracts/Contracts.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
 
 test: off
@@ -34,10 +35,13 @@ test: off
 artifacts:
   - path: Contracts/bin/
     name: Contracts
-  - path: Contracts/bin/x64/Debug/Contracts-Debug.*nupkg
+  - path: Contracts/bin/x64/Debug/Contracts-Debug.*.nupkg
     name: Contracts-Package-Debug
     type: NuGetPackage
-  - path: Contracts/bin/x64/Release/Contracts.*nupkg
+  - path: Contracts/bin/x64/Symbols/Contracts-Symbols.*.snupkg
+    name: Contracts-Package-Symbols
+    type: NuGetPackage
+  - path: Contracts/bin/x64/Release/Contracts.*.nupkg
     name: Contracts-Package-Release
     type: NuGetPackage
 
@@ -54,8 +58,15 @@ deploy:
       branch: deployment
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
-    symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
     artifact: Contracts-Package-Debug
+    username: dlebansais
+    api_key:
+      secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
+    on:
+      branch: deployment
+  - provider: NuGet
+    symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
+    artifact: Contracts-Package-Symbols
     username: dlebansais
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
