@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package>
   <metadata>
     <id>Contracts-Debug</id>
     <version>1.0.6</version>
     <authors>David Le Bansais</authors>
     <description>A set of tools to enforce contracts in methods</description>
     <copyright>Copyright © 2019 David Le Bansais</copyright>
-    <repository type="git" url="https://github.com/dlebansais/Contracts" />
+    <repository type="git" url="https://github.com/dlebansais/Contracts"/>
     <dependencies>
       <group targetFramework=".NETStandard2.1"/>
       <group targetFramework=".NETCoreApp3.1"/>
