@@ -1,6 +1,7 @@
 ﻿namespace Contracts
 {
     using System;
+    using System.Diagnostics;
 
     /// <summary>
     /// A set of tools to enforce contracts in methods.
@@ -16,6 +17,8 @@
         public static void RequireNotNull<T>(object? obj, out T result)
             where T : class
         {
+            Debug.Assert(obj != null, "Invalid null reference");
+
             if (obj == null)
                 throw new ArgumentNullException(nameof(obj));
 

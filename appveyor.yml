@@ -53,7 +53,7 @@ artifacts:
 
 deploy:
   - provider: GitHub
-    release: '$env:VERSION'
+    release: $env:VERSION
     description: 'Automatic deployment'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
