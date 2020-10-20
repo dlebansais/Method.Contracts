@@ -37,7 +37,7 @@ after_build:
         $xml = [xml](Get-Content .\%APPVEYOR_PROJECT_NAME%\%APPVEYOR_PROJECT_NAME%.csproj)
   - ps: $version = $xml.Project.PropertyGroup.Version
   - ps: set VERSION v$version
-  - ps: echo "This program version is: $env:VERSION"
+  - ps: echo "Version is $VERSION"
 
 test: off
 
