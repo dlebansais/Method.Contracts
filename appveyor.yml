@@ -45,7 +45,7 @@ test: off
 
 artifacts:
   - path: $(SolutionName)/bin/
-    name: %APPVEYOR_PROJECT_NAME%
+    name: $(APPVEYOR_PROJECT_NAME)
   - path: $(SolutionName)-Debug.*.nupkg
     name: %APPVEYOR_PROJECT_NAME%-Package-Debug
     type: NuGetPackage
