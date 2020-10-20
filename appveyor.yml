@@ -53,7 +53,7 @@ artifacts:
 
 deploy:
   - provider: GitHub
-    release: '%APPVEYOR_REPO_COMMIT_MESSAGE%'
+    release: '$env:VERSION'
     description: 'Automatic deployment'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
