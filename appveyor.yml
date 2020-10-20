@@ -44,13 +44,13 @@ after_build:
 test: off
 
 artifacts:
-  - path: $(SolutionName)/bin/
+  - path: $(APPVEYOR_PROJECT_NAME)/bin/
     name: $(APPVEYOR_PROJECT_NAME)
   - path: $(SolutionName)-Debug.*.nupkg
-    name: %APPVEYOR_PROJECT_NAME%-Package-Debug
+    name: $(APPVEYOR_PROJECT_NAME)-Package-Debug
     type: NuGetPackage
   - path: $(SolutionName)/bin/x64/Release/$(SolutionName).*.nupkg
-    name: %APPVEYOR_PROJECT_NAME%-Package-Release
+    name: $(APPVEYOR_PROJECT_NAME)-Package-Release
     type: NuGetPackage
 
 deploy:
