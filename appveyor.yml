@@ -29,11 +29,14 @@ after_build:
   - nuget install Packager -DependencyVersion Highest -OutputDirectory packages # Install Packager
   - ps: $folder = Get-ChildItem -Path packages/Packager.* -Name | Out-String    # Get the installation folder (we don't know the actual version)
   - ps: $firstline = ($folder -split '\r\n')[0]                                 # Get rid of carriage-return
-  - ps: $fullpath = "packages/$firstline/lib/net48/Packager.exe --debug"        # Build full path
-  - ps: Invoke-Expression $fullpath                                             # Execute the packager: the output is nuget\Contracts-Debug.nuspec
+  - ps: $fullpath = "packages/$firstline/lib/net48/Packager.exe"                # Build full path
+
+  # Execute the packager: the output is nuget\Contracts-Debug.nuspec
+  - ps: & $fullpath  --debug                                          
+  
   - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
-  - ps: "[xml]$xml = Get-Content .\Contracts\Contracts.csproj"
+  - ps: `[xml`]$xml = Get-Content .\Contracts\Contracts.csproj
   - ps: $version = $xml.Project.PropertyGroup.Version
   - ps: set VERSION v$version
   - ps: echo "Deploying $VERSION ..."
