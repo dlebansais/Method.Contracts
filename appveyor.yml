@@ -42,13 +42,13 @@ after_build:
 test: off
 
 artifacts:
-  - path: %APPVEYOR_PROJECT_NAME%/bin/
-    name: %APPVEYOR_PROJECT_NAME%
-  - path: %APPVEYOR_PROJECT_NAME%-Debug.*.nupkg
-    name: %APPVEYOR_PROJECT_NAME%-Package-Debug
+  - path: $(SolutionName)/bin/
+    name: $(SolutionName)
+  - path: $(SolutionName)-Debug.*.nupkg
+    name: $(SolutionName)-Package-Debug
     type: NuGetPackage
-  - path: %APPVEYOR_PROJECT_NAME%/bin/x64/Release/%APPVEYOR_PROJECT_NAME%.*.nupkg
-    name: %APPVEYOR_PROJECT_NAME%-Package-Release
+  - path: $(SolutionName)/bin/x64/Release/$(SolutionName).*.nupkg
+    name: $(SolutionName)-Package-Release
     type: NuGetPackage
 
 deploy:
