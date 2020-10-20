@@ -33,7 +33,7 @@ after_build:
   - ps: Invoke-Expression $fullpath                                             # Execute the packager: the output is nuget\Contracts-Debug.nuspec
   - nuget pack nuget\Contracts-Debug.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 Contracts/Contracts.csproj
-  - ps: $xml = Get-Content .\Packager\Packager.csproj
+  - ps: $xml = Get-Content .\Contracts\Contracts.csproj
   - ps: $version = $xml.Project.PropertyGroup.Version
   - ps: set VERSION v$version
   - ps: echo "Deploying $VERSION ..."
