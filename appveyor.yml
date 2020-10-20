@@ -57,7 +57,7 @@ deploy:
     description: 'Automatic deployment'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
-    artifact: %APPVEYOR_PROJECT_NAME%
+    artifact: $(SolutionName)
     draft: true
     prerelease: false
     on:
@@ -65,7 +65,7 @@ deploy:
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
     symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
-    artifact: %APPVEYOR_PROJECT_NAME%-Package-Debug
+    artifact: $(SolutionName)-Package-Debug
     username: dlebansais
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
@@ -73,7 +73,7 @@ deploy:
       branch: deployment
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
-    artifact: %APPVEYOR_PROJECT_NAME%-Package-Release
+    artifact: $(SolutionName)-Package-Release
     skip_symbols: true
     username: dlebansais
     api_key:
