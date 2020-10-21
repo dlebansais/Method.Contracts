@@ -53,7 +53,7 @@ artifacts:
 
 deploy:
   - provider: GitHub
-    release: $env:VERSION
+    release: $(VERSION)
     description: 'Automatic deployment'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
@@ -61,7 +61,7 @@ deploy:
     draft: true
     prerelease: false
     on:
-      branch: deployment
+      branch: master
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
     symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
