@@ -63,7 +63,7 @@ deploy:
     draft: true
     prerelease: false
     on:
-      branch: master
+      branch: deployment
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
     symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
