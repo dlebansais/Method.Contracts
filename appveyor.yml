@@ -36,8 +36,10 @@ after_build:
   - ps: |-
         $xml = [xml](Get-Content .\$env:APPVEYOR_PROJECT_NAME\$env:APPVEYOR_PROJECT_NAME.csproj)
   - ps: $version = $xml.Project.PropertyGroup.Version
-  - ps: $env:VERSION=v$version
-  - echo "Version is %VERSION%"
+  - ps: set version_tag v$version
+  - ps: $env:VERSION_TAG=$version_tag
+  - echo "Version is %VERSION_TAG%"
+
 
 test: off
 
@@ -53,7 +55,7 @@ artifacts:
 
 deploy:
   - provider: GitHub
-    release: $(VERSION)
+    release: $(VERSION_TAG)
     description: 'Automatic deployment'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
