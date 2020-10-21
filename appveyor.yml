@@ -38,8 +38,8 @@ after_build:
   - ps: $version = $xml.Project.PropertyGroup.Version
   - ps: set VERSION v$version
   - ps: echo "Version is $VERSION"
-  - echo "Version is $env:VERSION"
-  - set APPVERYOR_PROJECT_VERSION=$env:VERSION
+  - ps: $env:APPVERYOR_PROJECT_VERSION=$VERSION
+  - echo "Version is %APPVERYOR_PROJECT_VERSION% $(APPVERYOR_PROJECT_VERSION)"
 
 test: off
 
