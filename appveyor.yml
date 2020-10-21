@@ -38,6 +38,8 @@ after_build:
   - ps: $version = $xml.Project.PropertyGroup.Version
   - ps: set VERSION v$version
   - ps: echo "Version is $VERSION"
+  - echo "Version is $env:VERSION"
+  - set APPVERYOR_PROJECT_VERSION=$env:VERSION
 
 test: off
 
@@ -53,7 +55,7 @@ artifacts:
 
 deploy:
   - provider: GitHub
-    release: $(VERSION)
+    release: $(APPVERYOR_PROJECT_VERSION)
     description: 'Automatic deployment'
     auth_token:
       secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
