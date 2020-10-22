@@ -31,8 +31,10 @@ after_build:
   - ps: $firstline = ($folder -split '\r\n')[0]                                 # Get rid of carriage-return
   - ps: $fullpath = ".\packages\$firstline\lib\net48\Packager.exe"              # Build full path
   - ps: '& $fullpath --debug'                                                   # Execute the packager: the output is nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
+  - ls nuget-debug
   - nuget pack nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
   - ps: '& $fullpath'
+  - ls nuget
   - nuget pack nuget\%APPVEYOR_PROJECT_NAME%.nuspec
   - dotnet pack --configuration Release /p:Platform=x64 %APPVEYOR_PROJECT_NAME%/%APPVEYOR_PROJECT_NAME%.csproj
   - ps: |-
