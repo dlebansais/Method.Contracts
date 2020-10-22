@@ -25,7 +25,7 @@ deploy:
     draft: true
     prerelease: false
     on:
-      branch: deployment
+      branch: master
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
     symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
@@ -34,7 +34,7 @@ deploy:
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
     on:
-      branch: deployment
+      branch: master
   - provider: NuGet
     server: https://nuget.pkg.github.com/dlebansais/index.json
     artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
@@ -43,4 +43,4 @@ deploy:
     api_key:
       secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
     on:
-      branch: deployment
+      branch: master
