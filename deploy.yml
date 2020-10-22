@@ -1,0 +1,46 @@
+environment:
+  api_token:
+    secure: NGRAaKNVWOXIcptIIOzVn4k/oZE3WntKBO9tEZcN/Go=
+  deploy_project: contracts
+  deploy_version: ''            # download artifacts from latest build if no version specified
+  deploy_artifact: ''           # download all artifacts if empty
+
+build: off
+test: off
+
+branches:
+  only:
+    - none
+
+before_deploy:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/deploy.ps1'))
+
+deploy:
+  - provider: GitHub
+    release: $(VERSION_TAG)
+    description: 'Automatic deployment'
+    auth_token:
+      secure: dUpQSnUT5/m88z1BqHNnRjaxxZzz09CmyqFJr/cAyWjqKeLgnKunlIZlEKAXlNIm
+    artifact: $(APPVEYOR_PROJECT_NAME)
+    draft: true
+    prerelease: false
+    on:
+      branch: deployment
+  - provider: NuGet
+    server: https://nuget.pkg.github.com/dlebansais/index.json
+    symbol_server: https://nuget.pkg.github.com/dlebansais/index.json
+    artifact: $(APPVEYOR_PROJECT_NAME)-Package-Debug
+    username: dlebansais
+    api_key:
+      secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
+    on:
+      branch: deployment
+  - provider: NuGet
+    server: https://nuget.pkg.github.com/dlebansais/index.json
+    artifact: $(APPVEYOR_PROJECT_NAME)-Package-Release
+    skip_symbols: true
+    username: dlebansais
+    api_key:
+      secure: GOksqNi8I7Vs6dcsfosJvSa9vMaZH3zLQJjnx+ruJy6ZeLF075mifj4MdRI34E8W
+    on:
+      branch: deployment
