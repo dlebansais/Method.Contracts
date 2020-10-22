@@ -6,14 +6,14 @@
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <Authors>David Le Bansais</Authors>
     <Company />
     <Product />
     <Description>A set of tools to enforce contracts in methods</Description>
     <Copyright>Copyright © 2019 David Le Bansais</Copyright>
-    <AssemblyVersion>1.0.7.9</AssemblyVersion>
-    <FileVersion>1.0.7.9</FileVersion>
+    <AssemblyVersion>1.0.8.9</AssemblyVersion>
+    <FileVersion>1.0.8.9</FileVersion>
     <RepositoryUrl>https://github.com/dlebansais/Contracts</RepositoryUrl>
   </PropertyGroup>
 
