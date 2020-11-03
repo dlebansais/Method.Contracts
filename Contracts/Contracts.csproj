@@ -12,8 +12,8 @@
     <Product />
     <Description>A set of tools to enforce contracts in methods</Description>
     <Copyright>Copyright © 2019 David Le Bansais</Copyright>
-    <AssemblyVersion>1.0.9.11</AssemblyVersion>
-    <FileVersion>1.0.9.11</FileVersion>
+    <AssemblyVersion>1.0.9.12</AssemblyVersion>
+    <FileVersion>1.0.9.12</FileVersion>
     <RepositoryUrl>https://github.com/dlebansais/Contracts</RepositoryUrl>
   </PropertyGroup>
 

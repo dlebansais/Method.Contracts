@@ -103,16 +103,3 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 
 + The null forgiving operator is easily missed.
 + This check explicitely means you're declaring a code contract about your output.
-
-### Contract.DisposeOfUndefined
-
-If you use `Contract.Unused(out ...)` you may get [warning CA2000](https://docs.microsoft.com/en-us/visualstudio/code-quality/ca2000): *Use recommended dispose pattern to ensure that object created by 'out ...' is disposed on all paths*.
-
-Rather than turn the warning off, you can instead use `DisposeOfUndefined` to explicitely dispose of the object.
-
-````csharp
-if (!TryParseFoo(string text, out IDisposable parsedFoo))
-{
-	Contract.DisposeOfUndefined(parsedFoo);
-}
-````

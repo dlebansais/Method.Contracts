@@ -35,14 +35,5 @@
         {
             result = null !;
         }
-
-        /// <summary>
-        /// Disposes of any value that was last assigned by <see cref="Unused{T}(out T)"/>.
-        /// </summary>
-        /// <param name="value">The value to dispose of.</param>
-        public static void DisposeOfUndefined(IDisposable value)
-        {
-            value?.Dispose();
-        }
     }
 }
