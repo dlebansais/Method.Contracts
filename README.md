@@ -106,13 +106,13 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 
 ### Contract.DisposeOfUndefined
 
-If you use `Contract.Unused(out ...)` you may get [warning CA1062](https://docs.microsoft.com/en-us/visualstudio/code-quality/ca2000): *Use recommended dispose pattern to ensure that object created by 'out ...' is disposed on all paths*.
+If you use `Contract.Unused(out ...)` you may get [warning CA2000](https://docs.microsoft.com/en-us/visualstudio/code-quality/ca2000): *Use recommended dispose pattern to ensure that object created by 'out ...' is disposed on all paths*.
 
-Rather than turning the warning off, you can instead use `DisposeOfUndefined` to explicitely dispose of the object.
+Rather than turn the warning off, you can instead use `DisposeOfUndefined` to explicitely dispose of the object.
 
 ````csharp
-	if (!TryParseFoo(string text, out IDisposable parsedFoo))
-	{
-		Contract.DisposeOfUndefined(parsedFoo);
-	}
+if (!TryParseFoo(string text, out IDisposable parsedFoo))
+{
+	Contract.DisposeOfUndefined(parsedFoo);
+}
 ````
