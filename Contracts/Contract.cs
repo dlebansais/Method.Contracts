@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Provide a value for variables that should be uninitialized.
+        /// Provides a value for variables that should be uninitialized.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="result">The unused value.</param>
@@ -34,6 +34,15 @@
             where T : class
         {
             result = null !;
+        }
+
+        /// <summary>
+        /// Disposes of any value that was last assigned by <see cref="Unused{T}(out T)"/>.
+        /// </summary>
+        /// <param name="value">The value to dispose of.</param>
+        public static void DisposeOfUndefined(IDisposable value)
+        {
+            value?.Dispose();
         }
     }
 }

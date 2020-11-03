@@ -9,7 +9,9 @@ This assembly applies to projects using **C# 8 or higher** and with **Nullable**
 
 Add the assembly from the latest release as a dependency of your project. The `Contracts` namespace then becomes available.
 
-    using Contracts;
+````csharp
+using Contracts;
+````
     
 ### Contract.RequireNotNull
 
@@ -17,35 +19,41 @@ This static method can be used to check parameters and remove [warning CA1062](h
 
 Consider the following code:
 
-    public bool TryParseFoo(string text, out Foo parsedFoo)
+````csharp
+public bool TryParseFoo(string text, out Foo parsedFoo)
+{
+    if (text.Length > 0)
     {
-        if (text.Length > 0)
-        {
-		// ...
-        }
+	// ...
+    }
+````
 
 The line `if (text.Length > 0)` generates warning CA1062: *Validate arguments of public methods*. The traditional way of removing this warning is to check for the `null` value, as follow.
 
-    public bool TryParseFoo(string text, out Foo parsedFoo)
-    {
-        if (text == null)
-            throw new ArgumentNullException(nameof(text));
+````csharp
+public bool TryParseFoo(string text, out Foo parsedFoo)
+{
+    if (text == null)
+        throw new ArgumentNullException(nameof(text));
 
-        if (text.Length > 0)
-        {
-		// ...
-        }
+    if (text.Length > 0)
+    {
+	// ...
+    }
+````
 
 You can replace this code with `RequireNotNull` instead:
 
-    public bool TryParseFoo(string text, out Foo parsedFoo)
-    {
-        Contract.RequireNotNull(text, out string Text);
+````csharp
+public bool TryParseFoo(string text, out Foo parsedFoo)
+{
+    Contract.RequireNotNull(text, out string Text);
 
-        if (Text.Length > 0)
-        {
-		// ...
-        }
+    if (Text.Length > 0)
+    {
+	// ...
+    }
+````
 
 Note how the new code uses `Text` with an upper case T and not the parameter anymore.
 
@@ -63,29 +71,48 @@ The purpose of this method is mostly to annotate your code to specify that a var
 
 Consider the following code:
 
-    public bool TryParseFoo(string text, out Foo parsedFoo)
+````csharp
+public bool TryParseFoo(string text, out Foo parsedFoo)
+{
+    if (text.Length > 0)
     {
-        if (text.Length > 0)
-        {
-            // ... Obtain parsedFoo
-            return true;
-        }
-
-        parsedFoo = null;
-        return false;
+        // ... Obtain parsedFoo
+        return true;
     }
+
+    parsedFoo = null;
+    return false;
+}
+````
 
 The line `parsedFoo = null;` generates warning CS8625. The traditional way of removing this warning is then to add the `!` null forgiving operator, as follow:
 
-    parsedFoo = null!;
-    return false;
+````csharp
+parsedFoo = null!;
+return false;
+````
 
 You can replace this code with `Unused` instead:
 
-    Contract.Unused(out parsedFoo);
-    return false;
+````csharp
+Contract.Unused(out parsedFoo);
+return false;
+````
 
 By using `Unused` you can slightly improve your code, at least from a point of view:
 
 + The null forgiving operator is easily missed.
 + This check explicitely means you're declaring a code contract about your output.
+
+### Contract.DisposeOfUndefined
+
+If you use `Contract.Unused(out ...)` you may get *warning CA2000: Use recommended dispose pattern to ensure that object created by 'out ...' is disposed on all paths*.
+
+Rather than turning the warning off, you can instead use `DisposeOfUndefined` to explicitely dispose of the object.
+
+````csharp
+	if (!TryParseFoo(string text, out IDisposable parsedFoo))
+	{
+		Contract.DisposeOfUndefined(parsedFoo);
+	}
+````
