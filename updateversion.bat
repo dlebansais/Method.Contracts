@@ -1,5 +1,3 @@
-dir
-type .\obj\project.assets.json
 if not exist "%~1..\Version Tools\VersionBuilder.exe" goto error
 
 "%~1..\Version Tools\VersionBuilder.exe" %2 -v
