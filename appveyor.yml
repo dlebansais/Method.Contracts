@@ -31,7 +31,7 @@ before_build:
     printf "</Project>\n" >> build_all.xml
 
 build:
-  project: build_all.xml
+  project: %APPVEYOR_PROJECT_NAME%.sln
 
 after_build:
   - nuget install Packager -DependencyVersion Highest -OutputDirectory packages # Install Packager
