@@ -14,6 +14,7 @@
         /// <typeparam name="T">The type of <paramref name="obj"/> and <paramref name="result"/>.</typeparam>
         /// <param name="obj">The object instance to check.</param>
         /// <param name="result">The non-null alias upon return.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="obj"/> is null.</exception>
         public static void RequireNotNull<T>(object? obj, out T result)
             where T : class
         {
