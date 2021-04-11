@@ -15,6 +15,9 @@
     <AssemblyVersion>1.0.12.13</AssemblyVersion>
     <FileVersion>1.0.12.13</FileVersion>
     <RepositoryUrl>https://github.com/dlebansais/Contracts</RepositoryUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RootNamespace>Contracts</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
