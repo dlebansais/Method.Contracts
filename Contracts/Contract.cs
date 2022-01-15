@@ -18,9 +18,9 @@ public static class Contract
     public static void RequireNotNull<T>(object? obj, out T result)
         where T : class
     {
-        Debug.Assert(obj != null, "Invalid null reference");
+        Debug.Assert(obj is not null, "Invalid null reference");
 
-        if (obj == null)
+        if (obj is null)
             throw new ArgumentNullException(nameof(obj));
 
         result = (T)obj;
@@ -34,6 +34,20 @@ public static class Contract
     public static void Unused<T>(out T result)
         where T : class
     {
-        result = null!;
+        result = default!;
+    }
+
+    /// <summary>
+    /// Returns the provided value after checking that it's not null.
+    /// </summary>
+    /// <typeparam name="T">The value type.</typeparam>
+    /// <param name="value">The value that should not be null.</param>
+    /// <returns>The provided value.</returns>
+    public static T NullSupressed<T>(T? value)
+        where T : class
+    {
+        Debug.Assert(value != null);
+
+        return value!;
     }
 }
