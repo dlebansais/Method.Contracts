@@ -46,7 +46,7 @@ public static class Contract
     public static T NullSupressed<T>(T? value)
         where T : class
     {
-        Debug.Assert(value != null);
+        Debug.Assert(value is not null);
 
         return value!;
     }
