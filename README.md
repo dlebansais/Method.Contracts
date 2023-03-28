@@ -1,4 +1,4 @@
-# Contracts
+# Method.Contracts
 A set of tools to enforce contracts in methods.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/i7n5qgflgtbvaj1n?svg=true)](https://ci.appveyor.com/project/dlebansais/contracts) [![CodeFactor](https://www.codefactor.io/repository/github/dlebansais/contracts/badge)](https://www.codefactor.io/repository/github/dlebansais/contracts)
