@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net48;net5.0-windows7.0;net6.0-windows7.0</TargetFrameworks>
-    <LangVersion>10.0</LangVersion>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net48;net5.0-windows7.0;net6.0-windows7.0;net7.0-windows7.0</TargetFrameworks>
+    <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -12,12 +12,17 @@
     <Product />
     <Description>A set of tools to enforce contracts in methods</Description>
     <Copyright>Copyright © 2022 David Le Bansais</Copyright>
-    <AssemblyVersion>1.1.0.16</AssemblyVersion>
-    <FileVersion>1.1.0.16</FileVersion>
+    <AssemblyVersion>1.1.0.17</AssemblyVersion>
+    <FileVersion>1.1.0.17</FileVersion>
     <RepositoryUrl>https://github.com/dlebansais/Contracts</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <RootNamespace>Contracts</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>SA0001</NoWarn>
+    <NoWarn>NETSDK1138</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,11 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.376">
+    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
