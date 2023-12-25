@@ -8,7 +8,23 @@ using NUnit.Framework;
 public class TestRequire
 {
     [Test]
-    public void Test()
+    public void TestSuccess()
+    {
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        Contract.Require(true);
+
+        Assert.That(Listener.IsAssertTriggered, Is.False);
+#else
+        Assert.DoesNotThrow(() => Contract.Require(true));
+#endif
+    }
+
+    [Test]
+    public void TestFailure()
     {
 #if DEBUG
         DebugTraceListener Listener = new();
