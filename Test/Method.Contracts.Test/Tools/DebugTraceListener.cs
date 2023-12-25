@@ -17,10 +17,15 @@ public class DebugTraceListener : TraceListener
     public override void Fail(string? message)
     {
         IsAssertTriggered = true;
+
+        Write(message);
     }
 
     public override void Fail(string? message, string? detailMessage)
     {
         IsAssertTriggered = true;
+
+        WriteLine(message);
+        WriteLine(detailMessage);
     }
 }
