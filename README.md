@@ -61,14 +61,14 @@ By using `RequireNotNull` you can slightly improve your code, at least from a po
 
 + You can make the check take only one line and keep warnings about single-line statements active (see for instance [warning SA1502](https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1502.md)).
 + You can make this contract easy to replace everywhere with search/replace once the corresponding feature is added to .NET, if it ever happen.
-+ This check explicitely means you're declaring a code contract about your parameter.
++ This check explicitly means you're declaring a code contract about your parameter.
 + The debug version of your code will generate a `Debug.Assert` failure, the release version will throw `ArgumentNullException`. This means that even if during debugging and tests you couldn't reproduce a case where the inspected value is null, in production code there will still be an exception thrown.
 
 The drawback of using `RequireNotNull` is, of course, that you introduce a new variable.
 
 ### Contract.Require
 
-This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check arguments. This check explicitely means you're declaring a code contract about your parameter.
+This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check arguments. This check explicitly means you're declaring a code contract about your parameter.
 
 For example, consider this code :
 
@@ -85,7 +85,7 @@ If `value` is negative, the debug version will trigger a `Debug.Assert` failure,
 
 ### Contract.Ensure
 
-This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check the value returned by a method and the object state. This check explicitely means you're declaring a code contract about the method exit state.
+This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check the value returned by a method and the object state. This check explicitly means you're declaring a code contract about the method exit state.
 
 For example, consider this code :
 
@@ -140,7 +140,7 @@ return false;
 By using `Unused` you can slightly improve your code, at least from a point of view:
 
 + The null forgiving operator is easily missed.
-+ This check explicitely means you're declaring a code contract about your output.
++ This check explicitly means you're declaring a code contract about your output.
 
 ### Contract.NullSuppressed
 
