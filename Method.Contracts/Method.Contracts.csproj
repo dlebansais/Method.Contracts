@@ -13,7 +13,7 @@
         <Product />
         <Description>A set of tools to enforce contracts in methods</Description>
         <Copyright>Copyright © 2023 David Le Bansais</Copyright>
-        <AssemblyVersion>1.1.2.23</AssemblyVersion>
+        <AssemblyVersion>1.1.2.25</AssemblyVersion>
         <FileVersion>1.1.2.23</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/Method.Contracts</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
@@ -30,11 +30,6 @@
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <NoWarn>SA0001</NoWarn>
-        <NoWarn>NETSDK1138</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(APPVEYOR)' == 'True'">
