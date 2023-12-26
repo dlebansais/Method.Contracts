@@ -33,7 +33,7 @@ The line `if (text.Length > 0)` generates warning CA1062: *Validate arguments of
 ````csharp
 public bool TryParseFoo(string text, out Foo parsedFoo)
 {
-    if (text == null)
+    if (text is null)
         throw new ArgumentNullException(nameof(text));
 
     if (text.Length > 0)
@@ -62,8 +62,46 @@ By using `RequireNotNull` you can slightly improve your code, at least from a po
 + You can make the check take only one line and keep warnings about single-line statements active (see for instance [warning SA1502](https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA1502.md)).
 + You can make this contract easy to replace everywhere with search/replace once the corresponding feature is added to .NET, if it ever happen.
 + This check explicitely means you're declaring a code contract about your parameter.
++ The debug version of your code will generate a `Debug.Assert` failure, the release version will throw `ArgumentNullException`. This means that even if during debugging and tests you couldn't reproduce a case where the inspected value is null, in production code there will still be an exception thrown.
 
 The drawback of using `RequireNotNull` is, of course, that you introduce a new variable.
+
+### Contract.Require
+
+This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check arguments. This check explicitely means you're declaring a code contract about your parameter.
+
+For example, consider this code :
+
+````csharp
+public double SquareRoot(double value)
+{
+    Contract.Require(value >= 0);
+
+    // ...
+}
+````
+
+If `value` is negative, the debug version will trigger a `Debug.Assert` failure, and the release version will throw `ArgumentException`, both will a meaningful message that includes the "value >= 0" text.
+
+### Contract.Ensure
+
+This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check the value returned by a method and the object state. This check explicitely means you're declaring a code contract about the method exit state.
+
+For example, consider this code :
+
+````csharp
+public double SquareRoot(double value)
+{
+    double Result;
+
+    // ...
+
+    Contract.Ensure(Result >= 0);
+    return Result;
+}
+````
+
+If `Result` is negative, the debug version will trigger a `Debug.Assert` failure, and the release version will throw `InvalidOperationException`, both will a meaningful message that includes the "Result >= 0" text.
 
 ### Contract.Unused
 
@@ -103,3 +141,28 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 
 + The null forgiving operator is easily missed.
 + This check explicitely means you're declaring a code contract about your output.
+
+### Contract.NullSuppressed
+
+.NET analyzers can detect if the code checks whether some reference is null or not, and analyze the rest of the code accordingly.
+
+For instance :
+
+````csharp
+public bool TryParseFoo(string text, out Foo parsedFoo)
+{
+    if (text is null)
+        throw new ArgumentNullException(nameof(text));
+
+    // Here, the analyzer knows that text is not null.
+````
+
+In .NET Framework, `Debug.Assert(text is not null)` does the opposite of what is expected: the analyzer sees that `text` is compared to `null`, but does not conclude that it's non-null, and in the code that follows assumes text is of type `string?`, not `string` as declared, and therefore can be null.
+
+To avoid using `#if` directives to compile differently for .NET Framework and .NET 6 or greater, use the following call:
+
+````csharp
+    string Text = Contract.NullSuppressed(text);
+````
+
+`text` will then be tested, and if null will trigger `Debug.Assert` in the debug version, or throw `InvalidOperationException` in the release version.
