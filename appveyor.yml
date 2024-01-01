@@ -20,7 +20,7 @@ environment:
   package_token:
     secure: PTQKv7f2BGNT8I1SUx4ErllBziAj7gs+VDcm2h3c8mJ5jtRuGognMEIPm2hPn1NI
   opencover_version: 4.7.1221
-  codecov_version: 1.12.2
+  codecov_uploader_version: 0.7.1
   csharp-format_version: 0.0.9
 
 matrix:
@@ -58,7 +58,7 @@ after_build:
 
 before_test:
   - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
-  - nuget install CodecovUploader -Version %codecov_version% -OutputDirectory packages
+  - nuget install CodecovUploader -Version %codecov_uploader_version% -OutputDirectory packages
   - |-
     printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net8.0-windows7.0/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" > runtests.bat
     printf "dotnet test ./Test/%APPVEYOR_PROJECT_NAME%.Test/bin/x64/%CONFIGURATION%/net481/%APPVEYOR_PROJECT_NAME%.Test.dll -l console;verbosity=detailed\n" >> runtests.bat
@@ -73,7 +73,7 @@ test_script:
 
 after_test:
   - ps: Get-Content Coverage-*.xml -Head 3
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' .\packages\CodecovUploader.%codecov_uploader_version%\Tools\codecov.exe -f "Coverage-%APPVEYOR_PROJECT_NAME%.xml"
 
 artifacts:
   - path: $(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
