@@ -20,7 +20,7 @@ environment:
   package_token:
     secure: PTQKv7f2BGNT8I1SUx4ErllBziAj7gs+VDcm2h3c8mJ5jtRuGognMEIPm2hPn1NI
   opencover_version: 4.7.1221
-  codecov_version: 0.2.4
+  codecov_version: 1.12.2
   csharp-format_version: 0.0.9
 
 matrix:

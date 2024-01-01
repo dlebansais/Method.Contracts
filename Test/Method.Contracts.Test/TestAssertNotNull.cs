@@ -5,7 +5,7 @@ using System.Diagnostics;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestNullSuppressed
+public class TestAssertNotNull
 {
     [Test]
     public void TestSuccess()
@@ -16,13 +16,13 @@ public class TestNullSuppressed
         Trace.Listeners.Add(Listener);
 
         const string? NotNullString = "Not null";
-        string Result = Contract.NullSupressed(NotNullString);
+        string Result = Contract.AssertNotNull(NotNullString);
 
         Assert.That(Listener.IsAssertTriggered, Is.False);
         Assert.That(Result, Is.EqualTo(NotNullString));
 #else
         const string? NotNullString = "Not null";
-        string Result = Contract.NullSupressed(NotNullString);
+        string Result = Contract.AssertNotNull(NotNullString);
 
         Assert.That(Result, Is.EqualTo(NotNullString));
 #endif
@@ -37,12 +37,12 @@ public class TestNullSuppressed
         Trace.Listeners.Add(Listener);
 
         const string? NullString = null;
-        _ = Contract.NullSupressed(NullString);
+        _ = Contract.AssertNotNull(NullString);
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
         const string? NullString = null;
-        Assert.Throws<InvalidOperationException>(() => _ = Contract.NullSupressed(NullString));
+        Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNotNull(NullString));
 #endif
     }
 }

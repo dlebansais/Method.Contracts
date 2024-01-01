@@ -22,24 +22,20 @@ public static class Contract
     {
 #if DEBUG
         Debug.Assert(obj is not null, "Invalid null reference");
-
 #if NET481_OR_GREATER
         result = (T)obj!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
 #else
         result = (T)obj;
 #endif
-
-#else
-
+#else // #if DEBUG
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(obj);
 #else
         if (obj is null)
             throw new ArgumentNullException(nameof(obj));
 #endif
-
         result = (T)obj;
-#endif
+#endif // #if DEBUG #else
     }
 
     /// <summary>
@@ -65,10 +61,10 @@ public static class Contract
     public static void Ensure(bool expression, [CallerArgumentExpression(nameof(expression))] string? text = default)
     {
 #if DEBUG
-        Debug.Assert(expression, $"Guarantee not enforced: {text}");
+        Debug.Assert(expression, $"Postcondition failed: {text}");
 #else
         if (!expression)
-            throw new InvalidOperationException($"Guarantee not enforced: {text}");
+            throw new BrokenContractException($"Postcondition failed: {text}");
 #endif
     }
 
@@ -90,16 +86,102 @@ public static class Contract
     /// <param name="value">The value that should not be null.</param>
     /// <param name="text">The text of the value for diagnostic purpose.</param>
     /// <returns>The provided value.</returns>
-    public static T NullSupressed<T>(T? value, [CallerArgumentExpression(nameof(value))] string? text = default)
+    public static T AssertNotNull<T>(T? value, [CallerArgumentExpression(nameof(value))] string? text = default)
         where T : class
     {
 #if DEBUG
-        Debug.Assert(value is not null, "Unexpected null reference");
+        Debug.Assert(value is not null, $"Unexpected null value: {text}");
 #else
         if (value is null)
-            throw new InvalidOperationException($"Value is null: {text}");
+            throw new BrokenContractException($"Unexpected null value: {text}");
 #endif
 
         return value!;
+    }
+
+    /// <summary>
+    /// Executes an action, checking that no exception was thrown.
+    /// </summary>
+    /// <param name="action">The action that should not throw exceptions to call.</param>
+    /// <param name="text">The text of the action call for diagnostic purpose.</param>
+    public static void AssertNoThrow(Action action, [CallerArgumentExpression(nameof(action))] string? text = default)
+    {
+        Action Action;
+
+#if DEBUG
+        Debug.Assert(action is not null, "Invalid null reference");
+#if NET481_OR_GREATER
+        Action = action!; // .NET Framework does not detect that Debug.Assert(action is not null...) means action is not null.
+#else
+        Action = action;
+#endif
+#else // #if DEBUG
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(action);
+#else
+        if (action is null)
+            throw new ArgumentNullException(nameof(action));
+#endif
+        Action = action;
+#endif // #if DEBUG #else
+
+        try
+        {
+            Action();
+        }
+        catch (Exception exception)
+        {
+#if DEBUG
+            Debug.WriteLine(exception.StackTrace);
+            Debug.Fail($"Unexpected exception: {exception.Message}");
+#else
+            throw new BrokenContractException("Unexpected exception", exception);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Executes a function and return its result, checking that no exception was thrown.
+    /// </summary>
+    /// <typeparam name="T">The result type.</typeparam>
+    /// <param name="function">The function that should not throw exceptions to call.</param>
+    /// <param name="text">The text of the function call for diagnostic purpose.</param>
+    /// <returns>The value returned by <paramref name="function"/>.</returns>
+    public static T AssertNoThrow<T>(Func<T> function, [CallerArgumentExpression(nameof(function))] string? text = default)
+        where T : class
+    {
+        Func<T> Function;
+
+#if DEBUG
+        Debug.Assert(function is not null, "Invalid null reference");
+#if NET481_OR_GREATER
+        Function = function!; // .NET Framework does not detect that Debug.Assert(function is not null...) means function is not null.
+#else
+        Function = function;
+#endif
+#else // #if DEBUG
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(function);
+#else
+        if (function is null)
+            throw new ArgumentNullException(nameof(function));
+#endif
+        Function = function;
+#endif // #if DEBUG #else
+
+        try
+        {
+            return Function();
+        }
+        catch (Exception exception)
+        {
+#if DEBUG
+            Debug.WriteLine(exception.StackTrace);
+            Debug.Fail($"Unexpected exception: {exception.Message}");
+            return default!;
+#else
+            throw new BrokenContractException("Unexpected exception", exception);
+#endif
+        }
     }
 }

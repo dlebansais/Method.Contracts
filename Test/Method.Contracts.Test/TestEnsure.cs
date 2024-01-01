@@ -35,7 +35,7 @@ public class TestEnsure
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
-        Assert.Throws<InvalidOperationException>(() => Contract.Ensure(false));
+        Assert.Throws<BrokenContractException>(() => Contract.Ensure(false));
 #endif
     }
 }

@@ -101,7 +101,7 @@ public double SquareRoot(double value)
 }
 ````
 
-If `Result` is negative, the debug version will trigger a `Debug.Assert` failure, and the release version will throw `InvalidOperationException`, both will a meaningful message that includes the "Result >= 0" text.
+If `Result` is negative, the debug version will trigger a `Debug.Assert` failure, and the release version will throw `BrokenContractException`, both will a meaningful message that includes the "Result >= 0" text.
 
 ### Contract.Unused
 
@@ -142,7 +142,7 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 + The null forgiving operator is easily missed.
 + This check explicitly means you're declaring a code contract about your output.
 
-### Contract.NullSuppressed
+### Contract.AssertNotNull
 
 .NET analyzers can detect if the code checks whether some reference is null or not, and analyze the rest of the code accordingly.
 
@@ -162,7 +162,21 @@ In .NET Framework, `Debug.Assert(text is not null)` does the opposite of what is
 To avoid using `#if` directives to compile differently for .NET Framework and .NET 6 or greater, use the following call:
 
 ````csharp
-    string Text = Contract.NullSuppressed(text);
+    string Text = Contract.AssertNotNull(text);
 ````
 
-`text` will then be tested, and if null will trigger `Debug.Assert` in the debug version, or throw `InvalidOperationException` in the release version.
+`text` will then be tested, and if null will trigger `Debug.Assert` in the debug version, or throw `BrokenContractException` in the release version.
+
+### Contract.AssertNoThrow
+
+Methods may declare that they can throw exceptions in the documentation. The caller could either let any unexpected exception go through, or catch them and fallback to a more friendly approach such as returning a failure code.
+Yet, when no exception is throw in testable cases the exception handling code is never tested.
+`AssertNoThrow` offers another approach, which is to remove any exception thrown in some code, and to trigger `Debug.Assert` in the debug version, or throw `BrokenContractException` in the release version.
+
+For example:
+
+````csharp
+    string Text = Contract.AssertNoThrow(() => ReadStringFromSFile(filename));
+````
+
+In the case above, if the code has previously taken all necessary precautions to check that the file exists and has reading access (with appropriate error reporting to the user), and can prevent the file from being deleted or moved (maybe only temporarily), then performing the read operation is safe.
