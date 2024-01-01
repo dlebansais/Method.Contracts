@@ -28,7 +28,7 @@ public class TestAssertNoThrow
     }
 
     [Test]
-    public void TesttActionFailure()
+    public void TestActionFailure()
     {
 #if DEBUG
         DebugTraceListener Listener = new();
@@ -46,6 +46,24 @@ public class TestAssertNoThrow
     private static void Throwing()
     {
         throw new InvalidOperationException();
+    }
+
+    [Test]
+    public void TestInvalidAction()
+    {
+        const Action NullAction = null!;
+
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        Contract.AssertNoThrow(NullAction);
+
+        Assert.That(Listener.IsAssertTriggered, Is.True);
+#else
+        Assert.Throws<ArgumentNullException>(() => Contract.AssertNoThrow(NullAction));
+#endif
     }
 
     [Test]
@@ -95,5 +113,23 @@ public class TestAssertNoThrow
     private static string Throwing(string value)
     {
         throw new ArgumentNullException(nameof(value));
+    }
+
+    [Test]
+    public void TestInvalidFunction()
+    {
+        const Func<string> NullFunction = null!;
+
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        _ = Contract.AssertNoThrow(NullFunction);
+
+        Assert.That(Listener.IsAssertTriggered, Is.True);
+#else
+        Assert.Throws<ArgumentNullException>(() => _ = Contract.AssertNoThrow(NullFunction));
+#endif
     }
 }
