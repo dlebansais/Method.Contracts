@@ -170,13 +170,15 @@ To avoid using `#if` directives to compile differently for .NET Framework and .N
 ### Contract.AssertNoThrow
 
 Methods may declare that they can throw exceptions in the documentation. The caller could either let any unexpected exception go through, or catch them and fallback to a more friendly approach such as returning a failure code.
-Yet, when no exception is throw in testable cases the exception handling code is never tested.
+Yet, when no exception is thrown in testable cases the exception handling code is never tested.
 `AssertNoThrow` offers another approach, which is to remove any exception thrown in some code, and to trigger `Debug.Assert` in the debug version, or throw `BrokenContractException` in the release version.
 
 For example:
 
 ````csharp
-    string Text = Contract.AssertNoThrow(() => ReadStringFromSFile(filename));
+    string Text = Contract.AssertNoThrow(
+        () => ReadStringFromFile(filename)
+    );
 ````
 
 In the case above, if the code has previously taken all necessary precautions to check that the file exists and has reading access (with appropriate error reporting to the user), and can prevent the file from being deleted or moved (maybe only temporarily), then performing the read operation is safe.
