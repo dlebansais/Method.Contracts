@@ -106,24 +106,7 @@ public static class Contract
     /// <param name="text">The text of the action call for diagnostic purpose.</param>
     public static void AssertNoThrow(Action action, [CallerArgumentExpression(nameof(action))] string? text = default)
     {
-        Action Action;
-
-#if DEBUG
-        Debug.Assert(action is not null, "Invalid null reference");
-#if NET481_OR_GREATER
-        Action = action!; // .NET Framework does not detect that Debug.Assert(action is not null...) means action is not null.
-#else
-        Action = action;
-#endif
-#else // #if DEBUG
-#if NET6_0_OR_GREATER
-        ArgumentNullException.ThrowIfNull(action);
-#else
-        if (action is null)
-            throw new ArgumentNullException(nameof(action));
-#endif
-        Action = action;
-#endif // #if DEBUG #else
+        RequireNotNull(action, out Action Action);
 
         try
         {
@@ -150,24 +133,7 @@ public static class Contract
     public static T AssertNoThrow<T>(Func<T> function, [CallerArgumentExpression(nameof(function))] string? text = default)
         where T : class
     {
-        Func<T> Function;
-
-#if DEBUG
-        Debug.Assert(function is not null, "Invalid null reference");
-#if NET481_OR_GREATER
-        Function = function!; // .NET Framework does not detect that Debug.Assert(function is not null...) means function is not null.
-#else
-        Function = function;
-#endif
-#else // #if DEBUG
-#if NET6_0_OR_GREATER
-        ArgumentNullException.ThrowIfNull(function);
-#else
-        if (function is null)
-            throw new ArgumentNullException(nameof(function));
-#endif
-        Function = function;
-#endif // #if DEBUG #else
+        RequireNotNull(function, out Func<T> Function);
 
         try
         {
