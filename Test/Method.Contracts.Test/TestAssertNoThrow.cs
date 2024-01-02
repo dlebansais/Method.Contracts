@@ -15,7 +15,7 @@ public class TestAssertNoThrow
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Contract.AssertNoThrow(NotThrowing);
+        Contract.AssertNoThrow(() => NotThrowing());
 
         Assert.That(Listener.IsAssertTriggered, Is.False);
 #else
@@ -35,7 +35,7 @@ public class TestAssertNoThrow
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Contract.AssertNoThrow(Throwing);
+        Contract.AssertNoThrow(() => Throwing());
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
