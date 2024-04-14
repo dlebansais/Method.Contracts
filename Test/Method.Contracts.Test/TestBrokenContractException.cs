@@ -15,7 +15,11 @@ public class TestBrokenContractException
         string SerializedException = JsonSerializer.Serialize(TestException);
         BrokenContractException? DeserializedException = JsonSerializer.Deserialize<BrokenContractException>(SerializedException);
 
-        Assert.That(DeserializedException, Is.EqualTo(TestException));
+        Assert.That(DeserializedException, Is.Not.Null);
+
+        string ReserializedException = JsonSerializer.Serialize(DeserializedException);
+
+        Assert.That(ReserializedException, Is.EqualTo(SerializedException));
     }
 
     [Test]
