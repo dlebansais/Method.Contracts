@@ -23,9 +23,8 @@ public class DebugTraceListener : TraceListener
 
     public override void Fail(string? message, string? detailMessage)
     {
-        IsAssertTriggered = true;
+        Fail(message);
 
-        WriteLine(message);
         WriteLine(detailMessage);
     }
 }

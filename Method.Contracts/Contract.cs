@@ -116,7 +116,7 @@ public static class Contract
         {
 #if DEBUG
             Debug.WriteLine(exception.StackTrace);
-            Debug.Fail($"Unexpected exception: {exception.Message}");
+            Debug.Fail("Unexpected exception", exception.Message);
 #else
             throw new BrokenContractException("Unexpected exception", exception);
 #endif
@@ -143,7 +143,7 @@ public static class Contract
         {
 #if DEBUG
             Debug.WriteLine(exception.StackTrace);
-            Debug.Fail($"Unexpected exception: {exception.Message}");
+            Debug.Fail("Unexpected exception", exception.Message);
             return default!;
 #else
             throw new BrokenContractException("Unexpected exception", exception);
