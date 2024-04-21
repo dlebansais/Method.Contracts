@@ -1,6 +1,7 @@
 ﻿namespace Contracts.Test;
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
 
@@ -43,6 +44,45 @@ public class TestRequireNotNull
 #else
         const string? NullString = null;
         Assert.Throws<ArgumentNullException>(() => Contract.RequireNotNull<string>(NullString, out _));
+#endif
+    }
+
+    [Test]
+    public void TestDisposableSuccess()
+    {
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        using DebugTraceListener TestListener = new();
+        DebugTraceListener Result = Contract.RequireNotNull(TestListener);
+
+        Assert.That(Listener.IsAssertTriggered, Is.False);
+        Assert.That(Result, Is.EqualTo(TestListener));
+#else
+        using DebugTraceListener TestListener = new();
+        DebugTraceListener Result = Contract.RequireNotNull(TestListener);
+
+        Assert.That(Result, Is.EqualTo(TestListener));
+#endif
+    }
+
+    [Test]
+    public void TestDisposableFailure()
+    {
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        const DebugTraceListener? TestListener = null;
+        _ = Contract.RequireNotNull(TestListener);
+
+        Assert.That(Listener.IsAssertTriggered, Is.True);
+#else
+        const DebugTraceListener? TestListener = null;
+        Assert.Throws<ArgumentNullException>(() => _ = Contract.RequireNotNull(TestListener));
 #endif
     }
 }

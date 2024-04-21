@@ -66,6 +66,18 @@ By using `RequireNotNull` you can slightly improve your code, at least from a po
 
 The drawback of using `RequireNotNull` is, of course, that you introduce a new variable.
 
+#### Special version for ``IDisposable`` objects
+
+If the `out` value is a `IDisposable` object, the compiler generates [warning CA2000](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca2000): *Dispose objects before losing scope*.
+
+In this case, use the version of `RequireNotNull` that returns the non-null value:
+
+````csharp
+    Stream Stream = Contract.RequireNotNull(stream);
+````
+
+This call can be confused with `AssertNotNull` but there is no helping it.
+
 ### Contract.Require
 
 This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check arguments. This check explicitly means you're declaring a code contract about your parameter.
@@ -149,10 +161,8 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 For instance :
 
 ````csharp
-public bool TryParseFoo(string text, out Foo parsedFoo)
-{
     if (text is null)
-        throw new ArgumentNullException(nameof(text));
+        throw new MyUnexpectedNullException(nameof(text));
 
     // Here, the analyzer knows that text is not null.
 ````
@@ -182,3 +192,9 @@ For example:
 ````
 
 In the case above, if the code has previously taken all necessary precautions to check that the file exists and has reading access (with appropriate error reporting to the user), and can prevent the file from being deleted or moved (maybe only temporarily), then performing the read operation is safe.
+
+## When to use `RequireNotNull` vs `AssertNotNull`
+
+`Contract.RequireNotNull` is to be used for arguments (or object state when entering the method). In release mode it throws `ArgumentNullException`.
+
+`Contract.AssertNotNull` is to be used once the state has been validated and some action performed, to validate intermediate states. In release mode it throws `BrokenContractException`. If the null check is for the method exit state (like the returned value), use `Contract.Ensure`.

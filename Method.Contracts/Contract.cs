@@ -3,7 +3,6 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 /// <summary>
 /// A set of tools to enforce contracts in methods.
@@ -21,7 +20,7 @@ public static class Contract
         where T : class
     {
 #if DEBUG
-        Debug.Assert(obj is not null, "Invalid null reference");
+        Debug.Assert(obj is not null, "Invalid null argument");
 #if NET481_OR_GREATER
         result = (T)obj!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
 #else
@@ -35,6 +34,34 @@ public static class Contract
             throw new ArgumentNullException(nameof(obj));
 #endif
         result = (T)obj;
+#endif // #if DEBUG #else
+    }
+
+    /// <summary>
+    /// Checks that <paramref name="value"/> is not null, and provide an alias that is guaranteed to be non-null.
+    /// </summary>
+    /// <typeparam name="T">The type of <paramref name="value"/> and returned alias.</typeparam>
+    /// <param name="value">The value that should not be null.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+    /// <returns>The non-null alias.</returns>
+    public static T RequireNotNull<T>(T? value)
+        where T : class, IDisposable
+    {
+#if DEBUG
+        Debug.Assert(value is not null, "Invalid null argument");
+#if NET481_OR_GREATER
+        return value!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+#else
+        return value;
+#endif
+#else // #if DEBUG
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(value);
+#else
+        if (value is null)
+            throw new ArgumentNullException(nameof(value));
+#endif
+        return value;
 #endif // #if DEBUG #else
     }
 
