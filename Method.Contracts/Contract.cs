@@ -21,7 +21,7 @@ public static class Contract
     {
 #if DEBUG
         Debug.Assert(obj is not null, "Invalid null argument");
-#if NET481_OR_GREATER
+#if NET481_OR_GREATER || NETSTANDARD2_0
         result = (T)obj!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
 #else
         result = (T)obj;
@@ -49,7 +49,7 @@ public static class Contract
     {
 #if DEBUG
         Debug.Assert(value is not null, "Invalid null argument");
-#if NET481_OR_GREATER
+#if NET481_OR_GREATER || NETSTANDARD2_0
         return value!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
 #else
         return value;
