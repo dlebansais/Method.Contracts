@@ -11,14 +11,14 @@ public sealed class EnsureAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="EnsureAttribute"/> class.
     /// </summary>
-    /// <param name="guarantees">The guarantees.</param>
-    public EnsureAttribute(params string[] guarantees)
+    /// <param name="expressions">The guarantees.</param>
+    public EnsureAttribute(params string[] expressions)
     {
-        Guarantees = guarantees;
+        Expressions = expressions;
     }
 
     /// <summary>
     /// Gets the guarantees.
     /// </summary>
-    public string[] Guarantees { get; }
+    public string[] Expressions { get; }
 }

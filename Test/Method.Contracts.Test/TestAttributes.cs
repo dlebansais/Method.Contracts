@@ -1,24 +1,36 @@
 ﻿namespace Contracts.Test;
 
+using System.Linq;
 using NUnit.Framework;
 
 [TestFixture]
 public class TestAttributes
 {
     [Test]
-    public void TestSampleMethod()
+    public void TestAccessAttribute()
     {
-        SampleMethod(string.Empty);
+        var Access = new AccessAttribute("public");
+        Assert.That(Access.Specifiers.Count, Is.EqualTo(1));
     }
 
-    [Access("public")]
-    [RequireNotNull("text")]
-    [Require("text.Length >= 0")]
-    [Ensure("text.Length >= 0")]
-    public void SampleMethod(string text)
+    [Test]
+    public void TestRequireNotNullAttribute()
     {
-        SampleField++;
+        var RequireNotNull = new RequireNotNullAttribute("text");
+        Assert.That(RequireNotNull.ArgumentNames.Count, Is.EqualTo(1));
     }
 
-    public int SampleField { get; set; }
+    [Test]
+    public void TestRequireAttribute()
+    {
+        var Require = new RequireAttribute("true");
+        Assert.That(Require.Expressions.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void TestEnsureAttribute()
+    {
+        var Ensure = new EnsureAttribute("true");
+        Assert.That(Ensure.Expressions.Count, Is.EqualTo(1));
+    }
 }

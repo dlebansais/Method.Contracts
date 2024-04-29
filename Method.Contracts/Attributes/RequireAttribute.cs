@@ -11,14 +11,14 @@ public sealed class RequireAttribute : Attribute
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireAttribute"/> class.
     /// </summary>
-    /// <param name="requirements">The requirements.</param>
-    public RequireAttribute(params string[] requirements)
+    /// <param name="expressions">The requirements.</param>
+    public RequireAttribute(params string[] expressions)
     {
-        Requirements = requirements;
+        Expressions = expressions;
     }
 
     /// <summary>
     /// Gets the requirements.
     /// </summary>
-    public string[] Requirements { get; }
+    public string[] Expressions { get; }
 }
