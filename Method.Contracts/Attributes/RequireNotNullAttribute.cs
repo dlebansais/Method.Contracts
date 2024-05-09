@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Represents one or more arguments that must not be null.
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public sealed class RequireNotNullAttribute : Attribute
 {
     /// <summary>

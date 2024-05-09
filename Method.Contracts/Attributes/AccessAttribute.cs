@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Represents the generated method access specifiers attribute.
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public sealed class AccessAttribute : Attribute
 {
     /// <summary>

@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Represents one or more requirements.
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public sealed class RequireAttribute : Attribute
 {
     /// <summary>

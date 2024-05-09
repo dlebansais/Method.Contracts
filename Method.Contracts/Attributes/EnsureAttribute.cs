@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Represents one or more guarantees.
 /// </summary>
-[AttributeUsage(AttributeTargets.Method)]
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public sealed class EnsureAttribute : Attribute
 {
     /// <summary>
