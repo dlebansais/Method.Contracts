@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using NUnit.Framework;
 
 [TestFixture]
@@ -30,7 +31,7 @@ public class TestRequireNotNull
     }
 
     [Test]
-    public void TestFailure()
+    public void TestNullReferenceFailure()
     {
 #if DEBUG
         DebugTraceListener Listener = new();
@@ -44,6 +45,24 @@ public class TestRequireNotNull
 #else
         const string? NullString = null;
         Assert.Throws<ArgumentNullException>(() => Contract.RequireNotNull<string>(NullString, out _));
+#endif
+    }
+
+    [Test]
+    public void TestWrongTypeFailure()
+    {
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        const string TestString = "test";
+        Contract.RequireNotNull<Stream>(TestString, out _);
+
+        Assert.That(Listener.IsAssertTriggered, Is.True);
+#else
+        const string TestString = "test";
+        Assert.Throws<ArgumentException>(() => Contract.RequireNotNull<Stream>(TestString, out _));
 #endif
     }
 
