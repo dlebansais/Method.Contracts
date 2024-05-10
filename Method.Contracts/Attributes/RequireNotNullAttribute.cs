@@ -21,4 +21,14 @@ public sealed class RequireNotNullAttribute : Attribute
     /// Gets the argument names.
     /// </summary>
     public string[] ArgumentNames { get; }
+
+    /// <summary>
+    /// Gets or sets the alias type.
+    /// </summary>
+    public string AliasType { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the alias name.
+    /// </summary>
+    public string AliasName { get; set; } = string.Empty;
 }

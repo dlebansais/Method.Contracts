@@ -18,6 +18,26 @@ public class TestAttributes
     {
         var RequireNotNull = new RequireNotNullAttribute("text");
         Assert.That(RequireNotNull.ArgumentNames.Count, Is.EqualTo(1));
+        Assert.That(RequireNotNull.AliasType, Is.EqualTo(string.Empty));
+        Assert.That(RequireNotNull.AliasName, Is.EqualTo(string.Empty));
+
+        const string AliasType = "AliasType";
+        const string AliasName = "AliasName";
+
+        var RequireNotNullWithAliasType = new RequireNotNullAttribute("text") { AliasType = AliasType };
+        Assert.That(RequireNotNullWithAliasType.ArgumentNames.Count, Is.EqualTo(1));
+        Assert.That(RequireNotNullWithAliasType.AliasType, Is.EqualTo(AliasType));
+        Assert.That(RequireNotNullWithAliasType.AliasName, Is.EqualTo(string.Empty));
+
+        var RequireNotNullWithAliasName = new RequireNotNullAttribute("text") { AliasName = AliasName };
+        Assert.That(RequireNotNullWithAliasName.ArgumentNames.Count, Is.EqualTo(1));
+        Assert.That(RequireNotNullWithAliasName.AliasName, Is.EqualTo(AliasName));
+        Assert.That(RequireNotNullWithAliasName.AliasType, Is.EqualTo(string.Empty));
+
+        var RequireNotNullWithAliasTypeAndName = new RequireNotNullAttribute("text") { AliasType = AliasType, AliasName = AliasName };
+        Assert.That(RequireNotNullWithAliasTypeAndName.ArgumentNames.Count, Is.EqualTo(1));
+        Assert.That(RequireNotNullWithAliasTypeAndName.AliasType, Is.EqualTo(AliasType));
+        Assert.That(RequireNotNullWithAliasTypeAndName.AliasName, Is.EqualTo(AliasName));
     }
 
     [Test]
