@@ -20,20 +20,30 @@ public static class Contract
         where T : class
     {
 #if DEBUG
-        Debug.Assert(obj is not null, "Invalid null argument");
+        T? asT = obj as T;
+        Debug.Assert(obj is not null, "Invalid null argument.");
+#pragma warning disable CA1508
+        Debug.Assert(asT is not null, $"Invalid argument type. Expected {typeof(T)}, got {obj?.GetType()}.");
+#pragma warning restore CA1508
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        result = (T)obj!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        result = asT!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
 #else
-        result = (T)obj;
+        result = asT;
 #endif
 #else // #if DEBUG
+#pragma warning disable IDE0019
+        T? asT = obj as T;
+#pragma warning restore IDE0019
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(obj);
 #else
         if (obj is null)
             throw new ArgumentNullException(nameof(obj));
 #endif
-        result = (T)obj;
+        if (asT is null)
+            throw new ArgumentException($"Invalid argument type. Expected {typeof(T)}, got {obj.GetType()}.");
+
+        result = asT;
 #endif // #if DEBUG #else
     }
 
