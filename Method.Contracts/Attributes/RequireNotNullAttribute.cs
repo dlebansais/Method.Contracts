@@ -23,6 +23,11 @@ public sealed class RequireNotNullAttribute : Attribute
     public string[] ArgumentNames { get; }
 
     /// <summary>
+    /// Gets or sets the type.
+    /// </summary>
+    public string Type { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets or sets the alias type.
     /// </summary>
     public string AliasType { get; set; } = string.Empty;

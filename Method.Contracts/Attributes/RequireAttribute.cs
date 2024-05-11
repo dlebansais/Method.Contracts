@@ -21,4 +21,9 @@ public sealed class RequireAttribute : Attribute
     /// Gets the requirements.
     /// </summary>
     public string[] Expressions { get; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether code should be generated only if DEBUG is set.
+    /// </summary>
+    public bool DebugOnly { get; set; }
 }

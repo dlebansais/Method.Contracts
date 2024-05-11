@@ -45,6 +45,11 @@ public class TestAttributes
     {
         var Require = new RequireAttribute("true");
         Assert.That(Require.Expressions.Count, Is.EqualTo(1));
+        Assert.That(Require.DebugOnly, Is.False);
+
+        var RequireDebugOnly = new RequireAttribute("true") { DebugOnly = true };
+        Assert.That(RequireDebugOnly.Expressions.Count, Is.EqualTo(1));
+        Assert.That(RequireDebugOnly.DebugOnly, Is.True);
     }
 
     [Test]
@@ -52,5 +57,9 @@ public class TestAttributes
     {
         var Ensure = new EnsureAttribute("true");
         Assert.That(Ensure.Expressions.Count, Is.EqualTo(1));
+
+        var EnsureDebugOnly = new EnsureAttribute("true") { DebugOnly = true };
+        Assert.That(EnsureDebugOnly.Expressions.Count, Is.EqualTo(1));
+        Assert.That(EnsureDebugOnly.DebugOnly, Is.True);
     }
 }
