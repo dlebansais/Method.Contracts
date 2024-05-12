@@ -28,9 +28,9 @@ public sealed class RequireNotNullAttribute : Attribute
     public string Type { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the alias type.
+    /// Gets or sets the name.
     /// </summary>
-    public string AliasType { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the alias name.

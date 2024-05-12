@@ -187,4 +187,19 @@ public static class Contract
 #endif
         }
     }
+
+    /// <summary>
+    /// Checks whether a boolean expression evaluates to <see langword="true"/>.
+    /// </summary>
+    /// <param name="expression">The expression to check.</param>
+    /// <param name="text">The text of the expression for diagnostic purpose.</param>
+    public static void Assert(bool expression, [CallerArgumentExpression(nameof(expression))] string? text = default)
+    {
+#if DEBUG
+        Debug.Assert(expression, $"Assert failed: {text}");
+#else
+        if (!expression)
+            throw new BrokenContractException($"Assert failed: {text}");
+#endif
+    }
 }

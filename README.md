@@ -193,8 +193,24 @@ For example:
 
 In the case above, if the code has previously taken all necessary precautions to check that the file exists and has reading access (with appropriate error reporting to the user), and can prevent the file from being deleted or moved (maybe only temporarily), then performing the read operation is safe.
 
-## When to use `RequireNotNull` vs `AssertNotNull`
+### Contract.Assert
 
-`Contract.RequireNotNull` is to be used for arguments (or object state when entering the method). In release mode it throws `ArgumentNullException`.
+This method is similar to `Debug.Assert`, with the following differences:
 
-`Contract.AssertNotNull` is to be used once the state has been validated and some action performed, to validate intermediate states. In release mode it throws `BrokenContractException`. If the null check is for the method exit state (like the returned value), use `Contract.Ensure`.
++ It is also compiled in release mode. If you don't want that, just use `Debug.Assert`.
++ If no assert message is specified, the default message is the expression in the first parameter converted to a string.
++ In release mode it throws `BrokenContractException` if the expression is evaluated to `false`.
+
+## Recommended usage
+
+## When to use `RequireNotNull` (and `Require`) vs `AssertNotNull`
+
+`Contract.RequireNotNull` should be used for arguments. In release mode it throws `ArgumentNullException`. To check the object state for null references when entering the method, use `Contract.Require(... is not null)`.
+
+`Contract.AssertNotNull` should be used once the state has been validated and some action performed, to validate intermediate states. In release mode it throws `BrokenContractException`. If the null check is for the method exit state (like the returned value), prefer `Contract.Ensure(... is not null)`.
+
+## When to use `Require` (or `Ensure`) vs `Assert`
+
+`Contract.Require` and `Contract.Ensure` should be used to check the object state before (and after, respectively) the method is executed.
+
+`Contract.Assert` should be used once the state has been validated and some action performed, to validate intermediate states.
