@@ -67,7 +67,6 @@ public class TestAttributes
         Assert.That(RequireNotNull2.Type, Is.EqualTo(string.Empty));
         Assert.That(RequireNotNull2.Name, Is.EqualTo(string.Empty));
         Assert.That(RequireNotNull2.AliasName, Is.EqualTo(string.Empty));
-
     }
 
     [Test]
@@ -84,7 +83,6 @@ public class TestAttributes
         var Require2 = new RequireAttribute("true", "true");
         Assert.That(Require2.Expressions.Count, Is.EqualTo(2));
         Assert.That(Require2.DebugOnly, Is.False);
-
     }
 
     [Test]
