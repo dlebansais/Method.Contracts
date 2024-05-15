@@ -9,8 +9,20 @@ public class TestAttributes
     [Test]
     public void TestAccessAttribute()
     {
-        var Access = new AccessAttribute("public");
-        Assert.That(Access.Specifiers.Count, Is.EqualTo(1));
+        var Access1 = new AccessAttribute("public");
+        Assert.That(Access1.Specifiers.Count, Is.EqualTo(1));
+
+        var Access2 = new AccessAttribute("public", "virtual");
+        Assert.That(Access2.Specifiers.Count, Is.EqualTo(2));
+
+        var Access3 = new AccessAttribute("public", "virtual", "unchecked");
+        Assert.That(Access3.Specifiers.Count, Is.EqualTo(3));
+
+        var Access4 = new AccessAttribute("public", "virtual", "unchecked", "partial");
+        Assert.That(Access4.Specifiers.Count, Is.EqualTo(4));
+
+        var Access5 = new AccessAttribute("private", "protected", "virtual", "unchecked", "partial");
+        Assert.That(Access5.Specifiers.Count, Is.EqualTo(5));
     }
 
     [Test]
@@ -49,6 +61,13 @@ public class TestAttributes
         Assert.That(RequireNotNullWithAliasTypeAndName.Type, Is.EqualTo(Type));
         Assert.That(RequireNotNullWithAliasTypeAndName.Name, Is.EqualTo(Name));
         Assert.That(RequireNotNullWithAliasTypeAndName.AliasName, Is.EqualTo(AliasName));
+
+        var RequireNotNull2 = new RequireNotNullAttribute("text1", "text2");
+        Assert.That(RequireNotNull2.ArgumentNames.Count, Is.EqualTo(2));
+        Assert.That(RequireNotNull2.Type, Is.EqualTo(string.Empty));
+        Assert.That(RequireNotNull2.Name, Is.EqualTo(string.Empty));
+        Assert.That(RequireNotNull2.AliasName, Is.EqualTo(string.Empty));
+
     }
 
     [Test]
@@ -61,6 +80,11 @@ public class TestAttributes
         var RequireDebugOnly = new RequireAttribute("true") { DebugOnly = true };
         Assert.That(RequireDebugOnly.Expressions.Count, Is.EqualTo(1));
         Assert.That(RequireDebugOnly.DebugOnly, Is.True);
+
+        var Require2 = new RequireAttribute("true", "true");
+        Assert.That(Require2.Expressions.Count, Is.EqualTo(2));
+        Assert.That(Require2.DebugOnly, Is.False);
+
     }
 
     [Test]
@@ -68,9 +92,14 @@ public class TestAttributes
     {
         var Ensure = new EnsureAttribute("true");
         Assert.That(Ensure.Expressions.Count, Is.EqualTo(1));
+        Assert.That(Ensure.DebugOnly, Is.False);
 
         var EnsureDebugOnly = new EnsureAttribute("true") { DebugOnly = true };
         Assert.That(EnsureDebugOnly.Expressions.Count, Is.EqualTo(1));
         Assert.That(EnsureDebugOnly.DebugOnly, Is.True);
+
+        var Ensure2 = new EnsureAttribute("true", "true");
+        Assert.That(Ensure2.Expressions.Count, Is.EqualTo(2));
+        Assert.That(Ensure2.DebugOnly, Is.False);
     }
 }
