@@ -13,7 +13,7 @@ Add the assembly from the latest release as a dependency of your project. The `C
 using Contracts;
 ````
     
-### Contract.RequireNotNull
+### ``Contract.RequireNotNull``
 
 This static method can be used to check parameters and remove [warning CA1062](https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1062).
 
@@ -78,7 +78,7 @@ In this case, use the version of `RequireNotNull` that returns the non-null valu
 
 This call can be confused with `AssertNotNull` but there is no helping it.
 
-### Contract.Require
+### ``Contract.Require``
 
 This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check arguments. This check explicitly means you're declaring a code contract about your parameter.
 
@@ -95,7 +95,7 @@ public double SquareRoot(double value)
 
 If `value` is negative, the debug version will trigger a `Debug.Assert` failure, and the release version will throw `ArgumentException`, both will a meaningful message that includes the "value >= 0" text.
 
-### Contract.Ensure
+### ``Contract.Ensure``
 
 This method takes advantage of compiler features to break when an expression is false with a meaningful text that includes the expression text. Its purpose is to check the value returned by a method and the object state. This check explicitly means you're declaring a code contract about the method exit state.
 
@@ -115,7 +115,7 @@ public double SquareRoot(double value)
 
 If `Result` is negative, the debug version will trigger a `Debug.Assert` failure, and the release version will throw `BrokenContractException`, both will a meaningful message that includes the "Result >= 0" text.
 
-### Contract.Unused
+### ``Contract.Unused``
 
 The purpose of this method is mostly to annotate your code to specify that a variable value is not used, and remove warning CS8625: *Cannot convert null literal to non-nullable reference type*.
 
@@ -154,7 +154,7 @@ By using `Unused` you can slightly improve your code, at least from a point of v
 + The null forgiving operator is easily missed.
 + This check explicitly means you're declaring a code contract about your output.
 
-### Contract.AssertNotNull
+### ``Contract.AssertNotNull``
 
 .NET analyzers can detect if the code checks whether some reference is null or not, and analyze the rest of the code accordingly.
 
@@ -177,7 +177,30 @@ To avoid using `#if` directives to compile differently for .NET Framework and .N
 
 `text` will then be tested, and if null will trigger `Debug.Assert` in the debug version, or throw `BrokenContractException` in the release version.
 
-### Contract.AssertNoThrow
+### ``Contract.AssertOfType<T>``
+
+.NET analyzers can detect if the code checks whether some reference is of a given type or not, and analyze the rest of the code accordingly.
+
+For instance :
+
+````csharp
+    if (value is not string Text)
+        throw new MyWrongTypeException(nameof(value));
+
+    // Here, the analyzer knows that Text is a non-null string.
+````
+
+In .NET Framework, `Debug.Assert(value is string)` requires an additional operation to assign the type: `string Text = (string)value;`. But `null` is propagated then, which means that analyzers react differently depending on the .NET Framework used (see the previous section).
+
+To avoid using `#if` directives to compile differently for .NET Framework and .NET 6 or greater, use the following call:
+
+````csharp
+    string Text = Contract.AssertOfType<string>(value);
+````
+
+`value` will then be tested, and if `null` or not a `string` will trigger `Debug.Assert` in the debug version, or throw `BrokenContractException` in the release version.
+
+### ``Contract.AssertNoThrow``
 
 Methods may declare that they can throw exceptions in the documentation. The caller could either let any unexpected exception go through, or catch them and fallback to a more friendly approach such as returning a failure code.
 Yet, when no exception is thrown in testable cases the exception handling code is never tested.
@@ -193,7 +216,7 @@ For example:
 
 In the case above, if the code has previously taken all necessary precautions to check that the file exists and has reading access (with appropriate error reporting to the user), and can prevent the file from being deleted or moved (maybe only temporarily), then performing the read operation is safe.
 
-### Contract.Assert
+### ``Contract.Assert``
 
 This method is similar to `Debug.Assert`, with the following differences:
 
@@ -203,13 +226,13 @@ This method is similar to `Debug.Assert`, with the following differences:
 
 ## Recommended usage
 
-## When to use `RequireNotNull` (and `Require`) vs `AssertNotNull`
+## When to use ``RequireNotNull`` (and ``Require``) vs ``AssertNotNull``
 
 `Contract.RequireNotNull` should be used for arguments. In release mode it throws `ArgumentNullException`. To check the object state for null references when entering the method, use `Contract.Require(... is not null)`.
 
 `Contract.AssertNotNull` should be used once the state has been validated and some action performed, to validate intermediate states. In release mode it throws `BrokenContractException`. If the null check is for the method exit state (like the returned value), prefer `Contract.Ensure(... is not null)`.
 
-## When to use `Require` (or `Ensure`) vs `Assert`
+## When to use ``Require`` (or ``Ensure``) vs ``Assert``
 
 `Contract.Require` and `Contract.Ensure` should be used to check the object state before (and after, respectively) the method is executed.
 
