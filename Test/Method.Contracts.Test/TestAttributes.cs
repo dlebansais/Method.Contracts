@@ -100,4 +100,11 @@ public class TestAttributes
         Assert.That(Ensure2.Expressions.Count, Is.EqualTo(2));
         Assert.That(Ensure2.DebugOnly, Is.False);
     }
+
+    [Test]
+    public void TestInitializeWithAttribute()
+    {
+        var InitializeWith = new InitializeWithAttribute("text");
+        Assert.That(InitializeWith.MethodName, Is.EqualTo("text"));
+    }
 }
