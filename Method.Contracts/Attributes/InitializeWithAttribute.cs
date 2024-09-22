@@ -6,7 +6,7 @@ using System;
 /// Represents the name of an initializing method that must be called right after an object is constructed.
 /// </summary>
 /// <param name="methodName">The method name.</param>
-[AttributeUsage(AttributeTargets.Constructor, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Class, AllowMultiple = false)]
 public sealed class InitializeWithAttribute(string methodName) : Attribute
 {
     /// <summary>
