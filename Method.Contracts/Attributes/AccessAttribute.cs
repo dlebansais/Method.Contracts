@@ -1,4 +1,4 @@
-﻿#pragma warning disable CA1019 // Define accessors for attribute arguments
+﻿#pragma warning disable CA1019 // Define accessors for attribute arguments: Specifier is available through Specifiers.
 
 namespace Contracts;
 
@@ -6,9 +6,11 @@ using System;
 
 /// <summary>
 /// Represents the generated method access specifiers attribute.
+/// The primary constructor is not CLS-compliant.
 /// </summary>
+/// <param name="specifiers">The method access specifiers.</param>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-public sealed class AccessAttribute : Attribute
+public sealed class AccessAttribute(params string[] specifiers) : Attribute
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AccessAttribute"/> class.
@@ -16,7 +18,7 @@ public sealed class AccessAttribute : Attribute
     /// </summary>
     /// <param name="specifier">The method access specifier.</param>
     public AccessAttribute(string specifier)
-        : this(new string[] { specifier })
+        : this([specifier])
     {
     }
 
@@ -27,7 +29,7 @@ public sealed class AccessAttribute : Attribute
     /// <param name="specifier1">The first method access specifier.</param>
     /// <param name="specifier2">The second method access specifier.</param>
     public AccessAttribute(string specifier1, string specifier2)
-        : this(new string[] { specifier1, specifier2 })
+        : this([specifier1, specifier2])
     {
     }
 
@@ -39,7 +41,7 @@ public sealed class AccessAttribute : Attribute
     /// <param name="specifier2">The second method access specifier.</param>
     /// <param name="specifier3">The third method access specifier.</param>
     public AccessAttribute(string specifier1, string specifier2, string specifier3)
-        : this(new string[] { specifier1, specifier2, specifier3 })
+        : this([specifier1, specifier2, specifier3])
     {
     }
 
@@ -52,22 +54,12 @@ public sealed class AccessAttribute : Attribute
     /// <param name="specifier3">The third method access specifier.</param>
     /// <param name="specifier4">The fourth method access specifier.</param>
     public AccessAttribute(string specifier1, string specifier2, string specifier3, string specifier4)
-        : this(new string[] { specifier1, specifier2, specifier3, specifier4 })
+        : this([specifier1, specifier2, specifier3, specifier4])
     {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AccessAttribute"/> class.
-    /// This constructor is not CLS-compliant.
-    /// </summary>
-    /// <param name="specifiers">The method access specifiers.</param>
-    public AccessAttribute(params string[] specifiers)
-    {
-        Specifiers = specifiers;
     }
 
     /// <summary>
     /// Gets the method access specifiers.
     /// </summary>
-    public string[] Specifiers { get; }
+    public string[] Specifiers { get; } = specifiers;
 }

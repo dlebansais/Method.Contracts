@@ -5,7 +5,7 @@ using System.Text.Json;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestBrokenContractException
+internal class TestBrokenContractException
 {
     [Test]
     public void TestSerializable()

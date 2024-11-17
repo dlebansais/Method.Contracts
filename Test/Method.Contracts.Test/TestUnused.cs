@@ -3,7 +3,7 @@
 using NUnit.Framework;
 
 [TestFixture]
-public class TestUnused
+internal class TestUnused
 {
     [Test]
     public void TestClass()

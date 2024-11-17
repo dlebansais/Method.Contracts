@@ -1,7 +1,9 @@
 ﻿namespace Contracts;
 
 using System;
+#if DEBUG
 using System.Diagnostics;
+#endif
 
 /// <summary>
 /// A set of tools to enforce contracts in methods.

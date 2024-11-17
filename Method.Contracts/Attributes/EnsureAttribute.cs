@@ -1,4 +1,4 @@
-﻿#pragma warning disable CA1019 // Define accessors for attribute arguments
+﻿#pragma warning disable CA1019 // Define accessors for attribute arguments: Expression is available through Expressions.
 
 namespace Contracts;
 
@@ -6,9 +6,11 @@ using System;
 
 /// <summary>
 /// Represents one or more guarantees.
+/// The primary constructor is not CLS-compliant.
 /// </summary>
+/// <param name="expressions">The guarantees.</param>
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-public sealed class EnsureAttribute : Attribute
+public sealed class EnsureAttribute(params string[] expressions) : Attribute
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="EnsureAttribute"/> class.
@@ -16,24 +18,14 @@ public sealed class EnsureAttribute : Attribute
     /// </summary>
     /// <param name="expression">The guarantee.</param>
     public EnsureAttribute(string expression)
-        : this(new string[] { expression })
+        : this([expression])
     {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="EnsureAttribute"/> class.
-    /// This constructor is not CLS-compliant.
-    /// </summary>
-    /// <param name="expressions">The guarantees.</param>
-    public EnsureAttribute(params string[] expressions)
-    {
-        Expressions = expressions;
     }
 
     /// <summary>
     /// Gets the guarantees.
     /// </summary>
-    public string[] Expressions { get; }
+    public string[] Expressions { get; } = expressions;
 
     /// <summary>
     /// Gets or sets a value indicating whether code should be generated only if DEBUG is set.

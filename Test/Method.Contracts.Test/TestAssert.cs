@@ -1,11 +1,10 @@
 ﻿namespace Contracts.Test;
 
-using System;
 using System.Diagnostics;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestAssert
+internal class TestAssert
 {
     [Test]
     public void TestSuccess()

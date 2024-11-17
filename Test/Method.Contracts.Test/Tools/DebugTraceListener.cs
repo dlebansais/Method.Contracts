@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿namespace Contracts.Test;
 
-namespace Contracts.Test;
+using System.Diagnostics;
 
-public class DebugTraceListener : TraceListener
+internal class DebugTraceListener : TraceListener
 {
     public bool IsAssertTriggered { get; private set; }
 

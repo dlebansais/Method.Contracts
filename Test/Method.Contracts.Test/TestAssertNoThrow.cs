@@ -1,11 +1,13 @@
 ﻿namespace Contracts.Test;
 
 using System;
+#if DEBUG
 using System.Diagnostics;
+#endif
 using NUnit.Framework;
 
 [TestFixture]
-public class TestAssertNoThrow
+internal class TestAssertNoThrow
 {
     [Test]
     public void TestActionSuccess()
@@ -15,7 +17,7 @@ public class TestAssertNoThrow
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Contract.AssertNoThrow(() => NotThrowing());
+        Contract.AssertNoThrow(new Action(NotThrowing));
 
         Assert.That(Listener.IsAssertTriggered, Is.False);
 #else
@@ -35,7 +37,7 @@ public class TestAssertNoThrow
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Contract.AssertNoThrow(() => Throwing());
+        Contract.AssertNoThrow(new Action(Throwing));
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else

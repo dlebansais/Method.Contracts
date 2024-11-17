@@ -1,13 +1,13 @@
 ﻿namespace Contracts.Test;
 
-using System;
-using System.Collections.Generic;
+#if DEBUG
 using System.Diagnostics;
+#endif
 using System.IO;
 using NUnit.Framework;
 
 [TestFixture]
-public class TestRequireNotNull
+internal class TestRequireNotNull
 {
     [Test]
     public void TestSuccess()
@@ -24,7 +24,7 @@ public class TestRequireNotNull
         Assert.That(Result, Is.EqualTo(NotNullString));
 #else
         const string? NotNullString = "Not null";
-        Contract.RequireNotNull<string>(NotNullString, out string Result);
+        Contract.RequireNotNull(NotNullString, out string Result);
 
         Assert.That(Result, Is.EqualTo(NotNullString));
 #endif
@@ -44,7 +44,7 @@ public class TestRequireNotNull
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
         const string? NullString = null;
-        Assert.Throws<ArgumentNullException>(() => Contract.RequireNotNull<string>(NullString, out _));
+        Assert.Throws<System.ArgumentNullException>(() => Contract.RequireNotNull<string>(NullString, out _));
 #endif
     }
 
@@ -62,7 +62,7 @@ public class TestRequireNotNull
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
         const string TestString = "test";
-        Assert.Throws<ArgumentException>(() => Contract.RequireNotNull<Stream>(TestString, out _));
+        Assert.Throws<System.ArgumentException>(() => Contract.RequireNotNull<Stream>(TestString, out _));
 #endif
     }
 
@@ -101,7 +101,7 @@ public class TestRequireNotNull
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
         const DebugTraceListener? TestListener = null;
-        Assert.Throws<ArgumentNullException>(() => _ = Contract.RequireNotNull(TestListener));
+        Assert.Throws<System.ArgumentNullException>(() => _ = Contract.RequireNotNull(TestListener));
 #endif
     }
 }

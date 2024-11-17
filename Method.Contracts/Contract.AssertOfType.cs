@@ -1,6 +1,8 @@
 ﻿namespace Contracts;
 
+#if DEBUG
 using System.Diagnostics;
+#endif
 using System.Runtime.CompilerServices;
 
 /// <summary>

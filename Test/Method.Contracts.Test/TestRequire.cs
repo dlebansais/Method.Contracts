@@ -1,11 +1,13 @@
 ﻿namespace Contracts.Test;
 
 using System;
+#if DEBUG
 using System.Diagnostics;
+#endif
 using NUnit.Framework;
 
 [TestFixture]
-public class TestRequire
+internal class TestRequire
 {
     [Test]
     public void TestSuccess()
