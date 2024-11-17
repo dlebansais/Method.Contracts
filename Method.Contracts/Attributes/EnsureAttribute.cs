@@ -9,7 +9,7 @@ using System;
 /// The primary constructor is not CLS-compliant.
 /// </summary>
 /// <param name="expressions">The guarantees.</param>
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = true)]
 public sealed class EnsureAttribute(params string[] expressions) : Attribute
 {
     /// <summary>
