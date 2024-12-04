@@ -1,6 +1,8 @@
 ﻿namespace Contracts.Test;
 
+#if !DEBUG
 using System;
+#endif
 #if DEBUG
 using System.Diagnostics;
 #endif

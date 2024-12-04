@@ -1,6 +1,8 @@
 ﻿namespace Contracts.Test;
 
+#if DEBUG
 using System.Diagnostics;
+#endif
 using NUnit.Framework;
 
 [TestFixture]
