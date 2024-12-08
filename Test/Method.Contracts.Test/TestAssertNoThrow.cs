@@ -45,10 +45,7 @@ internal class TestAssertNoThrow
 #endif
     }
 
-    private static void Throwing()
-    {
-        throw new InvalidOperationException();
-    }
+    private static void Throwing() => throw new InvalidOperationException();
 
     [Test]
     public void TestFunctionSuccess()
@@ -71,10 +68,7 @@ internal class TestAssertNoThrow
         Assert.That(Result, Is.EqualTo(TestResult));
     }
 
-    private static string NotThrowing(string value)
-    {
-        return value;
-    }
+    private static string NotThrowing(string value) => value;
 
     [Test]
     public void TestFunctionFailure()
@@ -94,8 +88,5 @@ internal class TestAssertNoThrow
 #endif
     }
 
-    private static string Throwing(string value)
-    {
-        throw new ArgumentNullException(nameof(value));
-    }
+    private static string Throwing(string value) => throw new ArgumentNullException(nameof(value));
 }
