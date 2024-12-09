@@ -18,7 +18,7 @@ internal class TestMapNotComputed
         More = 2,
     }
 
-    [Test]
+    [TestCase(TestName = "Map success (function)")]
     public void TestSuccess()
     {
         const int NoneValue = 10;
@@ -44,7 +44,7 @@ internal class TestMapNotComputed
         Assert.That(Result, Is.EqualTo(NoneValue));
     }
 
-    [Test]
+    [TestCase(TestName = "Map failure with bad value (function)")]
     public void TestFailureBadValue()
     {
         Dictionary<TestEnum, Func<int>> Dictionary = new()
@@ -67,7 +67,7 @@ internal class TestMapNotComputed
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "Map failure with bad dictionary (function)")]
     public void TestFailureBadDictionary()
     {
         Dictionary<TestEnum, Func<int>> Dictionary = new()
@@ -89,7 +89,7 @@ internal class TestMapNotComputed
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "Map failure with null dictionary (function)")]
     public void TestNullDictionary()
     {
         const Dictionary<TestEnum, Func<int>> Dictionary = null!;

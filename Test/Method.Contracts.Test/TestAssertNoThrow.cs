@@ -9,7 +9,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestAssertNoThrow
 {
-    [Test]
+    [TestCase(TestName = "AssertNoThrow(Action) success")]
     public void TestActionSuccess()
     {
 #if DEBUG
@@ -29,7 +29,7 @@ internal class TestAssertNoThrow
     {
     }
 
-    [Test]
+    [TestCase(TestName = "AssertNoThrow(Action) failure")]
     public void TestActionFailure()
     {
 #if DEBUG
@@ -47,7 +47,7 @@ internal class TestAssertNoThrow
 
     private static void Throwing() => throw new InvalidOperationException();
 
-    [Test]
+    [TestCase(TestName = "AssertNoThrow(Func) success")]
     public void TestFunctionSuccess()
     {
         const string TestResult = "All good";
@@ -70,7 +70,7 @@ internal class TestAssertNoThrow
 
     private static string NotThrowing(string value) => value;
 
-    [Test]
+    [TestCase(TestName = "AssertNoThrow(Func) failure")]
     public void TestFunctionFailure()
     {
         const string TestResult = "Failed";

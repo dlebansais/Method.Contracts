@@ -5,7 +5,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestUnused
 {
-    [Test]
+    [TestCase(TestName = "Unused for a reference type")]
     public void TestClass()
     {
         Contract.Unused(out string UnusedString);
@@ -13,7 +13,7 @@ internal class TestUnused
         Assert.That(UnusedString, Is.Null);
     }
 
-    [Test]
+    [TestCase(TestName = "Unused for a nullable value type")]
     public void TestNullable()
     {
         Contract.Unused(out int? UnusedInt);
@@ -21,7 +21,7 @@ internal class TestUnused
         Assert.That(UnusedInt, Is.Null);
     }
 
-    [Test]
+    [TestCase(TestName = "Unused for a value type")]
     public void TestStruct()
     {
         Contract.Unused(out int UnusedInt);

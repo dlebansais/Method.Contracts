@@ -8,7 +8,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestEnsure
 {
-    [Test]
+    [TestCase(TestName = "Ensure success")]
     public void TestSuccess()
     {
 #if DEBUG
@@ -24,7 +24,7 @@ internal class TestEnsure
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "Ensure failure")]
     public void TestFailure()
     {
 #if DEBUG

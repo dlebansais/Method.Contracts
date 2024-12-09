@@ -11,7 +11,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestRequire
 {
-    [Test]
+    [TestCase(TestName = "Require success")]
     public void TestSuccess()
     {
 #if DEBUG
@@ -27,7 +27,7 @@ internal class TestRequire
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "Require failure")]
     public void TestFailure()
     {
 #if DEBUG

@@ -6,7 +6,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestAttributes
 {
-    [Test]
+    [TestCase(TestName = "Access attribute")]
     public void TestAccessAttribute()
     {
         AccessAttribute Access1 = new("public");
@@ -25,7 +25,7 @@ internal class TestAttributes
         Assert.That(Access5.Specifiers.Count, Is.EqualTo(5));
     }
 
-    [Test]
+    [TestCase(TestName = "RequireNotNull attribute")]
     public void TestRequireNotNullAttribute()
     {
         RequireNotNullAttribute RequireNotNull = new("text");
@@ -69,7 +69,7 @@ internal class TestAttributes
         Assert.That(RequireNotNull2.AliasName, Is.EqualTo(string.Empty));
     }
 
-    [Test]
+    [TestCase(TestName = "Require attribute")]
     public void TestRequireAttribute()
     {
         RequireAttribute Require = new("true");
@@ -85,7 +85,7 @@ internal class TestAttributes
         Assert.That(Require2.DebugOnly, Is.False);
     }
 
-    [Test]
+    [TestCase(TestName = "Ensure attribute")]
     public void TestEnsureAttribute()
     {
         EnsureAttribute Ensure = new("true");
@@ -101,7 +101,7 @@ internal class TestAttributes
         Assert.That(Ensure2.DebugOnly, Is.False);
     }
 
-    [Test]
+    [TestCase(TestName = "InitializeWith attribute")]
     public void TestInitializeWithAttribute()
     {
         InitializeWithAttribute InitializeWith = new("text");

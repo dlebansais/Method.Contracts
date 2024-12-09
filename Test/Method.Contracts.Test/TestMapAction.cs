@@ -18,7 +18,7 @@ internal class TestMapAction
         More = 2,
     }
 
-    [Test]
+    [TestCase(TestName = "Map success (action)")]
     public void TestSuccess()
     {
         const int NoneValue = 10;
@@ -45,7 +45,7 @@ internal class TestMapAction
         Assert.That(Result, Is.EqualTo(NoneValue));
     }
 
-    [Test]
+    [TestCase(TestName = "Map failure with bad value (action)")]
     public void TestFailureBadValue()
     {
         int Result = 0;
@@ -71,7 +71,7 @@ internal class TestMapAction
         Assert.That(Result, Is.EqualTo(0));
     }
 
-    [Test]
+    [TestCase(TestName = "Map failure with bad dictionary (action)")]
     public void TestFailureBadDictionary()
     {
         int Result = 0;
@@ -96,7 +96,7 @@ internal class TestMapAction
         Assert.That(Result, Is.EqualTo(0));
     }
 
-    [Test]
+    [TestCase(TestName = "Map failure with null dictionary (action)")]
     public void TestNullDictionary()
     {
         const Dictionary<TestEnum, Action> Dictionary = null!;

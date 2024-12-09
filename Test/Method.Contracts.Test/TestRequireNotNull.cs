@@ -9,7 +9,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestRequireNotNull
 {
-    [Test]
+    [TestCase(TestName = "RequireNotNull success")]
     public void TestSuccess()
     {
 #if DEBUG
@@ -30,7 +30,7 @@ internal class TestRequireNotNull
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "RequireNotNull failure with null reference")]
     public void TestNullReferenceFailure()
     {
 #if DEBUG
@@ -48,7 +48,7 @@ internal class TestRequireNotNull
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "RequireNotNull failure with wrong type")]
     public void TestWrongTypeFailure()
     {
 #if DEBUG
@@ -66,7 +66,7 @@ internal class TestRequireNotNull
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "RequireNotNull success (with disposable)")]
     public void TestDisposableSuccess()
     {
 #if DEBUG
@@ -87,7 +87,7 @@ internal class TestRequireNotNull
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "RequireNotNull failure (with disposable)")]
     public void TestDisposableFailure()
     {
 #if DEBUG

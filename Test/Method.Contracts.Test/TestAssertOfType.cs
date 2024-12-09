@@ -8,7 +8,7 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestAssertOfType
 {
-    [Test]
+    [TestCase(TestName = "AssertOfType success")]
     public void TestSuccess()
     {
 #if DEBUG
@@ -29,7 +29,7 @@ internal class TestAssertOfType
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "AssertOfType success")]
     public void TestFailure()
     {
 #if DEBUG
@@ -47,7 +47,7 @@ internal class TestAssertOfType
 #endif
     }
 
-    [Test]
+    [TestCase(TestName = "AssertOfType failure with null value")]
     public void TestNullFailure()
     {
 #if DEBUG

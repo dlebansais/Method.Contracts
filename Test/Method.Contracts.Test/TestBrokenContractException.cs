@@ -7,8 +7,8 @@ using NUnit.Framework;
 [TestFixture]
 internal class TestBrokenContractException
 {
-    [Test]
-    public void TestSerializable()
+    [TestCase(TestName = "BrokenContractException serialization")]
+    public void TestSerialization()
     {
         BrokenContractException TestException = new();
 
@@ -22,7 +22,7 @@ internal class TestBrokenContractException
         Assert.That(ReserializedException, Is.EqualTo(SerializedException));
     }
 
-    [Test]
+    [TestCase(TestName = "BrokenContractException constructor with message")]
     public void TestConstructorWithMessage()
     {
         const string TestMessage = "Test message";
@@ -30,7 +30,7 @@ internal class TestBrokenContractException
         Assert.That(TestException.Message, Is.EqualTo(TestMessage));
     }
 
-    [Test]
+    [TestCase(TestName = "BrokenContractException constructor with message and inner exception")]
     public void TestConstructorWithMessageAndInnerException()
     {
         const string TestMessage = "Test message";
@@ -38,6 +38,6 @@ internal class TestBrokenContractException
         BrokenContractException TestException = new(TestMessage, TestInnerException);
         Assert.That(TestException.Message, Is.EqualTo(TestMessage));
         Assert.That(TestException.InnerException, Is.TypeOf<InvalidOperationException>());
-        Assert.That(TestException.InnerException.Message, Is.EqualTo(TestMessage));
+        Assert.That(TestException.InnerException?.Message, Is.EqualTo(TestMessage));
     }
 }
