@@ -110,7 +110,7 @@ internal class TestMapAction
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
-        Assert.Throws<System.ArgumentNullException>(() => Contract.Map(TestEnum.None, Dictionary));
+        Assert.Throws<ArgumentNullException>(() => Contract.Map(TestEnum.None, Dictionary));
 #endif
     }
 }

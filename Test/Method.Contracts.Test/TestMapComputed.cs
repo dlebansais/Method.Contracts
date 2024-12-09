@@ -1,7 +1,6 @@
 ﻿namespace Contracts.Test;
 
 using System.Collections.Generic;
-
 #if DEBUG
 using System.Diagnostics;
 #endif

@@ -44,13 +44,14 @@ public static partial class Contract
         Dictionary<TEnumKey, TValue> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
+        bool IsValid = IsValidDictionary(dictionary);
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(dictionary, $"Invalid null dictionary: {dictionaryText}");
 #else
         if (dictionary is null)
             throw new ArgumentNullException(nameof(dictionary), $"Invalid null dictionary: {dictionaryText}");
 #endif
-        if (!IsValidDictionary(dictionary))
+        if (!IsValid)
             throw new BrokenContractException($"Invalid dictionary: {dictionaryText}");
 
         Dictionary<TEnumKey, TValue> Dictionary = dictionary;
@@ -100,13 +101,14 @@ public static partial class Contract
         Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
+        bool IsValid = IsValidDictionary(dictionary);
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(dictionary, $"Invalid null dictionary: {dictionaryText}");
 #else
         if (dictionary is null)
             throw new ArgumentNullException(nameof(dictionary), $"Invalid null dictionary: {dictionaryText}");
 #endif
-        if (!IsValidDictionary(dictionary))
+        if (!IsValid)
             throw new BrokenContractException($"Invalid dictionary: {dictionaryText}");
 
         Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
@@ -155,13 +157,14 @@ public static partial class Contract
         Dictionary<TEnumKey, Action> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
+        bool IsValid = IsValidDictionary(dictionary);
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(dictionary, $"Invalid null dictionary: {dictionaryText}");
 #else
         if (dictionary is null)
             throw new ArgumentNullException(nameof(dictionary), $"Invalid null dictionary: {dictionaryText}");
 #endif
-        if (!IsValidDictionary(dictionary))
+        if (!IsValid)
             throw new BrokenContractException($"Invalid dictionary: {dictionaryText}");
 
         Dictionary<TEnumKey, Action> Dictionary = dictionary;
