@@ -40,7 +40,7 @@ internal class TestMapAction
 
         Assert.That(Listener.IsAssertTriggered, Is.False);
 #else
-        Assert.DoesNotThrow(() => Result = Contract.Map(TestEnum.None, Dictionary));
+        Assert.DoesNotThrow(() => Contract.Map(TestEnum.None, Dictionary));
 #endif
         Assert.That(Result, Is.EqualTo(NoneValue));
     }
@@ -65,7 +65,7 @@ internal class TestMapAction
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.Map(TestEnum.None, Dictionary));
+        Assert.Throws<BrokenContractException>(() => Contract.Map((TestEnum)int.MaxValue, Dictionary));
 #endif
 
         Assert.That(Result, Is.EqualTo(0));

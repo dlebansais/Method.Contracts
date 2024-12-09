@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+#if DEBUG
 using System.Diagnostics;
+#endif
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
@@ -61,11 +63,10 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary.";
 #if DEBUG
         Debug.Assert(false, FailureText);
+        return default!;
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
 #endif // #if DEBUG #else
-
-        return default!;
     }
 
     /// <summary>
@@ -108,7 +109,7 @@ public static partial class Contract
         if (!IsValidDictionary(dictionary))
             throw new BrokenContractException($"Invalid dictionary: {dictionaryText}");
 
-        Dictionary<TEnumKey, TValue> Dictionary = dictionary;
+        Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
 #endif // #if DEBUG #else
 
         if (Dictionary.TryGetValue(expression, out Func<TValue>? FuncValue))
@@ -118,11 +119,10 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary.";
 #if DEBUG
         Debug.Assert(false, FailureText);
+        return default!;
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
 #endif // #if DEBUG #else
-
-        return default!;
     }
 
     /// <summary>
@@ -164,7 +164,7 @@ public static partial class Contract
         if (!IsValidDictionary(dictionary))
             throw new BrokenContractException($"Invalid dictionary: {dictionaryText}");
 
-        Dictionary<TEnumKey, TValue> Dictionary = dictionary;
+        Dictionary<TEnumKey, Action> Dictionary = dictionary;
 #endif // #if DEBUG #else
 
         if (Dictionary.TryGetValue(expression, out Action? ActionValue))

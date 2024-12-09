@@ -28,7 +28,7 @@ internal class TestMapNotComputed
             { TestEnum.Some, () => 20 },
             { TestEnum.More, () => 30 },
         };
-        int Result;
+        int Result = 0;
 
 #if DEBUG
         DebugTraceListener Listener = new();
@@ -39,7 +39,7 @@ internal class TestMapNotComputed
 
         Assert.That(Listener.IsAssertTriggered, Is.False);
 #else
-        Assert.DoesNotThrow(() => Result = Contract.Map(TestEnum.None, Dictionary));
+        Assert.DoesNotThrow(() => { Result = Contract.Map(TestEnum.None, Dictionary); });
 #endif
         Assert.That(Result, Is.EqualTo(NoneValue));
     }
@@ -53,18 +53,17 @@ internal class TestMapNotComputed
             { TestEnum.Some, () => 20 },
             { TestEnum.More, () => 30 },
         };
-        int Result;
 
 #if DEBUG
         DebugTraceListener Listener = new();
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Result = Contract.Map((TestEnum)int.MaxValue, Dictionary);
+        _ = Contract.Map((TestEnum)int.MaxValue, Dictionary);
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.Map(TestEnum.None, Dictionary));
+        Assert.Throws<BrokenContractException>(() => { _ = Contract.Map((TestEnum)int.MaxValue, Dictionary); });
 #endif
     }
 
@@ -76,18 +75,17 @@ internal class TestMapNotComputed
             { TestEnum.Some, () => 20 },
             { TestEnum.More, () => 30 },
         };
-        int Result;
 
 #if DEBUG
         DebugTraceListener Listener = new();
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Result = Contract.Map(TestEnum.More, Dictionary);
+        _ = Contract.Map(TestEnum.More, Dictionary);
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.Map(TestEnum.More, Dictionary));
+        Assert.Throws<BrokenContractException>(() => { _ = Contract.Map(TestEnum.More, Dictionary); });
 #endif
     }
 
@@ -95,18 +93,17 @@ internal class TestMapNotComputed
     public void TestNullDictionary()
     {
         const Dictionary<TestEnum, Func<int>> Dictionary = null!;
-        int Result;
 
 #if DEBUG
         DebugTraceListener Listener = new();
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Result = Contract.Map(TestEnum.None, Dictionary);
+        _ = Contract.Map(TestEnum.None, Dictionary);
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
 #else
-        Assert.Throws<System.ArgumentNullException>(() => Contract.Map(TestEnum.None, Dictionary));
+        Assert.Throws<ArgumentNullException>(() => { _ = Contract.Map(TestEnum.None, Dictionary); });
 #endif
     }
 }
