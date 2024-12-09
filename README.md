@@ -224,6 +224,30 @@ This method is similar to `Debug.Assert`, with the following differences:
 + If no assert message is specified, the default message is the expression in the first parameter converted to a string.
 + In release mode it throws `BrokenContractException` if the expression is evaluated to `false`.
 
+### ``Contract.Map``
+
+When using source coverage tools it is common to observe a `switch` instruction (or expression) that is not fully covered. For exemple, if all possible values are explicitly in a `case` clause, the `default` clause is unreachable. However, having a `default` clause is desirable in case the enum is extended with new values.
+
+To cover this case the programmer typically has to pick one of the enum values and replace it with `default`. This is not only aesthetically questionable, it also contradicts some rules like [IDE0010](https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/ide0010): *Add missing cases to switch statement*.
+
+Additionally it is hard to properly control what happens when a value is added to the enum. If, for instance, one adds a `default` case that throws an exception, this case cannot be tested, and will look bad on code coverage reports.
+
+This assembly provides the `Map` feature that takes an expression and a dictionary of actions to perform for each value. The `Map` method will assert that the dictionary covers all possible keys and will ensure full code coverage.
+
+It comes in different overloads:
+
+### `TValue Map<TEnumKey, TValue>(TEnumKey expression, Dictionary<TEnumKey, TValue> dictionary)`
+
+This method handles conversions that are already computed by the caller, such as conversion from one enum to another.
+
+### `TValue Map<TEnumKey, TValue>(TEnumKey expression, Dictionary<TEnumKey, Func<TValue>> dictionary)`
+
+This method handles conversions that not already computed, and will only call the function corresponding to the `expression` key.
+
+### `void Map<TEnumKey>(TEnumKey expression, Dictionary<TEnumKey, Action> dictionary`
+
+This method will only call the action corresponding to the matching `expression` key.
+
 ## Recommended usage
 
 ## When to use ``RequireNotNull`` (and ``Require``) vs ``AssertNotNull``

@@ -7,14 +7,14 @@
         <Platforms>x64</Platforms>
 
         <RootNamespace>Contracts</RootNamespace>
-        <Version>1.8.0</Version>
+        <Version>1.9.0</Version>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
         <Description>A set of tools to enforce contracts in methods</Description>
         <Copyright>Copyright © 2024 David Le Bansais</Copyright>
-        <AssemblyVersion>1.8.0.45</AssemblyVersion>
-        <FileVersion>1.8.0.44</FileVersion>
+        <AssemblyVersion>1.9.0.46</AssemblyVersion>
+        <FileVersion>1.9.0.46</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/Method.Contracts</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
