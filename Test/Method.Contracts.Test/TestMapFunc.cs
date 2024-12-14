@@ -9,7 +9,7 @@ using System.Diagnostics;
 using NUnit.Framework;
 
 [TestFixture]
-internal class TestMapNotComputed
+internal class TestMapFunc
 {
     private enum TestEnum
     {

@@ -38,6 +38,11 @@ internal class TestBrokenContractException
         BrokenContractException TestException = new(TestMessage, TestInnerException);
         Assert.That(TestException.Message, Is.EqualTo(TestMessage));
         Assert.That(TestException.InnerException, Is.TypeOf<InvalidOperationException>());
-        Assert.That(TestException.InnerException?.Message, Is.EqualTo(TestMessage));
+
+        InvalidOperationException? InnerException = TestException.InnerException as InvalidOperationException;
+        Assert.That(InnerException, Is.Not.Null);
+
+        string Message = InnerException!.Message;
+        Assert.That(Message, Is.EqualTo(TestMessage));
     }
 }
