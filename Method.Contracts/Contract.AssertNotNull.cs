@@ -16,15 +16,18 @@ public static partial class Contract
     /// <typeparam name="T">The value type.</typeparam>
     /// <param name="value">The value that should not be null.</param>
     /// <param name="text">The text of the value for diagnostic purpose.</param>
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
     /// <returns>The provided value.</returns>
-    public static T AssertNotNull<T>(T? value, [CallerArgumentExpression(nameof(value))] string? text = default)
+    public static T AssertNotNull<T>(T? value, [CallerArgumentExpression(nameof(value))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
+        string Message = $"Unexpected null value, line {lineNumber}: {text}";
+
 #if DEBUG
-        Debug.Assert(value is not null, $"Unexpected null value: {text}");
+        Debug.Assert(value is not null, Message);
 #else
         if (value is null)
-            throw new BrokenContractException($"Unexpected null value: {text}");
+            throw new BrokenContractException(Message);
 #endif
 
         return value!;

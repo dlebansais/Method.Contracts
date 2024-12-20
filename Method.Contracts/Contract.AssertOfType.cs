@@ -16,16 +16,20 @@ public static partial class Contract
     /// <typeparam name="T">The value type.</typeparam>
     /// <param name="value">The value that should be of the expected type.</param>
     /// <param name="text">The text of the value for diagnostic purpose.</param>
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
     /// <returns>The provided value.</returns>
-    public static T AssertOfType<T>(object? value, [CallerArgumentExpression(nameof(value))] string? text = default)
+    public static T AssertOfType<T>(object? value, [CallerArgumentExpression(nameof(value))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
+        string Message = $"Expected type '{typeof(T).Name}' for value: {text}, line {lineNumber}";
+
 #if DEBUG
         T? Result = value as T;
-        Debug.Assert(Result is not null, $"Expected type '{typeof(T).Name}' for value: {text}");
+
+        Debug.Assert(Result is not null, Message);
 #else
         if (value is not T Result)
-            throw new BrokenContractException($"Expected type '{typeof(T).Name}' for value: {text}");
+            throw new BrokenContractException(Message);
 #endif
 
         return Result!;

@@ -15,13 +15,16 @@ public static partial class Contract
     /// </summary>
     /// <param name="expression">The expression to check.</param>
     /// <param name="text">The text of the expression for diagnostic purpose.</param>
-    public static void Ensure(bool expression, [CallerArgumentExpression(nameof(expression))] string? text = default)
-#if DEBUG
-    => Debug.Assert(expression, $"Postcondition failed: {text}");
-#else
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
+    public static void Ensure(bool expression, [CallerArgumentExpression(nameof(expression))] string? text = default, [CallerLineNumber] int lineNumber = -1)
     {
+        string Message = $"Postcondition failed, line {lineNumber}: {text}";
+
+#if DEBUG
+        Debug.Assert(expression, Message);
+#else
         if (!expression)
-            throw new BrokenContractException($"Postcondition failed: {text}");
-    }
+            throw new BrokenContractException(Message);
 #endif
+    }
 }

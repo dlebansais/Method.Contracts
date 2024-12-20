@@ -16,7 +16,8 @@ public static partial class Contract
     /// </summary>
     /// <param name="action">The action that should not throw exceptions to call.</param>
     /// <param name="text">The text of the action call for diagnostic purpose.</param>
-    public static void AssertNoThrow(Action action, [CallerArgumentExpression(nameof(action))] string? text = default)
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
+    public static void AssertNoThrow(Action action, [CallerArgumentExpression(nameof(action))] string? text = default, [CallerLineNumber] int lineNumber = -1)
     {
         RequireNotNull(action, out Action Action);
 
@@ -26,11 +27,13 @@ public static partial class Contract
         }
         catch (Exception exception)
         {
+            string Message = $"Unexpected exception, line {lineNumber}";
+
 #if DEBUG
             Debug.WriteLine(exception.StackTrace);
-            Debug.Fail("Unexpected exception", exception.Message);
+            Debug.Fail(Message, exception.Message);
 #else
-            throw new BrokenContractException("Unexpected exception", exception);
+            throw new BrokenContractException(Message, exception);
 #endif
         }
     }
@@ -41,8 +44,9 @@ public static partial class Contract
     /// <typeparam name="T">The result type.</typeparam>
     /// <param name="function">The function that should not throw exceptions to call.</param>
     /// <param name="text">The text of the function call for diagnostic purpose.</param>
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
     /// <returns>The value returned by <paramref name="function"/>.</returns>
-    public static T AssertNoThrow<T>(Func<T> function, [CallerArgumentExpression(nameof(function))] string? text = default)
+    public static T AssertNoThrow<T>(Func<T> function, [CallerArgumentExpression(nameof(function))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
         RequireNotNull(function, out Func<T> Function);
@@ -53,12 +57,15 @@ public static partial class Contract
         }
         catch (Exception exception)
         {
+            string Message = $"Unexpected exception, line {lineNumber}";
+
 #if DEBUG
             Debug.WriteLine(exception.StackTrace);
-            Debug.Fail("Unexpected exception", exception.Message);
+            Debug.Fail(Message, exception.Message);
+
             return default!;
 #else
-            throw new BrokenContractException("Unexpected exception", exception);
+            throw new BrokenContractException(Message, exception);
 #endif
         }
     }

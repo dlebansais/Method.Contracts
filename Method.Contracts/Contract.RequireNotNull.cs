@@ -4,6 +4,7 @@ using System;
 #if DEBUG
 using System.Diagnostics;
 #endif
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// A set of tools to enforce contracts in methods.
@@ -16,15 +17,17 @@ public static partial class Contract
     /// <typeparam name="T">The type of <paramref name="obj"/> and <paramref name="result"/>.</typeparam>
     /// <param name="obj">The object instance to check.</param>
     /// <param name="result">The non-null alias upon return.</param>
+    /// <param name="text">The text of the expression for diagnostic purpose.</param>
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
     /// <exception cref="ArgumentNullException"><paramref name="obj"/> is null.</exception>
-    public static void RequireNotNull<T>(object? obj, out T result)
+    public static void RequireNotNull<T>(object? obj, out T result, [CallerArgumentExpression(nameof(obj))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
 #if DEBUG
         T? asT = obj as T;
-        Debug.Assert(obj is not null, "Invalid null argument.");
+        Debug.Assert(obj is not null, $"Invalid null argument '{text}', line {lineNumber}.");
 #pragma warning disable CA1508
-        Debug.Assert(asT is not null, $"Invalid argument type. Expected {typeof(T)}, got {obj?.GetType()}.");
+        Debug.Assert(asT is not null, $"Invalid argument type. Expected {typeof(T)}, got {obj?.GetType()}, line {lineNumber}.");
 #pragma warning restore CA1508
 #if NET481_OR_GREATER || NETSTANDARD2_0
         result = asT!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
@@ -42,7 +45,7 @@ public static partial class Contract
             throw new ArgumentNullException(nameof(obj));
 #endif
         if (asT is null)
-            throw new ArgumentException($"Invalid argument type. Expected {typeof(T)}, got {obj.GetType()}.");
+            throw new ArgumentException($"Invalid argument type. Expected {typeof(T)}, got {obj.GetType()}, line {lineNumber}.");
 
         result = asT;
 #endif // #if DEBUG #else
@@ -53,13 +56,15 @@ public static partial class Contract
     /// </summary>
     /// <typeparam name="T">The type of <paramref name="value"/> and returned alias.</typeparam>
     /// <param name="value">The value that should not be null.</param>
+    /// <param name="text">The text of the expression for diagnostic purpose.</param>
+    /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
     /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
     /// <returns>The non-null alias.</returns>
-    public static T RequireNotNull<T>(T? value)
+    public static T RequireNotNull<T>(T? value, [CallerArgumentExpression(nameof(value))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class, IDisposable
     {
 #if DEBUG
-        Debug.Assert(value is not null, "Invalid null argument");
+        Debug.Assert(value is not null, $"Invalid null argument '{text}', line {lineNumber}");
 #if NET481_OR_GREATER || NETSTANDARD2_0
         return value!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
 #else
