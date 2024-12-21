@@ -284,10 +284,8 @@ public static partial class Contract
         if (dictionary is null)
             throw new ArgumentNullException(nameof(dictionary), NullMessage);
 #endif
-        if (!IsValid)
-            throw new BrokenContractException(InvalidMessage);
 
-        return false;
+        return IsValid ? true : throw new BrokenContractException(InvalidMessage);
 #endif
     }
 
