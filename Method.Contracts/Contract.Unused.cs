@@ -1,4 +1,6 @@
-﻿namespace Contracts;
+﻿#pragma warning disable IDE0022 // Use expression body for method
+
+namespace Contracts;
 
 /// <summary>
 /// A set of tools to enforce contracts in methods.
@@ -10,14 +12,12 @@ public static partial class Contract
     /// </summary>
     /// <typeparam name="T">The value type.</typeparam>
     /// <param name="result">The unused value.</param>
-#pragma warning disable IDE0022 // Use expression body for method
     public static void Unused<T>(out T result)
         where T : class
     {
         // ! We initialize to default because the actual value will not be used.
         result = default!;
     }
-#pragma warning restore IDE0022 // Use expression body for method
 
     /// <summary>
     /// Provides a value for variables that should be uninitialized.
