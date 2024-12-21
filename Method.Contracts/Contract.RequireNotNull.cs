@@ -26,11 +26,14 @@ public static partial class Contract
 #if DEBUG
         T? asT = obj as T;
         Debug.Assert(obj is not null, $"Invalid null argument '{text}', line {lineNumber}.");
+
 #pragma warning disable CA1508
         Debug.Assert(asT is not null, $"Invalid argument type. Expected {typeof(T)}, got {obj?.GetType()}, line {lineNumber}.");
 #pragma warning restore CA1508
+
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        result = asT!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! Debug.Assert(asT is not null, ...) enforced that 'asT' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        result = asT!;
 #else
         result = asT;
 #endif
@@ -65,8 +68,10 @@ public static partial class Contract
     {
 #if DEBUG
         Debug.Assert(value is not null, $"Invalid null argument '{text}', line {lineNumber}");
+
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        return value!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! Debug.Assert(value is not null, ...) enforced that 'value' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        return value!;
 #else
         return value;
 #endif

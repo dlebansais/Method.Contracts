@@ -10,8 +10,14 @@ public static partial class Contract
     /// </summary>
     /// <typeparam name="T">The value type.</typeparam>
     /// <param name="result">The unused value.</param>
+#pragma warning disable IDE0022 // Use expression body for method
     public static void Unused<T>(out T result)
-        where T : class => result = default!;
+        where T : class
+    {
+        // ! We initialize to default because the actual value will not be used.
+        result = default!;
+    }
+#pragma warning restore IDE0022 // Use expression body for method
 
     /// <summary>
     /// Provides a value for variables that should be uninitialized.
@@ -26,7 +32,7 @@ public static partial class Contract
     /// </summary>
     /// <typeparam name="T">The value type.</typeparam>
     /// <param name="result">The unused value.</param>
-    /// <param name="_1">Unused.</param>
+    /// <param name="_1">Placeholder so that overload resolution can pick this method for structs.</param>
     public static void Unused<T>(out T result,
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
                                  T? _1 = null)

@@ -63,6 +63,7 @@ public static partial class Contract
             Debug.WriteLine(exception.StackTrace);
             Debug.Fail(Message, exception.Message);
 
+            // ! This line will not be executed because Debug.Fail() triggered the debugger first.
             return default!;
 #else
             throw new BrokenContractException(Message, exception);

@@ -25,11 +25,16 @@ public static partial class Contract
 
 #if DEBUG
         Debug.Assert(value is not null, Message);
-#else
-        if (value is null)
-            throw new BrokenContractException(Message);
-#endif
 
+#if NET481_OR_GREATER || NETSTANDARD2_0
+        // ! Debug.Assert(value is not null, ...) enforced that 'value' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
         return value!;
+#else
+        return value;
+#endif
+#else
+
+        return value is null ? throw new BrokenContractException(Message) : value;
+#endif
     }
 }

@@ -36,10 +36,14 @@ public static partial class Contract
         bool IsValid = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         if (dictionary is null || !IsValid)
+        {
+            // ! This line will not be executed because AssertValidDictionary() triggered the debugger first.
             return default!;
+        }
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        Dictionary<TEnumKey, TValue> Dictionary = dictionary!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        Dictionary<TEnumKey, TValue> Dictionary = dictionary!;
 #else
         Dictionary<TEnumKey, TValue> Dictionary = dictionary;
 #endif
@@ -56,7 +60,9 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
 
 #if DEBUG
-        Debug.Assert(false, FailureText);
+        Debug.Fail(FailureText);
+
+        // ! This line will not be executed because Debug.Fail() triggered the debugger first.
         return default!;
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
@@ -85,10 +91,14 @@ public static partial class Contract
         bool IsValid = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         if (dictionary is null || !IsValid)
+        {
+            // ! This line will not be executed because AssertValidDictionary() triggered the debugger first.
             return default!;
+        }
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary!;
 #else
         Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
 #endif
@@ -105,7 +115,9 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
 
 #if DEBUG
-        Debug.Assert(false, FailureText);
+        Debug.Fail(FailureText);
+
+        // ! This line will not be executed because Debug.Fail() triggered the debugger first.
         return default!;
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
@@ -136,7 +148,8 @@ public static partial class Contract
             return;
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        Dictionary<TEnumKey, Action> Dictionary = dictionary!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        Dictionary<TEnumKey, Action> Dictionary = dictionary!;
 #else
         Dictionary<TEnumKey, Action> Dictionary = dictionary;
 #endif
@@ -156,7 +169,7 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
 
 #if DEBUG
-        Debug.Assert(false, FailureText);
+        Debug.Fail(FailureText);
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
 #endif // #if DEBUG #else
@@ -184,10 +197,14 @@ public static partial class Contract
         bool IsValid = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         if (dictionary is null || !IsValid)
+        {
+            // ! This line will not be executed because AssertValidDictionary() triggered the debugger first.
             return default!;
+        }
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary!;
 #else
         Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary;
 #endif
@@ -204,7 +221,9 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
 
 #if DEBUG
-        Debug.Assert(false, FailureText);
+        Debug.Fail(FailureText);
+
+        // ! This line will not be executed because Debug.Fail() triggered the debugger first.
         return default!;
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
@@ -235,7 +254,8 @@ public static partial class Contract
             return;
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
-        Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary!; // .NET Framework does not detect that Debug.Assert(obj is not null...) means obj is not null.
+        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
+        Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary!;
 #else
         Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary;
 #endif
@@ -255,7 +275,7 @@ public static partial class Contract
         string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
 
 #if DEBUG
-        Debug.Assert(false, FailureText);
+        Debug.Fail(FailureText);
 #else // #if DEBUG
         throw new BrokenContractException(FailureText);
 #endif // #if DEBUG #else
