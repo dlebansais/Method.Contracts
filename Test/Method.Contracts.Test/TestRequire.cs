@@ -35,9 +35,11 @@ internal class TestRequire
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Contract.Require(false);
+        Contract.Require(false); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
+        Assert.That(Listener.IsOnlyOneMessage, Is.True);
+        Assert.That(Listener.LastMessage, Is.EqualTo($"Requirement not met, line {lineNumber}: {text}"));
 #else
         Assert.Throws<ArgumentException>(() => Contract.Require(false));
 #endif

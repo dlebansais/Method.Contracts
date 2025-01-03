@@ -21,7 +21,15 @@ public static partial class Contract
     public static T AssertOfType<T>(object? value, [CallerArgumentExpression(nameof(value))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
-        string Message = $"Expected type '{typeof(T).Name}' for value: {text}, line {lineNumber}";
+        AssertNotNull(value, text, lineNumber);
+
+        if (value is null)
+        {
+            // ! AssertNotNull(value, ...) enforced that 'value' is not null.
+            return default!;
+        }
+
+        string Message = $"Expected type '{typeof(T)}' for value: {text}, line {lineNumber}";
 
 #if DEBUG
         T? Result = value as T;

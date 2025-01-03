@@ -38,9 +38,11 @@ internal class TestAssertNotNull
         Trace.Listeners.Add(Listener);
 
         const string? NullString = null;
-        _ = Contract.AssertNotNull(NullString);
+        _ = Contract.AssertNotNull(NullString); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
+        Assert.That(Listener.IsOnlyOneMessage, Is.True);
+        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #else
         const string? NullString = null;
         Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNotNull(NullString));

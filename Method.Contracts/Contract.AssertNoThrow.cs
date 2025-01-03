@@ -19,11 +19,14 @@ public static partial class Contract
     /// <param name="lineNumber">The line number where the error occurred for diagnostic purpose.</param>
     public static void AssertNoThrow(Action action, [CallerArgumentExpression(nameof(action))] string? text = default, [CallerLineNumber] int lineNumber = -1)
     {
-        RequireNotNull(action, out Action Action);
+        AssertNotNull(action, text, lineNumber);
+
+        if (action is null)
+            return;
 
         try
         {
-            Action();
+            action();
         }
         catch (Exception exception)
         {
@@ -49,11 +52,17 @@ public static partial class Contract
     public static T AssertNoThrow<T>(Func<T> function, [CallerArgumentExpression(nameof(function))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
-        RequireNotNull(function, out Func<T> Function);
+        AssertNotNull(function, text, lineNumber);
+
+        if (function is null)
+        {
+            // ! AssertNotNull(function, ...) enforced that 'function' is not null.
+            return default!;
+        }
 
         try
         {
-            return Function();
+            return function();
         }
         catch (Exception exception)
         {

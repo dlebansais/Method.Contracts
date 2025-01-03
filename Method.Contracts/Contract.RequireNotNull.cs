@@ -24,11 +24,19 @@ public static partial class Contract
         where T : class
     {
 #if DEBUG
+        AssertNotNull(obj, text, lineNumber);
+
+        if (obj is null)
+        {
+            // ! AssertNotNull(obj, ...) enforced that 'obj' is not null.
+            result = default!;
+            return;
+        }
+
         T? asT = obj as T;
-        Debug.Assert(obj is not null, $"Invalid null argument '{text}', line {lineNumber}.");
 
 #pragma warning disable CA1508
-        Debug.Assert(asT is not null, $"Invalid argument type. Expected {typeof(T)}, got {obj?.GetType()}, line {lineNumber}.");
+        Debug.Assert(asT is not null, $"Invalid argument type, expected '{typeof(T)}', got '{obj.GetType()}', line {lineNumber}");
 #pragma warning restore CA1508
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
@@ -48,7 +56,7 @@ public static partial class Contract
             throw new ArgumentNullException(nameof(obj));
 #endif
         if (asT is null)
-            throw new ArgumentException($"Invalid argument type. Expected {typeof(T)}, got {obj.GetType()}, line {lineNumber}.");
+            throw new ArgumentException($"Invalid argument type, xpected {typeof(T)}, got {obj.GetType()}, line {lineNumber}");
 
         result = asT;
 #endif // #if DEBUG #else

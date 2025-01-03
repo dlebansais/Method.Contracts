@@ -1,18 +1,30 @@
 ﻿namespace Contracts.Test;
 
+#if NET8_0_OR_GREATER
+using System;
+#endif
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 internal class DebugTraceListener : TraceListener
 {
     public bool IsAssertTriggered { get; private set; }
 
-    public override void Write(string? message)
-    {
-    }
+    public bool IsOnlyOneMessage => RecordedMessages.Count == 1;
 
-    public override void WriteLine(string? message)
-    {
-    }
+    public string LastMessage => RecordedMessages[^1];
+
+    public bool IsExceptionMessage => RecordedDetailMessages.Count == 2 &&
+#if NET8_0_OR_GREATER
+                                      RecordedDetailMessages[0].Contains(".cs:line", StringComparison.Ordinal);
+#else
+                                      RecordedDetailMessages[0].Contains(".cs:line");
+#endif
+
+    public override void Write(string? message) => RecordedMessages.Add(message!);
+
+    public override void WriteLine(string? message) => RecordedDetailMessages.Add(message!);
 
     public override void Fail(string? message)
     {
@@ -27,4 +39,9 @@ internal class DebugTraceListener : TraceListener
 
         WriteLine(detailMessage);
     }
+
+    public static int LineNumber([CallerLineNumber] int lineNumber = 0) => lineNumber;
+
+    private List<string> RecordedMessages { get; } = [];
+    private List<string> RecordedDetailMessages { get; } = [];
 }

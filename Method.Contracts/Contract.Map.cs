@@ -57,7 +57,7 @@ public static partial class Contract
             return Value;
 
         object IntValue = Convert.ChangeType(expression, expression.GetTypeCode(), CultureInfo.InvariantCulture);
-        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
+        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}";
 
 #if DEBUG
         Debug.Fail(FailureText);
@@ -112,7 +112,7 @@ public static partial class Contract
             return FuncValue();
 
         object IntValue = Convert.ChangeType(expression, expression.GetTypeCode(), CultureInfo.InvariantCulture);
-        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
+        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}";
 
 #if DEBUG
         Debug.Fail(FailureText);
@@ -166,7 +166,7 @@ public static partial class Contract
         }
 
         object IntValue = Convert.ChangeType(expression, expression.GetTypeCode(), CultureInfo.InvariantCulture);
-        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
+        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}";
 
 #if DEBUG
         Debug.Fail(FailureText);
@@ -218,7 +218,7 @@ public static partial class Contract
             return await FuncValue().ConfigureAwait(false);
 
         object IntValue = Convert.ChangeType(expression, expression.GetTypeCode(), CultureInfo.InvariantCulture);
-        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
+        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}";
 
 #if DEBUG
         Debug.Fail(FailureText);
@@ -272,7 +272,7 @@ public static partial class Contract
         }
 
         object IntValue = Convert.ChangeType(expression, expression.GetTypeCode(), CultureInfo.InvariantCulture);
-        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}.";
+        string FailureText = $"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}";
 
 #if DEBUG
         Debug.Fail(FailureText);

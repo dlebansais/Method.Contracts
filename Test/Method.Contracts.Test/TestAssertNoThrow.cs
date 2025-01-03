@@ -37,15 +37,38 @@ internal class TestAssertNoThrow
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        Contract.AssertNoThrow(new Action(Throwing));
+        Contract.AssertNoThrow(new Action(Throwing)); int lineNumber = DebugTraceListener.LineNumber();
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
+        Assert.That(Listener.IsOnlyOneMessage, Is.True);
+        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected exception, line {lineNumber}"));
+        Assert.That(Listener.IsExceptionMessage, Is.True);
 #else
         Assert.Throws<BrokenContractException>(() => Contract.AssertNoThrow(Throwing));
 #endif
     }
 
     private static void Throwing() => throw new InvalidOperationException();
+
+    [TestCase(TestName = "AssertNoThrow(Action) with null action")]
+    public void TestActionNullFailure()
+    {
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        const Action NullAction = null!;
+        Contract.AssertNoThrow(NullAction); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullAction";
+
+        Assert.That(Listener.IsAssertTriggered, Is.True);
+        Assert.That(Listener.IsOnlyOneMessage, Is.True);
+        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        Assert.That(Listener.IsExceptionMessage, Is.False);
+#else
+        Assert.Throws<BrokenContractException>(() => Contract.AssertNoThrow(Throwing));
+#endif
+    }
 
     [TestCase(TestName = "AssertNoThrow(Func) success")]
     public void TestFunctionSuccess()
@@ -80,13 +103,36 @@ internal class TestAssertNoThrow
         Trace.Listeners.Clear();
         Trace.Listeners.Add(Listener);
 
-        _ = Contract.AssertNoThrow(() => Throwing(TestResult));
+        _ = Contract.AssertNoThrow(() => Throwing(TestResult)); int lineNumber = DebugTraceListener.LineNumber();
 
         Assert.That(Listener.IsAssertTriggered, Is.True);
+        Assert.That(Listener.IsOnlyOneMessage, Is.True);
+        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected exception, line {lineNumber}"));
+        Assert.That(Listener.IsExceptionMessage, Is.True);
 #else
         Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(() => Throwing(TestResult)));
 #endif
     }
 
     private static string Throwing(string value) => throw new ArgumentNullException(nameof(value));
+
+    [TestCase(TestName = "AssertNoThrow(Func) failure with null function")]
+    public void TestFunctionNullFailure()
+    {
+#if DEBUG
+        DebugTraceListener Listener = new();
+        Trace.Listeners.Clear();
+        Trace.Listeners.Add(Listener);
+
+        const Func<string> NullFunction = null!;
+        _ = Contract.AssertNoThrow(NullFunction); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullFunction";
+
+        Assert.That(Listener.IsAssertTriggered, Is.True);
+        Assert.That(Listener.IsOnlyOneMessage, Is.True);
+        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        Assert.That(Listener.IsExceptionMessage, Is.False);
+#else
+        Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(() => Throwing(TestResult)));
+#endif
+    }
 }

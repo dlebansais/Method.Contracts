@@ -14,10 +14,9 @@ public static partial class Contract
     /// <param name="result">The unused value.</param>
     public static void Unused<T>(out T result)
         where T : class
-    {
+
         // ! We initialize to default because the actual value will not be used.
-        result = default!;
-    }
+        => result = default!;
 
     /// <summary>
     /// Provides a value for variables that should be uninitialized.
