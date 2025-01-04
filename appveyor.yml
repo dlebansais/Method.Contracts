@@ -30,6 +30,7 @@ before_build:
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
   - dotnet restore
+  - dotnet tool install -g dotnet-stryker
 
 configuration:
   - Release
