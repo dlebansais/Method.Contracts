@@ -132,6 +132,7 @@ internal class TestAssertNoThrow
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
         Assert.That(Listener.IsExceptionMessage, Is.False);
 #else
+        string TestResult = string.Empty;
         Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(() => Throwing(TestResult)));
 #endif
     }
