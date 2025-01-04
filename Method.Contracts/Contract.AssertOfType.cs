@@ -23,11 +23,13 @@ public static partial class Contract
     {
         AssertNotNull(value, text, lineNumber);
 
+#if DEBUG
         if (value is null)
         {
             // ! AssertNotNull(value, ...) enforced that 'value' is not null.
             return default!;
         }
+#endif
 
         string Message = $"Expected type '{typeof(T)}' for value: {text}, line {lineNumber}";
 

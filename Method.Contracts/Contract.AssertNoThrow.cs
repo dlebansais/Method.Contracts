@@ -21,8 +21,10 @@ public static partial class Contract
     {
         AssertNotNull(action, text, lineNumber);
 
+#if DEBUG
         if (action is null)
             return;
+#endif
 
         try
         {
@@ -54,11 +56,13 @@ public static partial class Contract
     {
         AssertNotNull(function, text, lineNumber);
 
+#if DEBUG
         if (function is null)
         {
             // ! AssertNotNull(function, ...) enforced that 'function' is not null.
             return default!;
         }
+#endif
 
         try
         {
