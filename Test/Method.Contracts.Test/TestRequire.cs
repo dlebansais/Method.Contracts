@@ -1,8 +1,5 @@
 ﻿namespace Contracts.Test;
 
-#if !DEBUG
-using System;
-#endif
 #if DEBUG
 using System.Diagnostics;
 #endif
@@ -41,7 +38,9 @@ internal class TestRequire
         Assert.That(Listener.IsOnlyOneMessage, Is.True);
         Assert.That(Listener.LastMessage, Is.EqualTo($"Requirement not met, line {lineNumber}: {text}"));
 #else
-        Assert.Throws<ArgumentException>(() => Contract.Require(false));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Require(false)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Requirement not met, line {lineNumber}: {text}"));
 #endif
     }
 }

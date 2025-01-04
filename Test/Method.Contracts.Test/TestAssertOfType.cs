@@ -45,7 +45,9 @@ internal class TestAssertOfType
         Assert.That(Listener.LastMessage, Is.EqualTo($"Expected type 'System.String' for value: {text}, line {lineNumber}"));
 #else
         object? NotString = 0;
-        Assert.Throws<BrokenContractException>(() => _ = Contract.AssertOfType<string>(NotString));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.AssertOfType<string>(NotString)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NotString";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Expected type 'System.String' for value: {text}, line {lineNumber}"));
 #endif
     }
 
@@ -65,7 +67,9 @@ internal class TestAssertOfType
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #else
         const string? NullString = null;
-        Assert.Throws<BrokenContractException>(() => _ = Contract.AssertOfType<string>(NullString));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.AssertOfType<string>(NullString)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #endif
     }
 }

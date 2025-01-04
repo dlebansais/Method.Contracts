@@ -46,7 +46,9 @@ internal class TestRequireNotNull
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #else
         const string? NullString = null;
-        Assert.Throws<System.ArgumentNullException>(() => Contract.RequireNotNull<string>(NullString, out _));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.RequireNotNull<string>(NullString, out _)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #endif
     }
 
@@ -66,7 +68,9 @@ internal class TestRequireNotNull
         Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid argument type, expected 'System.IO.Stream', got 'System.String', line {lineNumber}"));
 #else
         const string TestString = "test";
-        Assert.Throws<System.ArgumentException>(() => Contract.RequireNotNull<Stream>(TestString, out _));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.RequireNotNull<Stream>(TestString, out _)); int lineNumber = DebugTraceListener.LineNumber();
+
+        Assert.That(Exception.Message, Is.EqualTo($"Invalid argument type, expected 'System.IO.Stream', got 'System.String', line {lineNumber}"));
 #endif
     }
 
@@ -108,7 +112,9 @@ internal class TestRequireNotNull
         Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null argument '{text}', line {lineNumber}"));
 #else
         const DebugTraceListener? TestListener = null;
-        Assert.Throws<System.ArgumentNullException>(() => _ = Contract.RequireNotNull(TestListener));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.RequireNotNull(TestListener)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "TestListener";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Invalid null argument '{text}', line {lineNumber}"));
 #endif
     }
 }

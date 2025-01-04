@@ -44,7 +44,9 @@ internal class TestAssertNoThrow
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected exception, line {lineNumber}"));
         Assert.That(Listener.IsExceptionMessage, Is.True);
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.AssertNoThrow(Throwing));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.AssertNoThrow(Throwing)); int lineNumber = DebugTraceListener.LineNumber();
+
+        Assert.That(Exception.Message, Is.EqualTo($"Unexpected exception, line {lineNumber}"));
 #endif
     }
 
@@ -66,7 +68,10 @@ internal class TestAssertNoThrow
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
         Assert.That(Listener.IsExceptionMessage, Is.False);
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.AssertNoThrow(Throwing));
+        const Action NullAction = null!;
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.AssertNoThrow(NullAction)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullAction";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #endif
     }
 
@@ -110,7 +115,9 @@ internal class TestAssertNoThrow
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected exception, line {lineNumber}"));
         Assert.That(Listener.IsExceptionMessage, Is.True);
 #else
-        Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(() => Throwing(TestResult)));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(() => Throwing(TestResult))); int lineNumber = DebugTraceListener.LineNumber();
+
+        Assert.That(Exception.Message, Is.EqualTo($"Unexpected exception, line {lineNumber}"));
 #endif
     }
 
@@ -132,8 +139,10 @@ internal class TestAssertNoThrow
         Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
         Assert.That(Listener.IsExceptionMessage, Is.False);
 #else
-        string TestResult = string.Empty;
-        Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(() => Throwing(TestResult)));
+        const Func<string> NullFunction = null!;
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNoThrow(NullFunction)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullFunction";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
 #endif
     }
 }

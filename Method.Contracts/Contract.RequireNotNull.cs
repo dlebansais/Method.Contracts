@@ -23,9 +23,9 @@ public static partial class Contract
     public static void RequireNotNull<T>(object? obj, out T result, [CallerArgumentExpression(nameof(obj))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class
     {
-#if DEBUG
         AssertNotNull(obj, text, lineNumber);
 
+#if DEBUG
         if (obj is null)
         {
             // ! AssertNotNull(obj, ...) enforced that 'obj' is not null.
@@ -34,9 +34,17 @@ public static partial class Contract
         }
 
         T? asT = obj as T;
+#else // #if DEBUG
+#pragma warning disable IDE0019
+        T? asT = obj as T;
+#pragma warning restore IDE0019
+#endif // #if DEBUG #else
 
+        // ! AssertNotNull(obj, ...) enforced that 'obj' is not null.
+        string Message = $"Invalid argument type, expected '{typeof(T)}', got '{obj!.GetType()}', line {lineNumber}";
+#if DEBUG
 #pragma warning disable CA1508
-        Debug.Assert(asT is not null, $"Invalid argument type, expected '{typeof(T)}', got '{obj.GetType()}', line {lineNumber}");
+        Debug.Assert(asT is not null, Message);
 #pragma warning restore CA1508
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
@@ -46,17 +54,8 @@ public static partial class Contract
         result = asT;
 #endif
 #else // #if DEBUG
-#pragma warning disable IDE0019
-        T? asT = obj as T;
-#pragma warning restore IDE0019
-#if NET6_0_OR_GREATER
-        ArgumentNullException.ThrowIfNull(obj);
-#else
-        if (obj is null)
-            throw new ArgumentNullException(nameof(obj));
-#endif
         if (asT is null)
-            throw new ArgumentException($"Invalid argument type, xpected {typeof(T)}, got {obj.GetType()}, line {lineNumber}");
+            throw new BrokenContractException(Message);
 
         result = asT;
 #endif // #if DEBUG #else
@@ -74,8 +73,10 @@ public static partial class Contract
     public static T RequireNotNull<T>(T? value, [CallerArgumentExpression(nameof(value))] string? text = default, [CallerLineNumber] int lineNumber = -1)
         where T : class, IDisposable
     {
+        string Message = $"Invalid null argument '{text}', line {lineNumber}";
+
 #if DEBUG
-        Debug.Assert(value is not null, $"Invalid null argument '{text}', line {lineNumber}");
+        Debug.Assert(value is not null, Message);
 
 #if NET481_OR_GREATER || NETSTANDARD2_0
         // ! Debug.Assert(value is not null, ...) enforced that 'value' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
@@ -84,13 +85,7 @@ public static partial class Contract
         return value;
 #endif
 #else // #if DEBUG
-#if NET6_0_OR_GREATER
-        ArgumentNullException.ThrowIfNull(value);
-#else
-        if (value is null)
-            throw new ArgumentNullException(nameof(value));
-#endif
-        return value;
+        return value is null ? throw new BrokenContractException(Message) : value;
 #endif // #if DEBUG #else
     }
 }

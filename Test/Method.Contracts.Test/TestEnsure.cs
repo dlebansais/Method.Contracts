@@ -38,7 +38,9 @@ internal class TestEnsure
         Assert.That(Listener.IsOnlyOneMessage, Is.True);
         Assert.That(Listener.LastMessage, Is.EqualTo($"Postcondition failed, line {lineNumber}: {text}"));
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.Ensure(false));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Ensure(false)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Postcondition failed, line {lineNumber}: {text}"));
 #endif
     }
 }

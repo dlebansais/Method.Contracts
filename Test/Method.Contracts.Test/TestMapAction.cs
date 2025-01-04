@@ -67,7 +67,9 @@ internal class TestMapAction
         Assert.That(Listener.IsOnlyOneMessage, Is.True);
         Assert.That(Listener.LastMessage, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.Map((TestEnum)int.MaxValue, Dictionary));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Map((TestEnum)int.MaxValue, Dictionary)); int lineNumber = DebugTraceListener.LineNumber(); const string expressionText = "(TestEnum)int.MaxValue"; const int IntValue = int.MaxValue;
+
+        Assert.That(Exception.Message, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
 #endif
 
         Assert.That(Result, Is.EqualTo(0));
@@ -94,7 +96,9 @@ internal class TestMapAction
         Assert.That(Listener.IsOnlyOneMessage, Is.True);
         Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
 #else
-        Assert.Throws<BrokenContractException>(() => Contract.Map(TestEnum.More, Dictionary));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Map(TestEnum.More, Dictionary)); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
 #endif
 
         Assert.That(Result, Is.EqualTo(0));
@@ -116,7 +120,9 @@ internal class TestMapAction
         Assert.That(Listener.IsOnlyOneMessage, Is.True);
         Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null dictionary, line {lineNumber}: {dictionaryText}"));
 #else
-        Assert.Throws<ArgumentNullException>(() => Contract.Map(TestEnum.None, Dictionary));
+        BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Map(TestEnum.None, Dictionary)); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
+
+        Assert.That(Exception.Message, Is.EqualTo($"Invalid null dictionary, line {lineNumber}: {dictionaryText}"));
 #endif
     }
 }

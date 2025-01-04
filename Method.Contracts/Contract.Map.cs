@@ -48,7 +48,7 @@ public static partial class Contract
         Dictionary<TEnumKey, TValue> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
-        _ = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
+        AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         Dictionary<TEnumKey, TValue> Dictionary = dictionary;
 #endif // #if DEBUG #else
@@ -103,7 +103,7 @@ public static partial class Contract
         Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
-        _ = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
+        AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
 #endif // #if DEBUG #else
@@ -154,7 +154,7 @@ public static partial class Contract
         Dictionary<TEnumKey, Action> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
-        _ = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
+        AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         Dictionary<TEnumKey, Action> Dictionary = dictionary;
 #endif // #if DEBUG #else
@@ -209,7 +209,7 @@ public static partial class Contract
         Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
-        _ = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
+        AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary;
 #endif // #if DEBUG #else
@@ -260,7 +260,7 @@ public static partial class Contract
         Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary;
 #endif
 #else // #if DEBUG
-        _ = AssertValidDictionary(dictionary, dictionaryText, lineNumber);
+        AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
         Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary;
 #endif // #if DEBUG #else
@@ -281,8 +281,13 @@ public static partial class Contract
 #endif // #if DEBUG #else
     }
 
+#if DEBUG
     private static bool AssertValidDictionary<TEnumKey, TValue>(Dictionary<TEnumKey, TValue>? dictionary, string? dictionaryText, int lineNumber)
         where TEnumKey : struct, Enum
+#else
+    private static void AssertValidDictionary<TEnumKey, TValue>(Dictionary<TEnumKey, TValue>? dictionary, string? dictionaryText, int lineNumber)
+        where TEnumKey : struct, Enum
+#endif
     {
         string NullMessage = $"Invalid null dictionary, line {lineNumber}: {dictionaryText}";
         string InvalidMessage = $"Invalid dictionary, line {lineNumber}: {dictionaryText}";
@@ -298,21 +303,18 @@ public static partial class Contract
 #else
         bool IsValid = IsValidDictionary(dictionary);
 
-#if NET6_0_OR_GREATER
-        ArgumentNullException.ThrowIfNull(dictionary, NullMessage);
-#else
-        if (dictionary is null)
-            throw new ArgumentNullException(nameof(dictionary), NullMessage);
-#endif
+        if (!IsValid)
+            throw new BrokenContractException(InvalidMessage);
 
-        return IsValid ? true : throw new BrokenContractException(InvalidMessage);
+        if (dictionary is null)
+            throw new BrokenContractException(NullMessage);
 #endif
     }
 
     private static bool IsValidDictionary<TEnumKey, TValue>(Dictionary<TEnumKey, TValue>? dictionary)
         where TEnumKey : struct, Enum
     {
-        // There is already a check for null before. We return true to not have two assert messages queued.
+        // There is already a check for null before. We return true to not have two assert messages queued, or the wrong exception thrown.
         if (dictionary is null)
             return true;
 

@@ -24,7 +24,7 @@ public static partial class Contract
         Debug.Assert(expression, Message);
 #else
         if (!expression)
-            throw new System.ArgumentException($"Requirement not met: {text}");
+            throw new BrokenContractException(Message);
 #endif
     }
 }
