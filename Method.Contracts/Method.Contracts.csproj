@@ -13,8 +13,8 @@
         <Product />
         <Description>A set of tools to enforce contracts in methods</Description>
         <Copyright>Copyright © 2024 David Le Bansais</Copyright>
-        <AssemblyVersion>2.0.1.52</AssemblyVersion>
-        <FileVersion>2.0.1.52</FileVersion>
+        <AssemblyVersion>2.0.1.53</AssemblyVersion>
+        <FileVersion>2.0.1.53</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/Method.Contracts</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
