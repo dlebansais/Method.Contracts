@@ -72,7 +72,7 @@ internal class TestMapAction
         Assert.That(Exception.Message, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
 #endif
 
-        Assert.That(Result, Is.EqualTo(0));
+        Assert.That(Result, Is.Zero);
     }
 
     [TestCase(TestName = "Map failure with bad dictionary (action)")]
@@ -101,7 +101,7 @@ internal class TestMapAction
         Assert.That(Exception.Message, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
 #endif
 
-        Assert.That(Result, Is.EqualTo(0));
+        Assert.That(Result, Is.Zero);
     }
 
     [TestCase(TestName = "Map failure with null dictionary (action)")]

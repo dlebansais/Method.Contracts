@@ -26,6 +26,6 @@ internal class TestUnused
     {
         Contract.Unused(out int UnusedInt);
 
-        Assert.That(UnusedInt, Is.EqualTo(0));
+        Assert.That(UnusedInt, Is.Zero);
     }
 }

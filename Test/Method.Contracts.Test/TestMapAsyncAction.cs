@@ -76,7 +76,7 @@ internal class TestMapAsyncAction
         Assert.That(Exception.Message, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
 #endif
 
-        Assert.That(Result, Is.EqualTo(0));
+        Assert.That(Result, Is.Zero);
 
         await Task.CompletedTask.ConfigureAwait(false);
     }
@@ -107,7 +107,7 @@ internal class TestMapAsyncAction
         Assert.That(Exception.Message, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
 #endif
 
-        Assert.That(Result, Is.EqualTo(0));
+        Assert.That(Result, Is.Zero);
 
         await Task.CompletedTask.ConfigureAwait(false);
     }
