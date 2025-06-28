@@ -33,7 +33,7 @@ before_build:
   - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
   - dotnet restore
   - dotnet tool install -g dotnet-stryker
-  - C:/PROGRA~1/7-Zip/7z.exe e -p${SnkPassword} .signing\key.zip          # Extract singing.snk to the current directory
+  - C:/PROGRA~1/7-Zip/7z.exe e -p%SnkPassword% .signing\key.zip          # Extract singing.snk to the current directory
   - dir
   - ls
 
