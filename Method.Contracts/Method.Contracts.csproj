@@ -87,12 +87,14 @@
             <None Include="$(TargetDir)$(ProjectName).xml" />
         </ItemGroup>
         <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget-debug\lib\$(TargetFramework)\" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+        <Copy SourceFiles="README-short.md" DestinationFolder="$(SolutionDir)nuget-debug\" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
 
         <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
             <None Include="$(TargetDir)$(ProjectName).dll" />
             <None Include="$(TargetDir)$(ProjectName).xml" />
         </ItemGroup>
-        <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget\lib\$(TargetFramework)\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />        
+        <Copy SourceFiles="@(None)" DestinationFolder="$(SolutionDir)nuget\lib\$(TargetFramework)\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+        <Copy SourceFiles="README-short.md" DestinationFolder="$(SolutionDir)nuget\" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     </Target>
 
 </Project>
