@@ -29,7 +29,6 @@ matrix:
 
 before_build:
   - nuget restore %APPVEYOR_PROJECT_NAME%.sln
-  - nuget install GitCommitId -DependencyVersion Highest -OutputDirectory packages
   - dotnet restore
   - dotnet tool install -g dotnet-stryker
   - C:/PROGRA~1/7-Zip/7z.exe e -p%SnkPassword% .signing\key.zip > nul           # Extract signing.snk to the current directory
@@ -42,14 +41,14 @@ build:
   project: $(APPVEYOR_PROJECT_NAME).sln
 
 after_build:
-  - nuget install Packager -DependencyVersion Highest -OutputDirectory packages # Install Packager
-  - ps: $folder = Get-ChildItem -Path packages/Packager.* -Name | Out-String    # Get the installation folder (we don't know the actual version)
-  - ps: $firstline = ($folder -split '\r\n')[0]                                 # Get rid of carriage-return
-  - ps: $fullpath = ".\packages\$firstline\lib\net481\Packager.exe"             # Build full path
+  - nuget install dlebansais.Packager -DependencyVersion Highest -OutputDirectory packages # Install Packager
+  - ps: $folder = Get-ChildItem -Path packages/dlebansais.Packager.* -Name | Out-String    # Get the installation folder (we don't know the actual version)
+  - ps: $firstline = ($folder -split '\r\n')[0]                                            # Get rid of carriage-return
+  - ps: $fullpath = ".\packages\$firstline\lib\net481\Packager.exe"                        # Build full path
   - ps: $env:PACKAGER_PATH=$fullpath
-  - '%PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX%'           # Execute the packager: the output is nuget\%APPVEYOR_PROJECT_NAME%.nuspec
+  - '%PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX%'                  # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
   - if exist nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec nuget pack nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
-  - '%PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX% --debug'   # Execute the packager: the output is nuget-debug\%APPVEYOR_PROJECT_NAME%-Debug.nuspec
+  - '%PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX% --debug'          # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
   - if exist nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec nuget pack nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
   - ps: $xml = [xml](Get-Content .\$env:APPVEYOR_PROJECT_NAME\$env:APPVEYOR_PROJECT_NAME.csproj)
   - ps: $version=$xml.Project.PropertyGroup.Version
