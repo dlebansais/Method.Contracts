@@ -5,12 +5,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    registries:
-      - github
-
-registries:
-  github:
-    type: nuget-feed
-    url: "https://nuget.pkg.github.com/dlebansais/index.json"
-    username: "dlebansais"
-    password: "${{secrets.DEPENDABOT_NUGET_TOKEN}}"
