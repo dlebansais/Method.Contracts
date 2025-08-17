@@ -7,14 +7,14 @@
         <Platforms>x64</Platforms>
 
         <RootNamespace>Contracts</RootNamespace>
-        <Version>2.0.3</Version>
+        <Version>2.0.5</Version>
         <Authors>David Le Bansais</Authors>
         <Company />
         <Product />
         <Description>A set of tools to enforce contracts in methods</Description>
         <Copyright>Copyright © 2025 David Le Bansais</Copyright>
-        <AssemblyVersion>2.0.3.55</AssemblyVersion>
-        <FileVersion>2.0.3.55</FileVersion>
+        <AssemblyVersion>2.0.5.56</AssemblyVersion>
+        <FileVersion>2.0.5.56</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/Method.Contracts</RepositoryUrl>
         <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 
@@ -31,7 +31,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageLicenseExpression>0BSD</PackageLicenseExpression>
-        <packageIcon>package-icon.png</packageIcon>
+        <PackageIcon>package-icon.png</PackageIcon>
         <PackageReadmeFile>README-short.md</PackageReadmeFile>
     </PropertyGroup>
 
