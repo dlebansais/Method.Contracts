@@ -20,13 +20,3 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: gh pr merge --auto --merge "$PR_URL"
-      - name: Wait before triggering Dependabot again
-        run: sleep 60
-      - name: Trigger Dependabot update
-        env:
-          GH_TOKEN: ${{secrets.DEPENDABOT_TRIGGER_TOKEN}}
-        run: |
-          curl -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/dlebansais/Method.Contracts/dependabot/updates
