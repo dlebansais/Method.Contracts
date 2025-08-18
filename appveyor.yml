@@ -83,10 +83,10 @@ before_test:
     printf "powershell $stryker_summary = Get-Content ./reports/mutation-report.md -Raw ; Write-Output $stryker_summary ; $pattern = 'The final mutation score is 100' ; if ($stryker_summary -NotMatch $pattern) { exit -1 }\n" >> after-test.bat
 
 test_script:
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' opencover.bat run-tests1.bat
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' call opencover.bat run-tests1.bat
 
 after_test:
-  - if '%APPVEYOR_REPO_BRANCH%' == 'master' after-test.bat
+  - if '%APPVEYOR_REPO_BRANCH%' == 'master' call after-test.bat
 
 artifacts:
   - path: $(PACKAGE_PREFIX).$(APPVEYOR_PROJECT_NAME)-Debug.*.nupkg
