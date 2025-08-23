@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreBuild", "PreBuild\PreBui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Method.Contracts.Test", "Test\Method.Contracts.Test\Method.Contracts.Test.csproj", "{3B7C9BF2-F399-4682-B1E4-4CC80116F8F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Method.Contracts.Test.DotNetCore", "Test\Method.Contracts.Test.DotNetCore\Method.Contracts.Test.DotNetCore.csproj", "{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +37,10 @@ Global
 		{3B7C9BF2-F399-4682-B1E4-4CC80116F8F7}.Debug|x64.Build.0 = Debug|x64
 		{3B7C9BF2-F399-4682-B1E4-4CC80116F8F7}.Release|x64.ActiveCfg = Release|x64
 		{3B7C9BF2-F399-4682-B1E4-4CC80116F8F7}.Release|x64.Build.0 = Release|x64
+		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Debug|x64.ActiveCfg = Debug|x64
+		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Debug|x64.Build.0 = Debug|x64
+		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Release|x64.ActiveCfg = Release|x64
+		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
