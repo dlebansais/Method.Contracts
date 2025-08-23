@@ -1,8 +1,6 @@
 ﻿namespace Contracts.Test;
 
-#if NET8_0_OR_GREATER
 using System;
-#endif
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -16,10 +14,10 @@ internal class DebugTraceListener : TraceListener
     public string LastMessage => RecordedMessages[^1];
 
     public bool IsExceptionMessage => RecordedDetailMessages.Count == 2 &&
-#if NET8_0_OR_GREATER
+#if NET8_0_OR_GREATER || NETCOREAPP3_1
                                       RecordedDetailMessages[0].Contains(".cs:line", StringComparison.Ordinal);
 #else
-                                      RecordedDetailMessages[0].Contains(".cs:line");
+                                      RecordedDetailMessages[0].IndexOf(".cs:line", StringComparison.Ordinal) >= 0;
 #endif
 
     public override void Write(string? message) => RecordedMessages.Add(message!);
