@@ -24,6 +24,9 @@ updates:
     schedule:
       interval: daily
     ignore:
+      - dependency-name: "Microsoft.NET.Test.Sdk"
+      - dependency-name: "NUnit"
+      - dependency-name: "NUnit3TestAdapter"
       - dependency-name: "System.Text.Json"
     open-pull-requests-limit: 1
     groups:
