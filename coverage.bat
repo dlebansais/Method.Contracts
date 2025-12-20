@@ -42,7 +42,7 @@ if exist .\Test\%TESTPROJECTNAME%\*.log del .\Test\%TESTPROJECTNAME%\*.log
 if exist %RESULTFILEPATH% del %RESULTFILEPATH%
 
 rem Execute tests within OpenCover.
-%OPENCOVER_EXE% -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test -c %CONFIGURATION% -f %FRAMEWORK% --no-build -l console;verbosity=detailed" -output:%RESULTFILEPATH% -mergeoutput
+%OPENCOVER_EXE% -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test ./Test/%TESTPROJECTNAME%/bin/x64/%CONFIGURATION%/%FRAMEWORK%/%TESTPROJECTNAME%.dll -l console;verbosity=detailed" -output:%RESULTFILEPATH% -mergeoutput
 
 if not exist %RESULTFILEPATH% goto end
 %CODECOV_UPLOADER_EXE% -f %RESULTFILEPATH% -t %TOKEN%
