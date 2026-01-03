@@ -12,7 +12,7 @@
         <Company />
         <Product />
         <Description>A set of tools to enforce contracts in methods</Description>
-        <Copyright>Copyright © 2025 David Le Bansais</Copyright>
+        <Copyright>Copyright © 2026 David Le Bansais</Copyright>
         <AssemblyVersion>2.0.5.59</AssemblyVersion>
         <FileVersion>2.0.5.59</FileVersion>
         <RepositoryUrl>https://github.com/dlebansais/Method.Contracts</RepositoryUrl>
