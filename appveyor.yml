@@ -13,7 +13,7 @@ skip_tags: true
 skip_commits:
   message: "*[skip ci]*"
 
-image: Visual Studio 2022
+image: Visual Studio 2026
 
 # scripts that are called at very beginning, before repo cloning
 init:
