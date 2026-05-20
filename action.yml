@@ -1,5 +1,0 @@
-name: "Empty Action"
-description: "Does nothing, placeholder only."
-runs:
-  using: "composite"
-  steps: []
