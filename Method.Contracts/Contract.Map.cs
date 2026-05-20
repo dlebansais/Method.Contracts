@@ -41,12 +41,7 @@ public static partial class Contract
             return default!;
         }
 
-#if NET481_OR_GREATER || NETSTANDARD2_0
-        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
-        Dictionary<TEnumKey, TValue> Dictionary = dictionary!;
-#else
         Dictionary<TEnumKey, TValue> Dictionary = dictionary;
-#endif
 #else // #if DEBUG
         AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
@@ -96,12 +91,7 @@ public static partial class Contract
             return default!;
         }
 
-#if NET481_OR_GREATER || NETSTANDARD2_0
-        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
-        Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary!;
-#else
         Dictionary<TEnumKey, Func<TValue>> Dictionary = dictionary;
-#endif
 #else // #if DEBUG
         AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
@@ -147,12 +137,7 @@ public static partial class Contract
         if (dictionary is null || !IsValid)
             return;
 
-#if NET481_OR_GREATER || NETSTANDARD2_0
-        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
-        Dictionary<TEnumKey, Action> Dictionary = dictionary!;
-#else
         Dictionary<TEnumKey, Action> Dictionary = dictionary;
-#endif
 #else // #if DEBUG
         AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
@@ -202,12 +187,7 @@ public static partial class Contract
             return default!;
         }
 
-#if NET481_OR_GREATER || NETSTANDARD2_0
-        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
-        Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary!;
-#else
         Dictionary<TEnumKey, Func<Task<TValue>>> Dictionary = dictionary;
-#endif
 #else // #if DEBUG
         AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
@@ -253,12 +233,7 @@ public static partial class Contract
         if (dictionary is null || !IsValid)
             return;
 
-#if NET481_OR_GREATER || NETSTANDARD2_0
-        // ! if (dictionary is null || ...) enforced that 'dictionary' is not null but .NET Framework and .NET Standard 2.0 don't detect it.
-        Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary!;
-#else
         Dictionary<TEnumKey, Func<Task>> Dictionary = dictionary;
-#endif
 #else // #if DEBUG
         AssertValidDictionary(dictionary, dictionaryText, lineNumber);
 
