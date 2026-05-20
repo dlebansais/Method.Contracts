@@ -13,10 +13,11 @@ internal class DebugTraceListener : TraceListener
 
     public string LastMessage => RecordedMessages[^1];
 
-    public bool IsExceptionMessage => RecordedDetailMessages.Count == 2 &&
 #if NET8_0_OR_GREATER || NETCOREAPP3_1
+    public bool IsExceptionMessage => RecordedDetailMessages.Count == 2 &&
                                       RecordedDetailMessages[0].Contains(".cs:line", StringComparison.Ordinal);
 #else
+    public bool IsExceptionMessage => RecordedDetailMessages.Count == 2 &&
                                       RecordedDetailMessages[0].IndexOf(".cs:line", StringComparison.Ordinal) >= 0;
 #endif
 
