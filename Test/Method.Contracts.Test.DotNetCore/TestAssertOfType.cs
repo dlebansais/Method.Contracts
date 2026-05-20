@@ -19,8 +19,11 @@ internal class TestAssertOfType
         object? NotNullString = "Not null";
         string Result = Contract.AssertOfType<string>(NotNullString);
 
-        Assert.That(Listener.IsAssertTriggered, Is.False);
-        Assert.That(Result, Is.EqualTo(NotNullString));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.False);
+            Assert.That(Result, Is.EqualTo(NotNullString));
+        });
 #else
         object? NotNullString = "Not null";
         string Result = Contract.AssertOfType<string>(NotNullString);
@@ -40,9 +43,12 @@ internal class TestAssertOfType
         object? NotString = 0;
         _ = Contract.AssertOfType<string>(NotString); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NotString";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Expected type 'System.String' for value: {text}, line {lineNumber}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Expected type 'System.String' for value: {text}, line {lineNumber}"));
+        });
 #else
         object? NotString = 0;
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.AssertOfType<string>(NotString)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NotString";
@@ -62,9 +68,12 @@ internal class TestAssertOfType
         const string? NullString = null;
         _ = Contract.AssertOfType<string>(NullString); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        });
 #else
         const string? NullString = null;
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.AssertOfType<string>(NullString)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";

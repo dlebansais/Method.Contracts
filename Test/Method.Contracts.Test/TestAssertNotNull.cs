@@ -19,8 +19,11 @@ internal class TestAssertNotNull
         const string? NotNullString = "Not null";
         string Result = Contract.AssertNotNull(NotNullString);
 
-        Assert.That(Listener.IsAssertTriggered, Is.False);
-        Assert.That(Result, Is.EqualTo(NotNullString));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.False);
+            Assert.That(Result, Is.EqualTo(NotNullString));
+        }
 #else
         const string? NotNullString = "Not null";
         string Result = Contract.AssertNotNull(NotNullString);
@@ -40,9 +43,12 @@ internal class TestAssertNotNull
         const string? NullString = null;
         _ = Contract.AssertNotNull(NullString); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        }
 #else
         const string? NullString = null;
         Assert.Throws<BrokenContractException>(() => _ = Contract.AssertNotNull(NullString));

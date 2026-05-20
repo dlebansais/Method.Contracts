@@ -36,8 +36,11 @@ internal class TestBrokenContractException
         const string TestMessage = "Test message";
         InvalidOperationException TestInnerException = new(TestMessage);
         BrokenContractException TestException = new(TestMessage, TestInnerException);
-        Assert.That(TestException.Message, Is.EqualTo(TestMessage));
-        Assert.That(TestException.InnerException, Is.TypeOf<InvalidOperationException>());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(TestException.Message, Is.EqualTo(TestMessage));
+            Assert.That(TestException.InnerException, Is.TypeOf<InvalidOperationException>());
+        }
 
         InvalidOperationException? InnerException = TestException.InnerException as InvalidOperationException;
         Assert.That(InnerException, Is.Not.Null);

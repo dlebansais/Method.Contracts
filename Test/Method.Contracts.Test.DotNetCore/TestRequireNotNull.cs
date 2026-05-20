@@ -20,8 +20,11 @@ internal class TestRequireNotNull
         const string? NotNullString = "Not null";
         Contract.RequireNotNull(NotNullString, out string Result);
 
-        Assert.That(Listener.IsAssertTriggered, Is.False);
-        Assert.That(Result, Is.EqualTo(NotNullString));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.False);
+            Assert.That(Result, Is.EqualTo(NotNullString));
+        });
 #else
         const string? NotNullString = "Not null";
         Contract.RequireNotNull(NotNullString, out string Result);
@@ -41,9 +44,12 @@ internal class TestRequireNotNull
         const string? NullString = null;
         Contract.RequireNotNull<string>(NullString, out _); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Unexpected null value, line {lineNumber}: {text}"));
+        });
 #else
         const string? NullString = null;
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.RequireNotNull<string>(NullString, out _)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "NullString";
@@ -63,9 +69,12 @@ internal class TestRequireNotNull
         const string TestString = "test";
         Contract.RequireNotNull<Stream>(TestString, out _); int lineNumber = DebugTraceListener.LineNumber();
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid argument type, expected 'System.IO.Stream', got 'System.String', line {lineNumber}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid argument type, expected 'System.IO.Stream', got 'System.String', line {lineNumber}"));
+        });
 #else
         const string TestString = "test";
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.RequireNotNull<Stream>(TestString, out _)); int lineNumber = DebugTraceListener.LineNumber();
@@ -85,8 +94,11 @@ internal class TestRequireNotNull
         using DebugTraceListener TestListener = new();
         DebugTraceListener Result = Contract.RequireNotNull(TestListener);
 
-        Assert.That(Listener.IsAssertTriggered, Is.False);
-        Assert.That(Result, Is.EqualTo(TestListener));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.False);
+            Assert.That(Result, Is.EqualTo(TestListener));
+        });
 #else
         using DebugTraceListener TestListener = new();
         DebugTraceListener Result = Contract.RequireNotNull(TestListener);
@@ -107,9 +119,12 @@ internal class TestRequireNotNull
 
         _ = Contract.RequireNotNull(TestListener); int lineNumber = DebugTraceListener.LineNumber(); const string text = "TestListener";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null argument '{text}', line {lineNumber}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null argument '{text}', line {lineNumber}"));
+        });
 #else
         const DebugTraceListener? TestListener = null;
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => _ = Contract.RequireNotNull(TestListener)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "TestListener";

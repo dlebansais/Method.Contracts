@@ -39,11 +39,15 @@ internal class TestMapAsyncFunc
 
         Result = await Contract.MapAsync(TestEnum.None, Dictionary).ConfigureAwait(false);
 
-        Assert.That(Listener.IsAssertTriggered, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.False);
+            Assert.That(Result, Is.EqualTo(NoneValue));
+        });
 #else
         Assert.DoesNotThrowAsync(async () => { Result = await Contract.MapAsync(TestEnum.None, Dictionary).ConfigureAwait(false); });
-#endif
         Assert.That(Result, Is.EqualTo(NoneValue));
+#endif
 
         await Task.CompletedTask.ConfigureAwait(false);
     }
@@ -65,9 +69,12 @@ internal class TestMapAsyncFunc
 
         _ = await Contract.MapAsync((TestEnum)int.MaxValue, Dictionary).ConfigureAwait(false); int lineNumber = DebugTraceListener.LineNumber(); const string expressionText = "(TestEnum)int.MaxValue"; const int IntValue = int.MaxValue;
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
+        });
 #else
         BrokenContractException Exception = Assert.ThrowsAsync<BrokenContractException>(async () => { _ = await Contract.MapAsync((TestEnum)int.MaxValue, Dictionary).ConfigureAwait(false); }); int lineNumber = DebugTraceListener.LineNumber(); const string expressionText = "(TestEnum)int.MaxValue"; const int IntValue = int.MaxValue;
 
@@ -93,9 +100,12 @@ internal class TestMapAsyncFunc
 
         _ = await Contract.MapAsync(TestEnum.More, Dictionary).ConfigureAwait(false); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
+        });
 #else
         BrokenContractException Exception = Assert.ThrowsAsync<BrokenContractException>(async () => { _ = await Contract.MapAsync(TestEnum.More, Dictionary).ConfigureAwait(false); }); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 
@@ -117,9 +127,12 @@ internal class TestMapAsyncFunc
 
         _ = await Contract.MapAsync(TestEnum.None, Dictionary).ConfigureAwait(false); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null dictionary, line {lineNumber}: {dictionaryText}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null dictionary, line {lineNumber}: {dictionaryText}"));
+        });
 #else
         BrokenContractException Exception = Assert.ThrowsAsync<BrokenContractException>(async () => { _ = await Contract.MapAsync(TestEnum.None, Dictionary).ConfigureAwait(false); }); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 

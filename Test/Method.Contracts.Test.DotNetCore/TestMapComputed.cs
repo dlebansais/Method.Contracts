@@ -35,11 +35,15 @@ internal class TestMapComputed
 
         Result = Contract.Map(TestEnum.None, Dictionary);
 
-        Assert.That(Listener.IsAssertTriggered, Is.False);
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.False);
+            Assert.That(Result, Is.EqualTo(NoneValue));
+        });
 #else
         Assert.DoesNotThrow(() => { Result = Contract.Map(TestEnum.None, Dictionary); });
-#endif
         Assert.That(Result, Is.EqualTo(NoneValue));
+#endif
     }
 
     [TestCase(TestName = "Map failure with bad value (direct conversion)")]
@@ -59,9 +63,12 @@ internal class TestMapComputed
 
         _ = Contract.Map((TestEnum)int.MaxValue, Dictionary); int lineNumber = DebugTraceListener.LineNumber(); const string expressionText = "(TestEnum)int.MaxValue"; const int IntValue = int.MaxValue;
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Enum '{expressionText}' with value {IntValue} not in dictionary, line {lineNumber}"));
+        });
 #else
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => { _ = Contract.Map((TestEnum)int.MaxValue, Dictionary); }); int lineNumber = DebugTraceListener.LineNumber(); const string expressionText = "(TestEnum)int.MaxValue"; const int IntValue = int.MaxValue;
 
@@ -85,9 +92,12 @@ internal class TestMapComputed
 
         _ = Contract.Map(TestEnum.More, Dictionary); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid dictionary, line {lineNumber}: {dictionaryText}"));
+        });
 #else
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => { _ = Contract.Map(TestEnum.More, Dictionary); }); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 
@@ -107,9 +117,12 @@ internal class TestMapComputed
 
         _ = Contract.Map(TestEnum.None, Dictionary); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null dictionary, line {lineNumber}: {dictionaryText}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Invalid null dictionary, line {lineNumber}: {dictionaryText}"));
+        });
 #else
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => { _ = Contract.Map(TestEnum.None, Dictionary); }); int lineNumber = DebugTraceListener.LineNumber(); const string dictionaryText = "Dictionary";
 

@@ -34,9 +34,12 @@ internal class TestEnsure
 
         Contract.Ensure(false); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Postcondition failed, line {lineNumber}: {text}"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Postcondition failed, line {lineNumber}: {text}"));
+        }
 #else
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Ensure(false)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
 
