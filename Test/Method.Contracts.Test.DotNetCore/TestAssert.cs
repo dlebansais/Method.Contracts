@@ -34,9 +34,12 @@ internal class TestAssert
 
         Contract.Assert(false); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
 
-        Assert.That(Listener.IsAssertTriggered, Is.True);
-        Assert.That(Listener.IsOnlyOneMessage, Is.True);
-        Assert.That(Listener.LastMessage, Is.EqualTo($"Assert failed, line {lineNumber}: {text}"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(Listener.IsAssertTriggered, Is.True);
+            Assert.That(Listener.IsOnlyOneMessage, Is.True);
+            Assert.That(Listener.LastMessage, Is.EqualTo($"Assert failed, line {lineNumber}: {text}"));
+        });
 #else
         BrokenContractException Exception = Assert.Throws<BrokenContractException>(() => Contract.Assert(false)); int lineNumber = DebugTraceListener.LineNumber(); const string text = "false";
 
