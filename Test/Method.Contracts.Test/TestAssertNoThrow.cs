@@ -27,7 +27,6 @@ internal class TestAssertNoThrow
 
     private static void NotThrowing()
     {
-
     }
 
     [TestCase(TestName = "AssertNoThrow(Action) failure")]
