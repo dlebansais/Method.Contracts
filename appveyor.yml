@@ -69,7 +69,9 @@ before_test:
   - nuget install CodecovUploader -Version %codecov_uploader_version% -OutputDirectory packages
   - nuget install ReportGenerator -Version %report_generator_version% -OutputDirectory packages
   - |-
-    printf "pushd ./Test/%APPVEYOR_PROJECT_NAME%.Test && dotnet test ./bin/x64/%CONFIGURATION%/net10.0/%APPVEYOR_PROJECT_NAME%.Test.dll --output:detailed && popd\n" > run-tests.bat
+    printf "pushd ./Test/%APPVEYOR_PROJECT_NAME%.Test\n" > run-tests.bat
+    printf "dotnet test ./bin/x64/%CONFIGURATION%/net10.0/%APPVEYOR_PROJECT_NAME%.Test.dll --output:detailed\n" >> run-tests.bat
+    printf "popd\n" >> run-tests.bat
     printf "pushd ./Test/%APPVEYOR_PROJECT_NAME%.Test.DotNetFramework && dotnet test ./bin/x64/%CONFIGURATION%/net481/%APPVEYOR_PROJECT_NAME%.Test.DotNetFramework.dll -l console;verbosity=detailed && popd\n" >> run-tests.bat
     printf "pushd ./Test/%APPVEYOR_PROJECT_NAME%.Test.DotNetCore && dotnet test ./bin/x64/%CONFIGURATION%/netcoreapp3.1/%APPVEYOR_PROJECT_NAME%.Test.DotNetCore.dll -l console;verbosity=detailed && popd\n" >> run-tests.bat
   - |-
