@@ -79,7 +79,7 @@ before_test:
   - |-
     printf ".\packages\CodecovUploader.%codecov_uploader_version%\Tools\Codecov.exe -f ""Coverage-%APPVEYOR_PROJECT_NAME%.xml""\n" > after-test.bat
     printf ".\packages\ReportGenerator.%report_generator_version%\Tools\Net8.0\ReportGenerator.exe ""-reports:Coverage-%APPVEYOR_PROJECT_NAME%.xml"" -targetdir:.\CoverageReports ""-assemblyfilters:-Microsoft*;+%APPVEYOR_PROJECT_NAME%"" ""-filefilters:-*.g.cs"" -reporttypes:textsummary\n" >> after-test.bat
-    printf "powershellif (-not (Test-Path .\CoverageReports\Summary2.txt)) { exit -1 }; $opencover_summary = Get-Content .\CoverageReports\Summary2.txt -Raw ; Write-Output $opencover_summary ; $pattern = 'Branch coverage' + [char]0x003A + ' 100' + [char]0x0025 ; if ($opencover_summary -NotMatch $pattern) { exit -1 }\n" >> after-test.bat
+    printf "powershell if (-not (Test-Path .\CoverageReports\Summary2.txt)) { exit -1 }; $opencover_summary = Get-Content .\CoverageReports\Summary2.txt -Raw ; Write-Output $opencover_summary ; $pattern = 'Branch coverage' + [char]0x003A + ' 100' + [char]0x0025 ; if ($opencover_summary -NotMatch $pattern) { exit -1 }\n" >> after-test.bat
     printf "if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%\n" >> after-test.bat
     printf "cd ./Test/%APPVEYOR_PROJECT_NAME%.Test.DotNetFramework\n" >> after-test.bat
     printf "dotnet stryker --configuration:%CONFIGURATION% --output . --reporter ""markdown""\n" >> after-test.bat
