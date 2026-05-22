@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34330.188
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11819.183 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Method.Contracts", "Method.Contracts\Method.Contracts.csproj", "{B40E58D3-4498-4015-9A03-78218AF85A69}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -18,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Method.Contracts.Test", "Test\Method.Contracts.Test\Method.Contracts.Test.csproj", "{3B7C9BF2-F399-4682-B1E4-4CC80116F8F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Method.Contracts.Test.DotNetCore", "Test\Method.Contracts.Test.DotNetCore\Method.Contracts.Test.DotNetCore.csproj", "{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Method.Contracts.Test.DotNetFramework", "Test\Method.Contracts.Test.DotNetFramework\Method.Contracts.Test.DotNetFramework.csproj", "{0A700E03-F248-0865-330D-94B83E8B1C97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Debug|x64.Build.0 = Debug|x64
 		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Release|x64.ActiveCfg = Release|x64
 		{40F24F0C-C230-7F0B-391F-66DE8CE0DEE8}.Release|x64.Build.0 = Release|x64
+		{0A700E03-F248-0865-330D-94B83E8B1C97}.Debug|x64.ActiveCfg = Debug|x64
+		{0A700E03-F248-0865-330D-94B83E8B1C97}.Debug|x64.Build.0 = Debug|x64
+		{0A700E03-F248-0865-330D-94B83E8B1C97}.Release|x64.ActiveCfg = Release|x64
+		{0A700E03-F248-0865-330D-94B83E8B1C97}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
