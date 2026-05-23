@@ -85,7 +85,7 @@ before_test:
     printf "cd ./Test/%APPVEYOR_PROJECT_NAME%.Test\n" >> after-test.bat
     printf "dotnet stryker --configuration:%CONFIGURATION% --output . --reporter ""markdown""\n" >> after-test.bat
     printf "if not exist ./reports/mutation-report.md exit /b -20\n" >> after-test.bat
-    printf "powershell $stryker_summary = Get-Content ./reports/mutation-report.md -Raw ; Write-Output $stryker_summary ; $pattern = 'The final mutation score is 1000' ; if ($stryker_summary -NotMatch $pattern) { Remove-Item ./reports/mutation-report.md -Force }\n" >> after-test.bat
+    printf "powershell $stryker_summary = Get-Content ./reports/mutation-report.md -Raw ; Write-Output $stryker_summary ; $pattern = 'The final mutation score is 100' ; if ($stryker_summary -NotMatch $pattern) { Remove-Item ./reports/mutation-report.md -Force }\n" >> after-test.bat
     printf "if not exist ./reports/mutation-report.md exit /b -21\n" >> after-test.bat
 
 test_script:
