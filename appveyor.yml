@@ -42,8 +42,8 @@ before_build:
   - if '%APPVEYOR_PULL_REQUEST_NUMBER%'=='' C:/PROGRA~1/7-Zip/7z.exe e -p%SnkPassword% .signing\key.zip > nul
   - ps: |-
         if ($env:CONFIGURATION -eq 'Release') { curl -OutFile CSharpLatest.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/CSharpLatest/artifacts/CSharpLatest.CodeFixes/bin/x64/Release-4-12-0/CSharpLatest-Release-4-12-0.zip?job=Release%2D4%2D12%2D0" }
-        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/Method.Contracts/artifacts/dlebansais.Method.Contracts.2.0.7.nupkg" }
-        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile DebugLogging.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/DebugLogging/artifacts/dlebansais.DebugLogging.2.0.4.nupkg" }
+        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/Method.Contracts/artifacts/dlebansais.Method.Contracts.2.0.7.nupkg?job=Release&all=true" }
+        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile DebugLogging.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/DebugLogging/artifacts/dlebansais.DebugLogging.2.0.4.nupkg?job=Release&all=true" }
         if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.Analyzers.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/Method.Contracts.Analyzers/artifacts/dlebansais.Method.Contracts.Analyzers.2.0.9.nupkg?job=Release%2D4%2D12%2D0" }
   - dir
 
