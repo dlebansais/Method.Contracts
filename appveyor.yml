@@ -43,7 +43,9 @@ before_build:
   - ps: |-
         if ($env:CONFIGURATION -eq 'Release') { curl -OutFile DebugLogging.nupkg -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/DebugLogging/artifacts/dlebansais.DebugLogging.2.0.4.nupkg?job=Configuration%3A+Release" }
         if ($env:CONFIGURATION -eq 'Release') { curl -OutFile CSharpLatest.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/CSharpLatest/artifacts/CSharpLatest.CodeFixes/bin/x64/Release-4-12-0/CSharpLatest-Release-4-12-0.zip?job=Release%2D4%2D12%2D0" }
-        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/method-contracts/artifacts/dlebansais.Method.Contracts.2.0.7.nupkg?job=Configuration%3A+Release" }
+        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/$(APPVEYOR_PROJECT_SLUG)/artifacts/dlebansais.Method.Contracts.2.0.7.nupkg?job=Configuration%3A+Release" }
+        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/%APPVEYOR_PROJECT_SLUG%/artifacts/dlebansais.Method.Contracts.2.0.7.nupkg?job=Configuration%3A+Release" }
+        if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Method.Contracts.zip -Headers @{ Authorization = "Bearer $token" } -Uri "https://ci.appveyor.com/api/projects/dlebansais/$env:APPVEYOR_PROJECT_SLUG/artifacts/dlebansais.Method.Contracts.2.0.7.nupkg?job=Configuration%3A+Release" }
         if ($env:CONFIGURATION -eq 'Release') { curl -OutFile Release-4-12-0.zip -Headers @{ Authorization = "Bearer $token" }   -Uri "https://ci.appveyor.com/api/projects/dlebansais/method-contracts-analyzers/artifacts/Method.Contracts.Analyzers/bin/x64/Release-4-12-0/Method.Contracts.Analyzers-Release-4-12-0.zip?job=Release%2D4%2D12%2D0" }
   - dir
 
