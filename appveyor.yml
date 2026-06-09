@@ -57,12 +57,11 @@ after_build:
       $folder = Get-ChildItem -Path packages/dlebansais.Packager.* -Name | Out-String    # Get the installation folder (we don't know the actual version)
       $firstline = ($folder -split '\r\n')[0]                                            # Get rid of carriage-return
       $fullpath = ".\packages\$firstline\lib\net10.0-windows7.0\Packager.exe"            # Build full path
-      $env:PACKAGER_PATH=$fullpath
-      %PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX%                # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
+      & $fullpath %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX%                # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
       if (Test-Path "nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec") {
         nuget pack "nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec"
       }
-      %PACKAGER_PATH% %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX% --debug        # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
+      & $fullpath %CUSTOM_PACKAGER_OPTIONS% --prefix=%PACKAGE_PREFIX% --debug        # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
       if (Test-Path "nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec") {
         nuget pack "nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec"
       }
