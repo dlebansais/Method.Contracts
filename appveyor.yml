@@ -26,6 +26,7 @@ environment:
   opencover_version: 4.7.1221
   codecov_uploader_version: 0.8.0
   report_generator_version: 5.5.10
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
   PACKAGE_PREFIX: dlebansais
 
 matrix:
@@ -49,7 +50,7 @@ configuration:
   - Debug
 
 build:
-  project: $(APPVEYOR_PROJECT_NAME).sln
+  project: $(APPVEYOR_PROJECT_NAME).slnx
 
 after_build:
   - ps: |
