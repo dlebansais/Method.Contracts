@@ -33,7 +33,7 @@ matrix:
   fast_finish: true
 
 before_build:
-  - nuget restore %APPVEYOR_PROJECT_NAME%.sln
+  - nuget restore %APPVEYOR_PROJECT_NAME%.slnx
   - nuget install dlebansais.GitCommitId -DependencyVersion Highest -OutputDirectory packages
   - nuget install dlebansais.Packager -DependencyVersion Highest -OutputDirectory packages
   - nuget install OpenCover -Version %opencover_version% -OutputDirectory packages
