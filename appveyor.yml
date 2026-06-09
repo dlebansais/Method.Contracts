@@ -71,8 +71,6 @@ after_build:
       $version_tag=$version_tag.Trim()
       $env:VERSION_TAG=$version_tag
   - echo Version is "%VERSION_TAG%"
-  - dir nuget
-  - dir nuget-debug
 
 before_test:
   - |-
