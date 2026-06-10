@@ -54,6 +54,7 @@ build:
 
 after_build:
   - ps: |
+      $ErrorActionPreference = "Stop"
       $folder = Get-ChildItem -Path packages/dlebansais.Packager.* -Name | Out-String    # Get the installation folder (we don't know the actual version)
       $firstline = ($folder -split '\r\n')[0]                                            # Get rid of carriage-return
       $fullpath = ".\packages\$firstline\lib\net10.0-windows7.0\Packager.exe"            # Build full path
