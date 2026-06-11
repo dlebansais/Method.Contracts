@@ -59,13 +59,13 @@ after_build:
       $fullpath = ".\packages\$firstline\tools\net10.0-windows7.0\Packager.exe"            # Build full path
       & $fullpath $env:CUSTOM_PACKAGER_OPTIONS --prefix=$env:PACKAGE_PREFIX              # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
       if ($LastExitCode -lt 0) { exit 1 }
-      if (Test-Path "nuget\$env:PACKAGE_PREFIX\$env:APPVEYOR_PROJECT_NAME.nuspec") {
-        nuget pack "nuget\$env:PACKAGE_PREFIX\$env:APPVEYOR_PROJECT_NAME.nuspec"
+      if (Test-Path "nuget\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME.nuspec") {
+        nuget pack "nuget\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME.nuspec"
       }
       & $fullpath $env:CUSTOM_PACKAGER_OPTIONS --prefix=$env:PACKAGE_PREFIX --debug      # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
       if ($LastExitCode -lt 0) { exit 1 }
-      if (Test-Path "nuget-debug\$env:PACKAGE_PREFIX\$env:APPVEYOR_PROJECT_NAME%-Debug.nuspec") {
-        nuget pack "nuget-debug\$env:PACKAGE_PREFIX\$env:APPVEYOR_PROJECT_NAME%-Debug.nuspec"
+      if (Test-Path "nuget-debug\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME%-Debug.nuspec") {
+        nuget pack "nuget-debug\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME%-Debug.nuspec"
       }
       $xml = [xml](Get-Content .\$env:APPVEYOR_PROJECT_NAME\$env:APPVEYOR_PROJECT_NAME.csproj)
       $version=$xml.Project.PropertyGroup.Version
