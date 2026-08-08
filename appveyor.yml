@@ -27,6 +27,7 @@ environment:
   codecov_uploader_version: 0.8.0
   report_generator_version: 5.5.10
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  CUSTOM_PACKAGER_OPTIONS: "[]"           # Override in settings -> Environment -> Environment variables
   PACKAGE_PREFIX: dlebansais
 
 matrix:
@@ -57,12 +58,13 @@ after_build:
       $folder = Get-ChildItem -Path packages/dlebansais.Packager.* -Name | Out-String    # Get the installation folder (we don't know the actual version)
       $firstline = ($folder -split '\r\n')[0]                                            # Get rid of carriage-return
       $fullpath = ".\packages\$firstline\tools\net10.0-windows7.0\Packager.exe"          # Build full path
+      $options = $env:CUSTOM_PACKAGER_OPTIONS | ConvertFrom-Json                         # Get options as JSON array
       if ($env:CONFIGURATION -eq 'Release') {
-        & $fullpath $env:CUSTOM_PACKAGER_OPTIONS --prefix=$env:PACKAGE_PREFIX            # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
+        & $fullpath $options --prefix=$env:PACKAGE_PREFIX                                # Execute the packager: the output is nuget\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%.nuspec
         if ($LastExitCode -lt 0) { exit 1 }
         nuget pack "nuget\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME.nuspec"
       } else {
-        & $fullpath $env:CUSTOM_PACKAGER_OPTIONS --prefix=$env:PACKAGE_PREFIX --debug    # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
+        & $fullpath $options --prefix=$env:PACKAGE_PREFIX --debug                        # Execute the packager: the output is nuget-debug\%PACKAGE_PREFIX%.%APPVEYOR_PROJECT_NAME%-Debug.nuspec
         if ($LastExitCode -lt 0) { exit 1 }
         nuget pack "nuget-debug\$env:PACKAGE_PREFIX.$env:APPVEYOR_PROJECT_NAME-Debug.nuspec"
       }
