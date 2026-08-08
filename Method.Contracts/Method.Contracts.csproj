@@ -36,6 +36,11 @@
         <PackageReadmeFile>README-short.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+        <IsAotCompatible>true</IsAotCompatible>
+        <VerifyReferenceAotCompatibility>true</VerifyReferenceAotCompatibility>
+    </PropertyGroup>
+    
     <PropertyGroup Condition="'$(APPVEYOR)' == 'True'">
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     </PropertyGroup>

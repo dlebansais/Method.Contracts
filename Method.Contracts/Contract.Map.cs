@@ -293,7 +293,11 @@ public static partial class Contract
         if (dictionary is null)
             return true;
 
+#if NET10_0_OR_GREATER
+        int EnumCount = Enum.GetValues<TEnumKey>().Length;
+#else
         int EnumCount = typeof(TEnumKey).GetEnumValues().Length;
+#endif
 
         return dictionary.Count == EnumCount;
     }

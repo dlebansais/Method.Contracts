@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <TargetFrameworks>net10.0</TargetFrameworks>
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
         <IsTestProject>true</IsTestProject>
+        <EnableNUnitRunner>true</EnableNUnitRunner>
+        <PublishAot>true</PublishAot>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         
         <RootNamespace>Contracts.Test</RootNamespace>
 
@@ -17,9 +21,6 @@
         <AnalysisLevel>latest-all</AnalysisLevel>
         <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
         <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-
-        <EnableNUnitRunner>true</EnableNUnitRunner>
-        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(APPVEYOR_PULL_REQUEST_NUMBER)' == ''">

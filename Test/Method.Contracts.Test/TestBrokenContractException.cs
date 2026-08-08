@@ -1,27 +1,11 @@
 ﻿namespace Contracts.Test;
 
 using System;
-using System.Text.Json;
 using NUnit.Framework;
 
 [TestFixture]
 internal class TestBrokenContractException
 {
-    [TestCase(TestName = "BrokenContractException serialization")]
-    public void TestSerialization()
-    {
-        BrokenContractException TestException = new();
-
-        string SerializedException = JsonSerializer.Serialize(TestException);
-        BrokenContractException? DeserializedException = JsonSerializer.Deserialize<BrokenContractException>(SerializedException);
-
-        Assert.That(DeserializedException, Is.Not.Null);
-
-        string ReserializedException = JsonSerializer.Serialize(DeserializedException);
-
-        Assert.That(ReserializedException, Is.EqualTo(SerializedException));
-    }
-
     [TestCase(TestName = "BrokenContractException constructor with message")]
     public void TestConstructorWithMessage()
     {

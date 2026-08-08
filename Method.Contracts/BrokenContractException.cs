@@ -5,7 +5,9 @@ using System;
 /// <summary>
 /// Represents errors that occur during contract checking.
 /// </summary>
+#if !NET10_0_OR_GREATER
 [Serializable]
+#endif
 public class BrokenContractException : Exception
 {
     /// <summary>
