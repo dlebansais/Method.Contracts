@@ -28,6 +28,7 @@ set REPORTGENERATOR_EXE=".\packages\%REPORTGENERATOR%\tools\net8.0\ReportGenerat
 nuget install OpenCover -Version %OPENCOVER_VERSION% -OutputDirectory packages
 nuget install CodecovUploader -Version %CODECOV_UPLOADER_VERSION% -OutputDirectory packages
 nuget install ReportGenerator -Version %REPORTGENERATOR_VERSION% -OutputDirectory packages
+dotnet tool install -g dotnet-stryker --version 4.16.0
 
 if '%TOKEN%' == '' goto error_console1
 if not exist %OPENCOVER_EXE% goto error_console2
@@ -42,11 +43,13 @@ if exist .\Test\%TESTPROJECTNAME%\*.log del .\Test\%TESTPROJECTNAME%\*.log
 if exist %RESULTFILEPATH% del %RESULTFILEPATH%
 
 rem Execute tests within OpenCover.
-%OPENCOVER_EXE% -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test ./Test/%TESTPROJECTNAME%/bin/x64/%CONFIGURATION%/%FRAMEWORK%/%TESTPROJECTNAME%.dll -l console;verbosity=detailed" -output:%RESULTFILEPATH% -mergeoutput
+%OPENCOVER_EXE% -register:user -target:"C:\Program Files\dotnet\dotnet.exe" -targetargs:"test ./Test/%TESTPROJECTNAME%/bin/x64/%CONFIGURATION%/%FRAMEWORK%/win-x64/%TESTPROJECTNAME%.dll -l console;verbosity=detailed" -output:%RESULTFILEPATH% -mergeoutput
 
 if not exist %RESULTFILEPATH% goto end
 %CODECOV_UPLOADER_EXE% -f %RESULTFILEPATH% -t %TOKEN%
 %REPORTGENERATOR_EXE% -reports:%RESULTFILEPATH% -targetdir:.\CoverageReports "-assemblyfilters:+%PROJECTNAME%;+%TESTPROJECTNAME%" "-filefilters:-*.g.cs;-*Microsoft.NET.Test.Sdk.Program.cs"
+pushd .\Test\%TESTPROJECTNAME%\ & dotnet stryker --configuration:%CONFIGURATION% --diag --output . --reporter "markdown" & popd
+
 goto end
 
 :error_console1
