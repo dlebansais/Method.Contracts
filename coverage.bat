@@ -48,7 +48,7 @@ rem Execute tests within OpenCover.
 if not exist %RESULTFILEPATH% goto end
 %CODECOV_UPLOADER_EXE% -f %RESULTFILEPATH% -t %TOKEN%
 %REPORTGENERATOR_EXE% -reports:%RESULTFILEPATH% -targetdir:.\CoverageReports "-assemblyfilters:+%PROJECTNAME%;+%TESTPROJECTNAME%" "-filefilters:-*.g.cs;-*Microsoft.NET.Test.Sdk.Program.cs"
-pushd .\Test\%TESTPROJECTNAME%\ & dotnet stryker --configuration:%CONFIGURATION% --diag --output . --reporter "markdown" & popd
+pushd .\Test\%TESTPROJECTNAME%\ & dotnet stryker --configuration:%CONFIGURATION% --output . --reporter "markdown" & popd
 
 goto end
 
