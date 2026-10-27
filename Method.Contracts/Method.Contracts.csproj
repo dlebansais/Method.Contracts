@@ -59,7 +59,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Nullable.Extended.Analyzer" Version="1.17.1">
+        <PackageReference Include="Nullable.Extended.Analyzer" Version="1.18.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -75,7 +75,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.402">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.403">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
